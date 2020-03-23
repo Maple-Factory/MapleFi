@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MapleFi</string>
+    <string name="proto_onoff_btn">ON OFF</string>
 </resources>
