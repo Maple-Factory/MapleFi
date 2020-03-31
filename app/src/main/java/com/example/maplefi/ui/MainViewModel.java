@@ -11,18 +11,22 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 
+import java.util.ArrayList;
+
 public class MainViewModel extends BaseViewModel {
     public WifiUtil wifiUtil;
     private MainActivityNavigator navigator;
+    ArrayList<String> list; // Old Sample
 
 //    public final ObservableField<ApItem> now_ap_item;
     public final ApItem now_ap_item;
 //    public final ObservableArrayList<ApItem> ap_item_list;
 
 
-    public MainViewModel(MainActivityNavigator navigator, WifiUtil wifiUtil) {
+    public MainViewModel(MainActivityNavigator navigator, WifiUtil wifiUtil, ArrayList<String> list /*Old*/) {
         this.navigator = navigator;
         this.wifiUtil = wifiUtil;
+        this.list = list;   // Old Sample
 
 //        now_ap_item = new ObservableField<>(new ApItem("Free"));
         now_ap_item = new ApItem("Free");
@@ -47,12 +51,13 @@ public class MainViewModel extends BaseViewModel {
 
     public void btnOnoffClick() {
         Log.d("TEST","ONOFF BUTTON");
-        if(MainViewModel.this.wifiUtil.isWifiEnabled()) {
-            MainViewModel.this.wifiUtil.setWifiEnabled(false);
-        }
-        else {
-            MainViewModel.this.wifiUtil.setWifiEnabled(true);
-        }
+        this.list.add(String.format("SSID %d", 0));  // Old Sample
+//        if(MainViewModel.this.wifiUtil.isWifiEnabled()) {
+//            MainViewModel.this.wifiUtil.setWifiEnabled(false);
+//        }
+//        else {
+//            MainViewModel.this.wifiUtil.setWifiEnabled(true);
+//        }
     }
 
     public void btnMoreClick() {

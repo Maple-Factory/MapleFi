@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+
     <data>
+        <import type="androidx.databinding.ObservableArrayList"/>
+        <import type="com.example.maplefi.ui.ApItem"/>
         <variable
             name="model"
             type= "com.example.maplefi.ui.MainViewModel"/>
+        <variable
+            name="apList"
+            type="ObservableArrayList&lt;com.example.maplefi.ui.ApItem&gt;" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -102,6 +109,7 @@
             android:id="@+id/apListLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:clipToPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -109,17 +117,20 @@
             app:layout_constraintTop_toTopOf="@+id/guidelineWidth"
             app:layout_constraintVertical_bias="1.0">
 
-            <include
-                android:id="@+id/sampleApListLayout"
-                layout="@layout/sample_item_ap"
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/wifilist"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                bind:item="@{apList}"/>-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wifiListOld"
                 android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
