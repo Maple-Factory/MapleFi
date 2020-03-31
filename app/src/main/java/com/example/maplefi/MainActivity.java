@@ -74,13 +74,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     }
 
 
-    public void addItem(String item_ssid, Drawable ap_state){
-        ApItem item = new ApItem();
-
-        item.ap_name(item_ssid);
-        item.setAp_state(ap_state);
-
-        mlist.add(item);
-//        Log.d("debug", "addItem: "+item_ssid);//debug
-    }
+//    public void addItem(String item_ssid, Drawable ap_state){
+//        ApItem item = new ApItem();
+//
+//        item.ap_name(item_ssid);
+//        item.setAp_state(ap_state);
+//
+//        mlist.add(item);
+////        Log.d("debug", "addItem: "+item_ssid);//debug
+//    }
 }
