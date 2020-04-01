@@ -16,32 +16,32 @@
 
         <TextView
             android:id="@+id/tv_ssid"
-            android:layout_width="210dp"
-            android:layout_height="53dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_width="0px"
+            android:layout_weight="5"
             android:text="AP SSID" />
 
         <ImageView
             android:id="@+id/img_rssiDegree"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
+            android:layout_width="0px"
             android:layout_weight="1"
+            android:layout_height="50dp"
             app:srcCompat="@drawable/wifi_full" />
 
         <ImageButton
             android:id="@+id/imgb_moreinf"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0px"
             android:layout_weight="1"
+            android:layout_height="50dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             app:srcCompat="@android:drawable/ic_menu_add" />
 
         <ImageButton
             android:id="@+id/imgb_connect"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="0px"
             android:layout_weight="1"
+            android:layout_height="50dp"
             app:srcCompat="@android:drawable/btn_star_big_off" />
     </LinearLayout>
 </layout>
