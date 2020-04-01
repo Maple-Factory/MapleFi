@@ -12,11 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maplefi.R;
+import com.example.maplefi.ui.ApItem;
 
 import java.util.ArrayList;
 
 public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHolder> {
-    private ArrayList<String> tssid = null;
+    private ArrayList<ApItem> tssid = null;
+
+    public interface OnItemClickListener{
+        //        public void onItemClick(View view, int position, boolean isUser);
+        void onItemClick(View v, int position);
+    }
 
     //아이템 뷰를 저장하는 뷰 홀더 클래스
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -38,7 +44,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     //TODO: 리스트 어텝더 작성 ㅡ
 
     //생성자에게 리스트 객체 전달 받는 파트
-    public ListAdapterOld(ArrayList<String> list){
+    public ListAdapterOld(ArrayList<ApItem> list, OnItemClickListener onItemClickListener){
         tssid = list;
     }
 
@@ -51,13 +57,13 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
         LayoutInflater inflater = (LayoutInflater)context.getSystemService((context.LAYOUT_INFLATER_SERVICE));
         View view = inflater.inflate(R.layout.wifilist_item, parent, false);
         ListAdapterOld.ViewHolder vh = new ListAdapterOld.ViewHolder(view);
-        return vh;//wifilist item 반환
+        return vh;  // wifilist item 반환
     }
 
     @Override
     //포지션에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String text = tssid.get(position);
+        String text = tssid.get(position).getItem_ssid();
         holder.textView_SSID.setText(text);
     }
 
