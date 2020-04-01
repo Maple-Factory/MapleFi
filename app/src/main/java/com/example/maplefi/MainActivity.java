@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.maplefi.databinding.ActivityMainBinding;
@@ -27,41 +28,52 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     private ActivityMainBinding binding;
     private MainViewModel model;
     private WifiUtil wifiUtil ;
-    public ListAdapter mAdapter;
-    private ArrayList<ApItem> apList = new ArrayList<>();
-    private LinearLayout container;
-    String item_ssid;
-    Drawable ap_state;
-    RecyclerView recyclerView = null;
+//    public ListAdapter mAdapter;
+    ListAdapterOld adapter = null;
+    private ArrayList<ApItem> apList = new ArrayList<ApItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<String> list = new ArrayList<>(); // Old Sample
 
         wifiUtil = new WifiUtil(getApplicationContext(), this);
-        model = new MainViewModel(this, wifiUtil, list /*Old*/);
+        model = new MainViewModel(this, wifiUtil);
 
 //        mAdapter = new ListAdapter();
 //        apList = new ObservableArrayList<>(); // MVVM
 //        apList.add(new ApItem("test")); // MVVM Debug
 
-        //바인딩
+        // 바인딩
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 //        binding.wifilist.setAdapter(mAdapter);    // MVVM
 //        binding.setApList(apList);    // MVVM
         binding.setModel(model);
         model.onCreate();
 
-
-
         //리사이클러뷰 리니어 레이아웃 매니저 지정
         RecyclerView recyclerView = findViewById(R.id.wifiListOld);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         //리사이클러뷰에 리스트 어뎁더 객체 지정
-        ListAdapterOld adapter = new ListAdapterOld(list);
+        adapter = new ListAdapterOld(apList, new ListAdapterOld.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                //버튼 클릭될때 호출됨
+                addItem("click test", getDrawable(R.drawable.wifi_full));
+//                Log.d("debug", "onItemClick: "+item_ssid);//debug
+                adapter.notifyDataSetChanged();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
+        //item 추가
+        addItem("test",getDrawable(R.drawable.wifi_full));
+//        Log.d("'debug", "onCreate: additem test1");//debug
+        addItem("test2",getDrawable(R.drawable.wifi_full));
+//        Log.d("debug", "onCreate: additem test2");//debug
+        addItem("test3",getDrawable(R.drawable.wifi_full));
+//        Log.d(TAG, "onCreate: additem test3");//debug
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -73,14 +85,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         startActivity(intent);
     }
 
+    public void addItem(String item_ssid, Drawable ap_state){
+        ApItem item = new ApItem(item_ssid);
 
-//    public void addItem(String item_ssid, Drawable ap_state){
-//        ApItem item = new ApItem();
-//
-//        item.ap_name(item_ssid);
-//        item.setAp_state(ap_state);
-//
-//        mlist.add(item);
-////        Log.d("debug", "addItem: "+item_ssid);//debug
-//    }
+        item.setAp_state(ap_state);
+
+        apList.add(item);
+//        Log.d("debug", "addItem: "+item_ssid);  //debug
+    }
 }
