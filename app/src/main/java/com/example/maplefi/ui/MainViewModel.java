@@ -3,13 +3,13 @@ package com.example.maplefi.ui;
 import android.util.Log;
 
 import com.example.maplefi.R;
-import com.example.maplefi.databinding.ActivityMainBinding;
+//import com.example.maplefi.databinding.ActivityMainBinding;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.WifiUtil;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ObservableArrayList;
-import androidx.databinding.ObservableField;
+//import androidx.databinding.DataBindingUtil;
+//import androidx.databinding.ObservableArrayList;
+//import androidx.databinding.ObservableField;
 
 import java.util.ArrayList;
 
@@ -57,12 +57,12 @@ public class MainViewModel extends BaseViewModel {
         }
     }
 
-    public void btnMoreClick() {
-        Log.d("TEST","More BUTTON");
-        callMoreActivity();
-    }
-
-    public void callMoreActivity() {
-        navigator.callMoreActivity();
-    }
+//    public void btnMoreClick() {
+//        Log.d("TEST","More BUTTON");
+//        callMoreActivity();
+//    }
+//
+//    public void callMoreActivity(String ap_name, int ap_sec_score, int ap_speed) {
+//        navigator.callMoreActivity(ap_name, ap_sec_score, ap_speed);
+//    }
 }

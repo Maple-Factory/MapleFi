@@ -2,11 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name="mmodel"
-            type= "com.example.maplefi.ui.MoreViewModel"/>
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,20 +36,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
-
-<!--            <include-->
-<!--                android:id="@+id/apinfo_layout"-->
-<!--                layout="@layout/sample_item_more"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineWidth"
@@ -106,24 +87,24 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/sec_score_btn"
+                android:id="@+id/sec_score_tv"
                 android:layout_width="0px"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{mmodel.ap_sec_score}"
+                android:text="sec_text_01"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/speed_score_btn"
+                app:layout_constraintEnd_toStartOf="@+id/speed_score_tv"
                 app:layout_constraintTop_toTopOf="@+id/guidelineWidth" />
 
             <TextView
-                android:id="@+id/speed_score_btn"
+                android:id="@+id/speed_score_tv"
                 android:layout_width="0px"
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{mmodel.ap_speed}"
-                app:layout_constraintStart_toEndOf="@+id/sec_score_btn"
+                android:text="speed_text_02"
+                app:layout_constraintStart_toEndOf="@+id/sec_score_tv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guidelineWidth" />
 
