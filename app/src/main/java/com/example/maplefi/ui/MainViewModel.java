@@ -11,6 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 
+import java.util.ArrayList;
+
 public class MainViewModel extends BaseViewModel {
     public WifiUtil wifiUtil;
     private MainActivityNavigator navigator;

@@ -14,7 +14,7 @@
 
     <include
         android:id="@+id/ap_layout"
-        layout="@layout/sample_item_ap"
+        layout="@layout/wifilist_item"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginLeft="10dp"
