@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
@@ -42,6 +43,28 @@ public class WifiUtil {
     }
 
     // Sub Functions
+    public void disconnect(){
+        this.wifiManager.disconnect();
+    }
+    public void scan(){
+        this.wifiManager.startScan();
+    }
+    public WifiInfo getConnectionInfo(){
+        return this.wifiManager.getConnectionInfo();
+    }
+
+    public String getCapabilities(String bssid){
+        List<ScanResult> networkList = wifiManager.getScanResults();
+        if (networkList != null) {
+            for (ScanResult network : networkList){
+                if(network.BSSID == bssid) {
+                    return network.capabilities;
+                }
+            }
+        }
+        return "";  // 예외 처리 구문 필요
+    }
+
     public boolean connect(String ssid, String password, String capabilities) {
         // Ref. https://stackoverflow.com/questions/8818290/how-do-i-connect-to-a-specific-wi-fi-network-in-android-programmatically
         try {
