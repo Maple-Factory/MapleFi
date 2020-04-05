@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
-
-<!--    <data>-->
-<!--       <variable-->
-<!--           name="listitem"-->
-<!--           type="com.example.maplefi.ui.ApItem" />-->
-<!--    </data>-->
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,17 +10,20 @@
 
         <TextView
             android:id="@+id/tv_ssid"
-            android:layout_height="50dp"
             android:layout_width="0px"
+            android:layout_height="50dp"
             android:layout_weight="5"
-            android:text="AP SSID" />
+            android:gravity="center"
+            android:text="AP SSID"
+            android:textAlignment="textStart"
+            tools:ignore="RtlCompat" />
 
         <ImageView
             android:id="@+id/img_rssiDegree"
             android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/wifi_full" />
+            app:srcCompat="@drawable/wifi_3" />
 
         <ImageButton
             android:id="@+id/imgb_moreinf"
