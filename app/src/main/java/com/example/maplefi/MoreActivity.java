@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.maplefi.ui.ApItem;
+
 public class MoreActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +24,22 @@ public class MoreActivity extends AppCompatActivity {
         textViewSsid.setText(intent.getStringExtra("AP_NAME"));
 
         final ImageView imgRssi = (ImageView) findViewById(R.id.img_rssiDegree);
+        int rssi_level = ap_item.getRssiLevel();
+        switch (rssi_level){
+            case 1:
+                imgRssi.setImageResource(R.drawable.wifi_1);
+                break;
+            case 2:
+                imgRssi.setImageResource(R.drawable.wifi_2);
+                break;
+            case 3:
+                imgRssi.setImageResource(R.drawable.wifi_3);
+                break;
+            default:
+                imgRssi.setImageResource(R.drawable.wifi_x);
+        }
 
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
-        imgButtonMoreinf.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
         imgButtonConnect.setOnClickListener(new Button.OnClickListener() {
             @Override
