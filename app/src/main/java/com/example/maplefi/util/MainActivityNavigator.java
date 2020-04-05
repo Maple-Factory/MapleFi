@@ -1,5 +1,7 @@
 package com.example.maplefi.util;
 
+import com.example.maplefi.ui.ApItem;
+
 public interface MainActivityNavigator {
-    void callMoreActivity(String ap_name, int ap_sec_score, int ap_speed);
+    void callMoreActivity(ApItem ap_item);
 }

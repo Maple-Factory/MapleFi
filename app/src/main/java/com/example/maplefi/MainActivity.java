@@ -4,115 +4,213 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.maplefi.ui.ApItem;
-import com.example.maplefi.util.ListAdapter;
 import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.WifiUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
-    private WifiUtil wifiUtil ;
+    private WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
-    private ArrayList<ApItem> apList = new ArrayList<ApItem>();
+    private ApItem now_ap_item = null;
+    private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
+
+    // NOW AP
+    TextView textViewNowSsid;
+    ImageView imgNowRssi;
+    ImageButton imgButtonNowMoreinf;
+    ImageButton imgButtonNowConnect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         wifiUtil = new WifiUtil(getApplicationContext(), this);
 
-        setContentView(R.layout.activity_main);
-
-        // Side Bar Elements
-        Button buttonOnoff = (Button) findViewById(R.id.btn_onoff) ;
+        // - 사이드바 요소
+        // ON OFF 버튼
+        final Button buttonOnoff = (Button) findViewById(R.id.btn_onoff) ;
+        if(wifiUtil.isWifiEnabled()) buttonOnoff.setText("off");
+        else buttonOnoff.setText("on");
         buttonOnoff.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(wifiUtil.isWifiEnabled()) {
                     wifiUtil.setWifiEnabled(false);
+                    buttonOnoff.setText("on");  // to String.xml 리팩토링 필요
+                    updateNowAp();
+                    ap_items.clear();
+                    adapter.notifyDataSetChanged();
                 }
                 else {
                     wifiUtil.setWifiEnabled(true);
+                    buttonOnoff.setText("off"); // to String.xml 리팩토링 필요
+                }
+            }
+        });
+        // Scan 버튼 (임시)
+        final Button buttonScan = (Button) findViewById(R.id.btn_scan) ;
+        buttonScan.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // AP 스캔
+                updateNowAp();  // 테스트 용도
+                ap_items.clear();
+                adapter.notifyDataSetChanged();
+                if(wifiUtil.isWifiEnabled()) {
+                    wifiUtil.scan();
+                    List<ScanResult> wifiList = wifiUtil.getScanResults();
+                    for (ScanResult scanResult : wifiList) {
+                        if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
+                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level);
+                    }
+                }
+                else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Wifi가 꺼져있습니다.", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
 
-        // Now Ap Elements
+        // - 연결된 AP 아이템 요소
         final TextView textViewSsid = (TextView) findViewById(R.id.tv_ssid);
         final ImageView imgRssi = (ImageView) findViewById(R.id.img_rssiDegree);
-
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
-        imgButtonMoreinf.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callMoreActivity("main-imgbtn-onclick test",1,1);
-            }
-        });
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
-        imgButtonConnect.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                wifiUtil.connect("","","");
-            }
-        });
+        textViewNowSsid = textViewSsid;
+        imgNowRssi = imgRssi;
+        imgButtonNowMoreinf = imgButtonMoreinf;
+        imgButtonNowConnect = imgButtonConnect;
 
-        // Ap List Elements
+        // - AP 리스트뷰 요소
         // 리사이클러뷰 리니어 레이아웃 매니저 지정
         RecyclerView recyclerView = findViewById(R.id.wifiListOld);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 리사이클러뷰에 리스트 어뎁더 객체 지정
-        adapter = new ListAdapterOld(apList, new ListAdapterOld.OnItemClickListener() {
+        adapter = new ListAdapterOld(ap_items, new ListAdapterOld.OnApItemClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
-                //버튼 클릭될때 호출됨
-                addItem("click test", getDrawable(R.drawable.wifi_full));
-                Log.d("debug", "onItemClick: ");  // debug
+            public void onMoreBtnClick(View v, int position) {
+                // ApItem More Button Click Listener
+                ApItem ap_item = ap_items.get(position);
+                callMoreActivity(ap_item);
+
                 adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onConBtnClick(View v, int position) {
+                // ApItem Connect Button Click Listener
+                ApItem ap_item = ap_items.get(position);
+                wifiUtil.connect(ap_item.getSsid(),"",ap_item.getCaps());   // 패스워드 체크 로직 필요
+                adapter.notifyDataSetChanged();
+
+                updateNowAp();
             }
         });
         recyclerView.setAdapter(adapter);
 
-        // item 추가
-        addItem("test",getDrawable(R.drawable.wifi_full));
-//        Log.d("'debug", "onCreate: additem test1");//debug
-        addItem("test2",getDrawable(R.drawable.wifi_full));
-//        Log.d("debug", "onCreate: additem test2");//debug
-        addItem("test3",getDrawable(R.drawable.wifi_full));
-//        Log.d(TAG, "onCreate: additem test3");//debug
-        adapter.notifyDataSetChanged();
+        // - 메인 액티비티 실행 내용
+        updateNowAp();
+
+        // - 테스트 샘플
+//        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50);
+//        addItem("IPTIME","[WEP][ESS]",-80);
     }
 
     @Override
-    public void callMoreActivity(String ap_name, int ap_sec_score, int ap_speed) {
+    public void callMoreActivity(ApItem ap_item) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
-        intent.putExtra("AP_NAME","AP_NAME");
-        intent.putExtra("AP_SEC_SCORE","75");
-        intent.putExtra("AP_SPEED","7");
+        intent.putExtra("AP_ITEM", ap_item);
         startActivity(intent);
     }
 
-    public void addItem(String item_ssid, Drawable ap_state){
-        ApItem item = new ApItem(item_ssid);
-
-        item.setAp_state(ap_state);
-
-        apList.add(item);
-//        Log.d("debug", "addItem: "+item_ssid);  //debug
+    public void addItem(String item_ssid, String capabilities, int rssi){
+        ApItem item = new ApItem(item_ssid, capabilities, rssi);
+        ap_items.add(item);
+        adapter.notifyDataSetChanged();
     }
+
+    public void updateNowAp(){
+        // 텀을 가진 후 업데이트 하는 로직 삭제 후 주기적 업데이트로 수정 필요
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Log.d("TEST","Update Now AP");
+                WifiInfo wifiInfo = wifiUtil.getConnectionInfo();
+                if(wifiInfo.getNetworkId() != -1) {
+                    String bssid = wifiInfo.getBSSID();
+                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi());
+                }
+                else {
+                    now_ap_item = null;
+                }
+
+                if(now_ap_item == null){
+                    textViewNowSsid.setText("연결된 와이파이가 없습니다.");
+                    imgNowRssi.setImageResource(R.drawable.wifi_x);
+                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+                    });
+                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                        }
+                    });
+                }
+                else {
+                    textViewNowSsid.setText(now_ap_item.getSsid());
+                    int rssi_level = now_ap_item.getRssiLevel();
+                    switch (rssi_level){
+                        case 1:
+                            imgNowRssi.setImageResource(R.drawable.wifi_1);
+                            break;
+                        case 2:
+                            imgNowRssi.setImageResource(R.drawable.wifi_2);
+                            break;
+                        case 3:
+                            imgNowRssi.setImageResource(R.drawable.wifi_3);
+                            break;
+                        default:
+                            imgNowRssi.setImageResource(R.drawable.wifi_x);
+                    }
+                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            callMoreActivity(now_ap_item);
+                        }
+                    });
+                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            wifiUtil.disconnect();  // 임시로 단순 연결 해제 기능으로 사용. 수정 필요
+                            updateNowAp();
+                        }
+                    });
+                }
+                adapter.notifyDataSetChanged();
+            }
+        }, 3000);
+    }
+
 }
