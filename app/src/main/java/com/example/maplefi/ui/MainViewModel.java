@@ -18,7 +18,7 @@ public class MainViewModel extends BaseViewModel {
     private MainActivityNavigator navigator;
 
 //    public final ObservableField<ApItem> now_ap_item;
-    public final ApItem now_ap_item;
+//    public final ApItem now_ap_item;
 //    public final ObservableArrayList<ApItem> ap_item_list;
 
 
@@ -27,7 +27,7 @@ public class MainViewModel extends BaseViewModel {
         this.wifiUtil = wifiUtil;
 
 //        now_ap_item = new ObservableField<>(new ApItem("Free"));
-        now_ap_item = new ApItem("Free");
+//        now_ap_item = new ApItem("Free");
 
 //        ap_item_list = new ObservableArrayList<>();
     }
