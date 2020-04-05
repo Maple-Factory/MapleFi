@@ -17,35 +17,36 @@ import com.example.maplefi.ui.ApItem;
 import java.util.ArrayList;
 
 public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHolder> {
-    private ArrayList<ApItem> tssid = null;
-
-    public interface OnItemClickListener{
-        //        public void onItemClick(View view, int position, boolean isUser);
-        void onItemClick(View v, int position);
+    public interface OnApItemClickListener {
+        void onMoreBtnClick(View v, int position);
+        void onConBtnClick(View v, int position);
     }
+    private ArrayList<ApItem> ap_items = null;
+    private OnApItemClickListener OnApItemClickListener;
 
     //아이템 뷰를 저장하는 뷰 홀더 클래스
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView_SSID;
-        ImageView ap_state;
-        ImageButton btn_ap_connect;
+        ImageView img_ap_rssi;
         ImageButton btn_ap_info;
+        ImageButton btn_ap_connect;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //뷰 객체에 대한 참조
             textView_SSID = itemView.findViewById(R.id.tv_ssid);
-            ap_state = itemView.findViewById(R.id.img_rssiDegree);
-            btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
+            img_ap_rssi = itemView.findViewById(R.id.img_rssiDegree);
             btn_ap_info = itemView.findViewById(R.id.imgb_moreinf);
+            btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
 
         }
     }
     //TODO: 리스트 어텝더 작성 ㅡ
 
     //생성자에게 리스트 객체 전달 받는 파트
-    public ListAdapterOld(ArrayList<ApItem> list, OnItemClickListener onItemClickListener){
-        tssid = list;
+    public ListAdapterOld(ArrayList<ApItem> list, OnApItemClickListener onApItemClickListener){
+        this.ap_items = list;
+        this.OnApItemClickListener = onApItemClickListener;
     }
 
     @NonNull
@@ -63,14 +64,50 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     @Override
     //포지션에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String text = tssid.get(position).getItem_ssid();
+        ApItem ap_item = ap_items.get(position);
+
+        String text = ap_item.getSsid();
+        int rssi_level = ap_item.getRssiLevel();
+
         holder.textView_SSID.setText(text);
+        switch (rssi_level){
+            case 1:
+                holder.img_ap_rssi.setImageResource(R.drawable.wifi_1);
+                break;
+            case 2:
+                holder.img_ap_rssi.setImageResource(R.drawable.wifi_2);
+                break;
+            case 3:
+                holder.img_ap_rssi.setImageResource(R.drawable.wifi_3);
+                break;
+            default:
+                holder.img_ap_rssi.setImageResource(R.drawable.wifi_x);
+        }
+
+        holder.btn_ap_info.setTag(position);
+        holder.btn_ap_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OnApItemClickListener != null) {
+                    OnApItemClickListener.onMoreBtnClick(v, (int)v.getTag());
+                }
+            }
+        });
+        holder.btn_ap_connect.setTag(position);
+        holder.btn_ap_connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OnApItemClickListener != null) {
+                    OnApItemClickListener.onConBtnClick(v, (int)v.getTag());
+                }
+            }
+        });
+
     }
 
     //전체 데이터 갯수 리턴
     @Override
     public int getItemCount() {
-        return tssid.size();
+        return ap_items.size();
     }
-
 }
