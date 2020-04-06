@@ -1,17 +1,22 @@
 package com.example.maplefi;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.maplefi.ui.ApItem;
 import com.example.maplefi.ui.Apinfo;
@@ -20,12 +25,14 @@ import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.SecurityEstimater;
 import com.example.maplefi.util.WifiUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
     private WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
-    private ArrayList<ApItem> apList = new ArrayList<ApItem>();
+
     public SecurityEstimater securityEstimater;
     private ArrayList<Apinfo> apinfoList = new ArrayList<Apinfo>();
     private ApItem now_ap_item = null;
@@ -37,12 +44,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     ImageButton imgButtonNowMoreinf;
     ImageButton imgButtonNowConnect;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        wifiUtil = new WifiUtil(getApplicationContext(), this);
-
         setContentView(R.layout.activity_main);
 
         wifiUtil = new WifiUtil(getApplicationContext(), this);
@@ -73,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         buttonScan.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callMoreActivity("main-imgbtn-onclick test",1,1);
+                //security estimater check 용
+                addApinfo("ssid","wpa","psk","ccmp",30);
+                addApinfo("","wep","tkip","ccmp",40);
+                securityEstimater = new SecurityEstimater(apinfoList);
+              
                 // AP 스캔
                 updateNowAp();  // 테스트 용도
                 ap_items.clear();
@@ -96,16 +107,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         final TextView textViewSsid = (TextView) findViewById(R.id.tv_ssid);
         final ImageView imgRssi = (ImageView) findViewById(R.id.img_rssiDegree);
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
-        imgButtonMoreinf.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callMoreActivity("main-imgbtn-onclick test",1,1);
-                //security estimater check 용
-                addApinfo("ssid","wpa","psk","ccmp",30);
-                addApinfo("","wep","tkip","ccmp",40);
-                securityEstimater = new SecurityEstimater(apinfoList);
-            }
-        });
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
         textViewNowSsid = textViewSsid;
         imgNowRssi = imgRssi;
@@ -150,10 +151,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     @Override
     public void callMoreActivity(ApItem ap_item) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
+        intent.putExtra("AP_NAME","AP_NAME");
+        intent.putExtra("AP_SEC_SCORE", apinfoList.get(0).getGrade());//임의로 0 보이게 해둔것
+        intent.putExtra("AP_SPEED",apinfoList.get(0).getRssi());
         intent.putExtra("AP_ITEM", ap_item);
-//        intent.putExtra("AP_NAME","AP_NAME");
-//        intent.putExtra("AP_SEC_SCORE", apinfoList.get(0).getGrade());//임의로 0 보이게 해둔것
-//        intent.putExtra("AP_SPEED",apinfoList.get(0).getRssi());
         startActivity(intent);
     }
 
@@ -243,5 +244,4 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         }
 
     }
-
 }
