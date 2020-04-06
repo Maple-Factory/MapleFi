@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     public void callMoreActivity(String ap_name, int ap_sec_score, int ap_speed) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
         intent.putExtra("AP_NAME","AP_NAME");
-        intent.putExtra("AP_SEC_SCORE","75");
-        intent.putExtra("AP_SPEED","7");
+        intent.putExtra("AP_SEC_SCORE", apinfoList.get(0).getGrade());//임의로 0 보이게 해둔것
+        intent.putExtra("AP_SPEED",apinfoList.get(0).getRssi());
         startActivity(intent);
     }
 
