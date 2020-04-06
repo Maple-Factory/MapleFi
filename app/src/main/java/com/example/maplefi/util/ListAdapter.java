@@ -11,13 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.maplefi.BR;
 import com.example.maplefi.R;
 import com.example.maplefi.ui.ApItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.maplefi.databinding.WifilistItemBinding;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 //    private ArrayList<ApItem> tssid = null;
@@ -96,10 +94,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         ApItem apitem = mdata.get(position);
 //        holder.bind(apitem);//mvvm
 
-        holder.textView_SSID.setText(apitem.getItem_ssid());
-//        Log.d("debug", "onBindViewHolder: set text ssid");//debug
-        holder.ap_state.setImageDrawable(apitem.getAp_state());
-//        Log.d("debug", "onBindViewHolder: set ap state");//debug
+        holder.textView_SSID.setText(apitem.getSsid());
+//        holder.ap_state.setImageDrawable(apitem.getImg_ap_rssi());
 
         holder.getAp_connect().setOnClickListener(new View.OnClickListener() {
             @Override

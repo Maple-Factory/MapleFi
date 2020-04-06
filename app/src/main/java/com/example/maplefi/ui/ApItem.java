@@ -3,47 +3,68 @@ package com.example.maplefi.ui;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageButton;
 
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.ObservableField;
+import java.io.Serializable;
 
-public class ApItem {
-    public String ap_name = "";
-    private ImageButton moreinf;
-    private ImageButton ap_connect;
-    private Drawable ap_state;
-//    public ObservableField<String> ap_name = new ObservableField<>();
-//    public int rssi;
-//    public int sec_level;
+public class ApItem implements Serializable {
+    private String ap_name;
+    private String capabilities;
+    private int rssi;
 
-    public ApItem(String name) {
+    public int rssi_level;
+    public int rssi_score;
+
+    public int sec_score;
+    public int sec_level;
+
+    private final int RSSI_HIGH = -60;
+    private final int RSSI_LOW = -70;
+
+    public ApItem(String name, String capabilities, int rssi) {
         this.ap_name = name;
-//        ap_name.set("");
-//        rssi = 0;
-//        sec_level = 0;
+        this.capabilities = capabilities;
+        this.rssi = rssi;
+
+        if(this.rssi > RSSI_HIGH){
+            this.rssi_level = 3;
+        }
+        else if(this.rssi > RSSI_LOW){
+            this.rssi_level = 2;
+        }
+        else {
+            this.rssi_level = 1;
+        }
+
+        this.rssi_score = rssi; // score 대신 rssi 값 그대로 사용. 수정 필요
+        this.sec_score = 100;
+        this.sec_level = 3;
     }
 
-//    public void setName(String name){
-//        ap_name = name;
-//    }
-
-
-    public void setAp_state(Drawable ap_icon){
-        ap_state = ap_icon;
+    public void setName(String name){
+        ap_name = name;
     }
-    //public void setMoreinf()
-    //public void setAp_connect()
 
-    public String getItem_ssid(){
+    public String getSsid(){
         return this.ap_name;
     }
-    public Drawable getAp_state(){
-        return this.ap_state;
+    public int getRssi(){
+        return this.rssi;
     }
-//    public ImageButton getMoreinf(){
-//        return this.moreinf;
-//    }
-//    public ImageButton getAp_connect(){
-//        return this.ap_connect;
-//    }
+    public String getCaps(){
+        return this.capabilities;
+    }
+
+    public int getRssiLevel(){
+        return this.rssi_level;
+    }
+    public int getRssiScore(){
+        return this.rssi_score;
+    }
+
+    public int getSecScore(){
+        return this.sec_score;
+    }
+    public int getSecLevel(){
+        return this.sec_level;
+    }
+
 }
