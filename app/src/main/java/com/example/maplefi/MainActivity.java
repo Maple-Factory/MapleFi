@@ -4,29 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.maplefi.ui.ApItem;
 import com.example.maplefi.ui.Apinfo;
-import com.example.maplefi.util.ListAdapter;
 import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.SecurityEstimater;
 import com.example.maplefi.util.WifiUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
     private WifiUtil wifiUtil ;
@@ -125,18 +120,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 //        Log.d("debug", "addItem: "+item_ssid);  //debug
     }
 
-    public  void addApinfo(String ssid, String pwEncType, String protocolEncType, String packetEncType, int rssi){
+    public  void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
         Apinfo info = new Apinfo();
         info.setSsid(ssid);
         info.setPwEncType(pwEncType);
-        info.setProtocolEncType(protocolEncType);
+        info.setPacketRule(packetRule);
         info.setPacketEncType(packetEncType);
         info.setRssi(rssi);
         info.setGradeZero();
 
         apinfoList.add(info);
         for(int i = 0; i < (apinfoList.size()); i++){
-            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"protocolType"+apinfoList.get(i).getProtocolEncType());
+            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
 
         }
 

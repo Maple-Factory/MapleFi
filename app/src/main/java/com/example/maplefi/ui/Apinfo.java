@@ -3,7 +3,7 @@ package com.example.maplefi.ui;
 public class Apinfo {
     String ssid = "";
     String pwEncType = "wpa";//와이파이 패스워드 암호화 type
-    String packetEncRule = "";//ex) ccmp
+    String packetRule = "";//ex) ccmp
     String packetEncType = ""; //ex)eap
     int rssi = 0;
     int grade = 0;//AP 보안성 점수
@@ -17,8 +17,8 @@ public class Apinfo {
         this.packetEncType = pwEncType;
     }
 
-    public void setProtocolEncType(String packetEncRule) {
-        this.packetEncRule = packetEncRule;
+    public void setPacketRule(String packetRule) {
+        this.packetRule = packetRule;
     }
 
     public void setPacketEncType(String packetEncType){
@@ -43,7 +43,7 @@ public class Apinfo {
     }
 
     public String getProtocolEncType() {
-        return packetEncRule;
+        return packetRule;
     }
 
     public String getPacketEncType(){
