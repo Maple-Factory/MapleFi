@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maplefi.ui.ApItem;
+import com.example.maplefi.ui.Apinfo;
 import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
+import com.example.maplefi.util.SecurityEstimater;
 import com.example.maplefi.util.WifiUtil;
 
 import java.io.Serializable;
@@ -30,6 +32,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
     private WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
+
+    public SecurityEstimater securityEstimater;
+    private ArrayList<Apinfo> apinfoList = new ArrayList<Apinfo>();
     private ApItem now_ap_item = null;
     private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     ImageView imgNowRssi;
     ImageButton imgButtonNowMoreinf;
     ImageButton imgButtonNowConnect;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         buttonScan.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                callMoreActivity("main-imgbtn-onclick test",1,1);
+                //security estimater check 용
+                addApinfo("ssid","wpa","psk","ccmp",30);
+                addApinfo("","wep","tkip","ccmp",40);
+                securityEstimater = new SecurityEstimater(apinfoList);
+              
                 // AP 스캔
                 updateNowAp();  // 테스트 용도
                 ap_items.clear();
@@ -139,6 +151,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     @Override
     public void callMoreActivity(ApItem ap_item) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
+        intent.putExtra("AP_NAME","AP_NAME");
+        intent.putExtra("AP_SEC_SCORE", apinfoList.get(0).getGrade());//임의로 0 보이게 해둔것
+        intent.putExtra("AP_SPEED",apinfoList.get(0).getRssi());
         intent.putExtra("AP_ITEM", ap_item);
         startActivity(intent);
     }
@@ -213,4 +228,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         }, 3000);
     }
 
+    public  void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
+        Apinfo info = new Apinfo();
+        info.setSsid(ssid);
+        info.setPwEncType(pwEncType);
+        info.setPacketRule(packetRule);
+        info.setPacketEncType(packetEncType);
+        info.setRssi(rssi);
+        info.setGradeZero();
+
+        apinfoList.add(info);
+        for(int i = 0; i < (apinfoList.size()); i++){
+            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
+
+        }
+
+    }
 }
