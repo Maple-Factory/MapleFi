@@ -4,29 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.maplefi.ui.ApItem;
 import com.example.maplefi.ui.Apinfo;
-import com.example.maplefi.util.ListAdapter;
 import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.SecurityEstimater;
 import com.example.maplefi.util.WifiUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
     private WifiUtil wifiUtil ;
@@ -111,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     public void callMoreActivity(String ap_name, int ap_sec_score, int ap_speed) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
         intent.putExtra("AP_NAME","AP_NAME");
-        intent.putExtra("AP_SEC_SCORE","75");
-        intent.putExtra("AP_SPEED","7");
+        intent.putExtra("AP_SEC_SCORE", apinfoList.get(0).getGrade());//임의로 0 보이게 해둔것
+        intent.putExtra("AP_SPEED",apinfoList.get(0).getRssi());
         startActivity(intent);
     }
 
@@ -125,18 +120,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 //        Log.d("debug", "addItem: "+item_ssid);  //debug
     }
 
-    public  void addApinfo(String ssid, String pwEncType, String protocolEncType, String packetEncType, int rssi){
+    public  void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
         Apinfo info = new Apinfo();
         info.setSsid(ssid);
         info.setPwEncType(pwEncType);
-        info.setProtocolEncType(protocolEncType);
+        info.setPacketRule(packetRule);
         info.setPacketEncType(packetEncType);
         info.setRssi(rssi);
         info.setGradeZero();
 
         apinfoList.add(info);
         for(int i = 0; i < (apinfoList.size()); i++){
-            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"protocolType"+apinfoList.get(i).getProtocolEncType());
+            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
 
         }
 
