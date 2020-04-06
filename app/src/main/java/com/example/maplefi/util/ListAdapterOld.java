@@ -41,7 +41,6 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
 
         }
     }
-    //TODO: 리스트 어텝더 작성 ㅡ
 
     //생성자에게 리스트 객체 전달 받는 파트
     public ListAdapterOld(ArrayList<ApItem> list, OnItemClickListener onItemClickListener){
