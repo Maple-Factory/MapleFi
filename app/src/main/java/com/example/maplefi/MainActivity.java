@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 // ApItem Connect Button Click Listener
                 ApItem ap_item = ap_items.get(position);
                 connection(ap_item.getSsid(), ap_item.getCaps());
-//                wifiUtil.connect(ap_item.getSsid(),ap_item.getCaps(),"");   // 패스워드 체크 로직 필요
 
                 adapter.notifyDataSetChanged();
                 updateNowAp();
