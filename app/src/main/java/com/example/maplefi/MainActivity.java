@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.WifiUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 else {
                     wifiUtil.setWifiEnabled(true);
                     buttonOnoff.setText("off"); // to String.xml 리팩토링 필요
+                    updateNowAp();
                 }
             }
         });
@@ -82,10 +81,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 adapter.notifyDataSetChanged();
                 if(wifiUtil.isWifiEnabled()) {
                     wifiUtil.scan();
+
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     for (ScanResult scanResult : wifiList) {
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
-                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level);
+                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,  Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                     }
                 }
                 else {
@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 //                wifiUtil.connect(ap_item.getSsid(),ap_item.getCaps(),"");   // 패스워드 체크 로직 필요
 
                 adapter.notifyDataSetChanged();
-
                 updateNowAp();
             }
         });
@@ -149,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         startActivity(intent);
     }
 
-    public void addItem(String item_ssid, String capabilities, int rssi){
-        ApItem item = new ApItem(item_ssid, capabilities, rssi);
+    public void addItem(String item_ssid, String capabilities, int rssi, int eap_type){
+        ApItem item = new ApItem(item_ssid, capabilities, rssi, eap_type);
         ap_items.add(item);
         adapter.notifyDataSetChanged();
     }
@@ -190,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 WifiInfo wifiInfo = wifiUtil.getConnectionInfo();
                 if(wifiInfo.getNetworkId() != -1) {
                     String bssid = wifiInfo.getBSSID();
-                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi());
+                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi(), Integer.parseInt(wifiUtil.parseEapType(wifiInfo.toString())));
                 }
                 else {
                     now_ap_item = null;
