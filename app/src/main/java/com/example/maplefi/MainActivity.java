@@ -120,7 +120,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             public void onConBtnClick(View v, int position) {
                 // ApItem Connect Button Click Listener
                 ApItem ap_item = ap_items.get(position);
-                wifiUtil.connect(ap_item.getSsid(),"",ap_item.getCaps());   // 패스워드 체크 로직 필요
+                connection(ap_item.getSsid(), ap_item.getCaps());
+//                wifiUtil.connect(ap_item.getSsid(),ap_item.getCaps(),"");   // 패스워드 체크 로직 필요
+
                 adapter.notifyDataSetChanged();
 
                 updateNowAp();
@@ -147,6 +149,32 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         ApItem item = new ApItem(item_ssid, capabilities, rssi);
         ap_items.add(item);
         adapter.notifyDataSetChanged();
+    }
+
+    public void connection(String ssid, String capabilities){
+        // Test
+        String TAG = "TEST";
+        Log.d(TAG,"connection debug");
+        WifiManager wifiManager = wifiUtil.getWifiManager();
+
+        // Profile Check
+        if(wifiUtil.getProfileId(capabilities) == -1){
+            if(wifiUtil.isNeedPassword(capabilities)){
+                // Get Password
+                String password = askPassword();
+                Log.d("TEST","TEST askPassword END......");
+                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
+                wifiUtil.connect(net_id);
+            }
+            else {
+                // No Password New Connect
+                int net_id = wifiUtil.addProfile(ssid, capabilities);
+                wifiUtil.connect(net_id);
+            }
+        }
+        else {
+            wifiUtil.connect(ssid);
+        }
     }
 
     public void updateNowAp(){
