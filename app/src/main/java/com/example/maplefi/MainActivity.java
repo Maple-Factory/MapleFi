@@ -4,15 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +26,6 @@ import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.WifiUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 else {
                     wifiUtil.setWifiEnabled(true);
                     buttonOnoff.setText("off"); // to String.xml 리팩토링 필요
+                    updateNowAp();
                 }
             }
         });
@@ -78,10 +81,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 adapter.notifyDataSetChanged();
                 if(wifiUtil.isWifiEnabled()) {
                     wifiUtil.scan();
+
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     for (ScanResult scanResult : wifiList) {
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
-                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level);
+                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,  Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                     }
                 }
                 else {
@@ -120,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             public void onConBtnClick(View v, int position) {
                 // ApItem Connect Button Click Listener
                 ApItem ap_item = ap_items.get(position);
-                wifiUtil.connect(ap_item.getSsid(),"",ap_item.getCaps());   // 패스워드 체크 로직 필요
-                adapter.notifyDataSetChanged();
+                connection(ap_item.getSsid(), ap_item.getCaps());
 
+                adapter.notifyDataSetChanged();
                 updateNowAp();
             }
         });
@@ -143,10 +147,36 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         startActivity(intent);
     }
 
-    public void addItem(String item_ssid, String capabilities, int rssi){
-        ApItem item = new ApItem(item_ssid, capabilities, rssi);
+    public void addItem(String item_ssid, String capabilities, int rssi, int eap_type){
+        ApItem item = new ApItem(item_ssid, capabilities, rssi, eap_type);
         ap_items.add(item);
         adapter.notifyDataSetChanged();
+    }
+
+    public void connection(String ssid, String capabilities){
+        // Test
+        String TAG = "TEST";
+        Log.d(TAG,"connection debug");
+        WifiManager wifiManager = wifiUtil.getWifiManager();
+
+        // Profile Check
+        if(wifiUtil.getProfileId(capabilities) == -1){
+            if(wifiUtil.isNeedPassword(capabilities)){
+                // Get Password
+                String password = askPassword();
+                Log.d("TEST","TEST askPassword END......");
+                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
+                wifiUtil.connect(net_id);
+            }
+            else {
+                // No Password New Connect
+                int net_id = wifiUtil.addProfile(ssid, capabilities);
+                wifiUtil.connect(net_id);
+            }
+        }
+        else {
+            wifiUtil.connect(ssid);
+        }
     }
 
     public void updateNowAp(){
@@ -158,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 WifiInfo wifiInfo = wifiUtil.getConnectionInfo();
                 if(wifiInfo.getNetworkId() != -1) {
                     String bssid = wifiInfo.getBSSID();
-                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi());
+                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi(), Integer.parseInt(wifiUtil.parseEapType(wifiInfo.toString())));
                 }
                 else {
                     now_ap_item = null;
@@ -211,6 +241,39 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 adapter.notifyDataSetChanged();
             }
         }, 3000);
+    }
+    public String askPassword(){
+        Log.d("TEST","TEST askPassword");
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText editTextPasswd = new EditText(this);
+        editTextPasswd.setText("");
+        alert.setView(editTextPasswd);
+
+        alert.setTitle("패스워드 입력");
+        alert.setMessage("와이파이 패스워드를 입력해주세요.");
+
+        alert.setPositiveButton("연결", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = editTextPasswd.getText().toString();
+                Log.d("TEST","onclick ok " + value);
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.d("TEST","onclick no");
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
+        // ISSUE. Can't Wait Dismiss
+        String password = editTextPasswd.getText().toString();
+        Log.d("TEST","END " + password);
+        return password;
     }
 
 }
