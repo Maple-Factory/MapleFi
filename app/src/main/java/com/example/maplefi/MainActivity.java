@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -239,6 +243,39 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 adapter.notifyDataSetChanged();
             }
         }, 3000);
+    }
+    public String askPassword(){
+        Log.d("TEST","TEST askPassword");
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText editTextPasswd = new EditText(this);
+        editTextPasswd.setText("");
+        alert.setView(editTextPasswd);
+
+        alert.setTitle("패스워드 입력");
+        alert.setMessage("와이파이 패스워드를 입력해주세요.");
+
+        alert.setPositiveButton("연결", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = editTextPasswd.getText().toString();
+                Log.d("TEST","onclick ok " + value);
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNegativeButton("취소",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                Log.d("TEST","onclick no");
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
+
+        // ISSUE. Can't Wait Dismiss
+        String password = editTextPasswd.getText().toString();
+        Log.d("TEST","END " + password);
+        return password;
     }
 
 }
