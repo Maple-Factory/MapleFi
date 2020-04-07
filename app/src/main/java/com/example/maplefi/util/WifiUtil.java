@@ -71,7 +71,7 @@ public class WifiUtil {
     }
     public boolean connect(String ssid){
         int net_id = getProfileId(ssid);
-        if(net_id == -1) {
+        if(net_id != -1) {
             connect(net_id);
             return true;
         }
