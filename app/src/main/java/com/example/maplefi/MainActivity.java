@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         buttonScan.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callMoreActivity("main-imgbtn-onclick test",1,1);
                 //security estimater check 용
                 addApinfo("ssid","wpa","psk","ccmp",30);
                 addApinfo("","wep","tkip","ccmp",40);
@@ -151,9 +150,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     @Override
     public void callMoreActivity(ApItem ap_item) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
-        intent.putExtra("AP_NAME","AP_NAME");
-        intent.putExtra("AP_SEC_SCORE", apinfoList.get(0).getGrade());//임의로 0 보이게 해둔것
-        intent.putExtra("AP_SPEED",apinfoList.get(0).getRssi());
         intent.putExtra("AP_ITEM", ap_item);
         startActivity(intent);
     }
@@ -240,8 +236,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         apinfoList.add(info);
         for(int i = 0; i < (apinfoList.size()); i++){
             Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
-
         }
-
     }
 }
