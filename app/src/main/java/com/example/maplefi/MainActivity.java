@@ -34,18 +34,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
     private WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
+    private ApItem now_ap_item = null;
+    private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
 
     public SecurityEstimater securityEstimater;
     private ArrayList<Apinfo> apinfoList = new ArrayList<Apinfo>();
-    private ApItem now_ap_item = null;
-    private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
 
     // NOW AP
     TextView textViewNowSsid;
     ImageView imgNowRssi;
     ImageButton imgButtonNowMoreinf;
     ImageButton imgButtonNowConnect;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,18 +165,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
     public void connection(String ssid, String capabilities){
         // Test
-        String TAG = "TEST";
-        Log.d(TAG,"connection debug");
-        WifiManager wifiManager = wifiUtil.getWifiManager();
+//        String TAG = "TEST";
+//        Log.d(TAG,"connection debug");
+//        WifiManager wifiManager = wifiUtil.getWifiManager();
 
         // Profile Check
-        if(wifiUtil.getProfileId(capabilities) == -1){
+        if(wifiUtil.getProfileId(ssid) == -1){
             if(wifiUtil.isNeedPassword(capabilities)){
                 // Get Password
-                String password = askPassword();
-                Log.d("TEST","TEST askPassword END......");
-                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
-                wifiUtil.connect(net_id);
+                // ISSUE - Can't Wait Dismiss
+//                String password = askPassword();
+//                Log.d("TEST","TEST askPassword END......");
+//                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
+//                wifiUtil.connect(net_id);
             }
             else {
                 // No Password New Connect
@@ -199,7 +199,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 WifiInfo wifiInfo = wifiUtil.getConnectionInfo();
                 if(wifiInfo.getNetworkId() != -1) {
                     String bssid = wifiInfo.getBSSID();
-                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi(), Integer.parseInt(wifiUtil.parseEapType(wifiInfo.toString())));
+                    // ISSUE - WifiInfo has not eap_type of toString
+                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi(), 0); // Integer.parseInt(wifiUtil.parseEapType(wifiInfo.toString())));
                 }
                 else {
                     now_ap_item = null;
@@ -281,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
         alert.show();
 
-        // ISSUE. Can't Wait Dismiss
         String password = editTextPasswd.getText().toString();
         Log.d("TEST","END " + password);
         return password;
