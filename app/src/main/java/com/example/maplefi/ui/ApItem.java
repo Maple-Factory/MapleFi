@@ -1,7 +1,6 @@
 package com.example.maplefi.ui;
 
-import android.graphics.drawable.Drawable;
-import android.widget.ImageButton;
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
@@ -9,6 +8,7 @@ public class ApItem implements Serializable {
     private String ap_name;
     private String capabilities;
     private int rssi;
+    public int eap_type;
 
     public int rssi_level;
     public int rssi_score;
@@ -19,10 +19,11 @@ public class ApItem implements Serializable {
     private final int RSSI_HIGH = -60;
     private final int RSSI_LOW = -70;
 
-    public ApItem(String name, String capabilities, int rssi) {
+    public ApItem(String name, String capabilities, int rssi, int eap_type) {
         this.ap_name = name;
         this.capabilities = capabilities;
         this.rssi = rssi;
+        this.eap_type = eap_type;
 
         if(this.rssi > RSSI_HIGH){
             this.rssi_level = 3;
