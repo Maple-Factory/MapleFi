@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     for (ScanResult scanResult : wifiList) {
+                        Log.d("TEST",scanResult.toString());
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
                             addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,  Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                     }
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onConBtnClick(View v, int position) {
                 // ApItem Connect Button Click Listener
@@ -139,6 +141,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 adapter.notifyDataSetChanged();
                 updateNowAp();
             }
+            //item 클릭 이벤트
+            @Override
+            public void onItemClick(View v, int position) {
+//                Log.d("test", "onItemClick: 아이템 클릭");
+            }
+
         });
         recyclerView.setAdapter(adapter);
 

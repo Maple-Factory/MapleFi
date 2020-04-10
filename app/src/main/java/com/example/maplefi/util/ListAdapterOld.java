@@ -1,12 +1,15 @@
 package com.example.maplefi.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,9 +23,10 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     public interface OnApItemClickListener {
         void onMoreBtnClick(View v, int position);
         void onConBtnClick(View v, int position);
+        void onItemClick(View v, int position);
     }
     private ArrayList<ApItem> ap_items = null;
-    private OnApItemClickListener OnApItemClickListener;
+    public OnApItemClickListener OnApItemClickListener;
 
     //아이템 뷰를 저장하는 뷰 홀더 클래스
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,13 +43,30 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
             btn_ap_info = itemView.findViewById(R.id.imgb_moreinf);
             btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
 
+            //아이템 클릭 이벤트 처리
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if(pos != RecyclerView.NO_POSITION){
+                        //아이템 클릭 이벤트
+                        ApItem apItem = ap_items.get(pos);
+                        Log.d("TEST", "onClick: this is listAdapter" + pos);
+                        //TODO: 토리 profile 삭제 넣으면 됨
+
+                        notifyItemChanged(pos) ;
+                    }
+                }
+            });
+
         }
     }
 
     //생성자에게 리스트 객체 전달 받는 파트
-    public ListAdapterOld(ArrayList<ApItem> list, OnApItemClickListener onApItemClickListener){
+    public ListAdapterOld(ArrayList<ApItem> list, OnApItemClickListener onApItemClickListener/*, OnItemClickListener itemClickListener*/){
         this.ap_items = list;
         this.OnApItemClickListener = onApItemClickListener;
+//        this.itemClickListener =  itemClickListener;
     }
 
     @NonNull
