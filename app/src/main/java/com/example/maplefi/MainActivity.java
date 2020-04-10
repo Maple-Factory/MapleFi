@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
     // NOW AP
     TextView textViewNowSsid;
+    ImageView imgNowcolor;
     ImageView imgNowRssi;
     ImageButton imgButtonNowMoreinf;
     ImageButton imgButtonNowConnect;
@@ -108,10 +109,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
         // - 연결된 AP 아이템 요소
         final TextView textViewSsid = (TextView) findViewById(R.id.tv_ssid);
+        final ImageView imgcolor = (ImageView) findViewById(R.id.img_color);
         final ImageView imgRssi = (ImageView) findViewById(R.id.img_rssiDegree);
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
         textViewNowSsid = textViewSsid;
+        imgNowcolor = imgcolor;//신호등
         imgNowRssi = imgRssi;
         imgButtonNowMoreinf = imgButtonMoreinf;
         imgButtonNowConnect = imgButtonConnect;
