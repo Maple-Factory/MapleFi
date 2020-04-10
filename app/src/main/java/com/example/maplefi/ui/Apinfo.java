@@ -1,5 +1,6 @@
 package com.example.maplefi.ui;
 
+//TODO : 없애기. score는 Security에 선언
 public class Apinfo {
     String ssid = "";
     String pwEncType = "wpa";//와이파이 패스워드 암호화 type

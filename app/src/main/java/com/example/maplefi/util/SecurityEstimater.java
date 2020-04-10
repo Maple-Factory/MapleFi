@@ -1,6 +1,6 @@
 package com.example.maplefi.util;
 
-//TODO : 보안성 모듈 점수 계산 함수 짜고, more info에 들어갈 스트링도 넣기
+//TODO : Security 함수 추가// 4,5,6번
 //deadline : 2020.4.5
     /*평가 항목
     1. 무선랜 단말에 로그온 암호 적용? (o,x) ->완
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class SecurityEstimater {
     //test 용 임의 정보들
     ArrayList<Apinfo> apinfos = new ArrayList<>();
-//    int grade = 0;
+    int score = 0;
     String TAG = "SecurityEstimater";
 
     public SecurityEstimater(ArrayList<Apinfo> apinfos/*, int position*/){
@@ -119,5 +119,18 @@ public class SecurityEstimater {
 //    public void packet_snif_checker(){//eap -tls등 고려하여 도청 가능한지 판별
 //        apinfo.get(position).addGrade(50);
 //    }
+
+    public void setGradeZero() {
+        this.score = 0;
+    }
+
+    public void addGrade(int grade){
+        this.score += grade;
+    }
+
+    public int getGrade(){
+        return this.score;
+    }
+
 
 }
