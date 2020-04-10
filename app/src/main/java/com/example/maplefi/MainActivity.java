@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
         textViewNowSsid = textViewSsid;
-        imgNowcolor = imgcolor;
+        imgNowcolor = imgcolor;//신호등
         imgNowRssi = imgRssi;
         imgButtonNowMoreinf = imgButtonMoreinf;
         imgButtonNowConnect = imgButtonConnect;
