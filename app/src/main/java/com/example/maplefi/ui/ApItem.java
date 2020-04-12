@@ -68,4 +68,8 @@ public class ApItem implements Serializable {
         return this.sec_level;
     }
 
+    public int getEapType(){
+        return this.eap_type;
+    }
+
 }
