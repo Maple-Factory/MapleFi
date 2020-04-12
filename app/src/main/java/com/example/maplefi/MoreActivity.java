@@ -50,9 +50,11 @@ public class MoreActivity extends AppCompatActivity {
         });
 
         final TextView textViewSecScore = (TextView) findViewById(R.id.sec_score_tv);
-        textViewSecScore.setText(Integer.toString(ap_item.getSecScore()));
+        textViewSecScore.setText("TEST eap type:"+Integer.toString(ap_item.getEapType()));
+//        textViewSecScore.setText(Integer.toString(ap_item.getSecScore()));
         final TextView textViewSpdScore = (TextView) findViewById(R.id.speed_score_tv);
-        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
+        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
+//        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
 
     }
 }
