@@ -243,6 +243,15 @@ public class WifiUtil {
         else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
     }
 
+    public int ssidToEap(String ssid){
+        List<ScanResult> wifiList = wifiManager.getScanResults();
+        for (ScanResult scanResult : wifiList) {
+            if(!scanResult.SSID.equals(ssid))   // 임시로 숨겨진 ap 스킵. 수정 필요
+                return Integer.parseInt(parseEapType(scanResult.toString()));
+        }
+        return -2;  // 예외 처리 값 설정 필요
+    }
+
     // ScanResult Processing Functions
     public String parseEapType(@NonNull String to_stringed){
         String front_delimiter = ", Carrier AP EAP Type: ";
