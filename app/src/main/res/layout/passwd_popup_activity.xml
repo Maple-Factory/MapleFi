@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#eeeeee"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content">
+
+    <!-- Title Bar -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="패스워드 입력"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:background="#27577E"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+    </LinearLayout>
+    <!-- Title Bar End -->
+
+    <!-- EditText -->
+    <LinearLayout
+        android:padding="24dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_passwd"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:alpha="1"
+            android:gravity="center"
+            android:layout_marginBottom="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!-- Notice -->
+
+    <View
+        android:background="#27577E"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <!-- 닫기 버튼 -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#C6D7E6"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="연결"
+            android:textColor="#27577E"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="취소"
+            android:textColor="#27577E"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <!--// 닫기 버튼 -->
+</LinearLayout>
