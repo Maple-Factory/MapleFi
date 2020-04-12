@@ -4,18 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
+    final public int PASSWORD_POPUP_ACTIVITY = 1;
+
     private WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
     private ApItem now_ap_item = null;
@@ -184,11 +182,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         if(wifiUtil.getProfileId(ssid) == -1){
             if(wifiUtil.isNeedPassword(capabilities)){
                 // Get Password
-                // ISSUE - Can't Wait Dismiss
-//                String password = askPassword();
-//                Log.d("TEST","TEST askPassword END......");
-//                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
-//                wifiUtil.connect(net_id);
+                askPassword(ssid, capabilities);
             }
             else {
                 // No Password New Connect
@@ -265,37 +259,31 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             }
         }, 3000);
     }
-    public String askPassword(){
-        Log.d("TEST","TEST askPassword");
+    public void askPassword(String ssid, String capabilities) {
+        Intent intent = new Intent(this, PasswdPopupActivity.class);
+        intent.putExtra("ssid", ssid);
+        intent.putExtra("capabilities", capabilities);
+        startActivityForResult(intent, PASSWORD_POPUP_ACTIVITY);
+        Log.d("TEST","Start Activity");
+    }
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final EditText editTextPasswd = new EditText(this);
-        editTextPasswd.setText("");
-        alert.setView(editTextPasswd);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PASSWORD_POPUP_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                Log.d("TEST","RESULT_OK");
+                String ssid = data.getStringExtra("ssid");
+                String capabilities = data.getStringExtra("capabilities");
+                String password = data.getStringExtra("password");
 
-        alert.setTitle("패스워드 입력");
-        alert.setMessage("와이파이 패스워드를 입력해주세요.");
-
-        alert.setPositiveButton("연결", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = editTextPasswd.getText().toString();
-                Log.d("TEST","onclick ok " + value);
-                dialog.dismiss();
+                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
+                wifiUtil.connect(net_id);
+                Log.d("TEST",ssid+" "+capabilities+" "+password);
             }
-        });
-
-        alert.setNegativeButton("취소",new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Log.d("TEST","onclick no");
-                dialog.dismiss();
-            }
-        });
-
-        alert.show();
-
-        String password = editTextPasswd.getText().toString();
-        Log.d("TEST","END " + password);
-        return password;
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public  void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
