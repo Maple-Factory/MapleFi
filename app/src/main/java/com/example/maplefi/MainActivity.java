@@ -170,35 +170,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         registerReceiver(receiverWifi, mIntentFilter);
     }
 
-
-    @Override
-    public void callMoreActivity(ApItem ap_item) {
-        Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
-        intent.putExtra("AP_ITEM", ap_item);
-        startActivity(intent);
-    }
-
     public void addItem(String item_ssid, String capabilities, int rssi, int eap_type){
         ApItem item = new ApItem(item_ssid, capabilities, rssi, eap_type);
         ap_items.add(item);
         adapter.notifyDataSetChanged();
     }
+    public void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
+        Apinfo info = new Apinfo();
+        info.setSsid(ssid);
+        info.setPwEncType(pwEncType);
+        info.setPacketRule(packetRule);
+        info.setPacketEncType(packetEncType);
+        info.setRssi(rssi);
+        info.setGradeZero();
 
-    public void connection(String ssid, String capabilities){
-        // Profile Check
-        if(wifiUtil.getProfileId(ssid) == -1){
-            if(wifiUtil.isNeedPassword(capabilities)){
-                // Get Password
-                askPassword(ssid, capabilities);
-            }
-            else {
-                // No Password New Connect
-                int net_id = wifiUtil.addProfile(ssid, capabilities);
-                wifiUtil.connect(net_id);
-            }
-        }
-        else {  // Already Ap Profile
-            wifiUtil.connect(ssid);
+        apinfoList.add(info);
+        for(int i = 0; i < (apinfoList.size()); i++){
+            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
         }
     }
 
@@ -269,6 +257,24 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             }
         }, 3000);
     }
+
+    public void connection(String ssid, String capabilities){
+        // Profile Check
+        if(wifiUtil.getProfileId(ssid) == -1){
+            if(wifiUtil.isNeedPassword(capabilities)){
+                // Get Password
+                askPassword(ssid, capabilities);
+            }
+            else {
+                // No Password New Connect
+                int net_id = wifiUtil.addProfile(ssid, capabilities);
+                wifiUtil.connect(net_id);
+            }
+        }
+        else {  // Already Ap Profile
+            wifiUtil.connect(ssid);
+        }
+    }
     public void askPassword(String ssid, String capabilities) {
         Intent intent = new Intent(this, PasswdPopupActivity.class);
         intent.putExtra("ssid", ssid);
@@ -311,22 +317,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    public  void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
-        Apinfo info = new Apinfo();
-        info.setSsid(ssid);
-        info.setPwEncType(pwEncType);
-        info.setPacketRule(packetRule);
-        info.setPacketEncType(packetEncType);
-        info.setRssi(rssi);
-        info.setGradeZero();
-
-        apinfoList.add(info);
-        for(int i = 0; i < (apinfoList.size()); i++){
-            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
-        }
+    @Override
+    public void callMoreActivity(ApItem ap_item) {
+        Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
+        intent.putExtra("AP_ITEM", ap_item);
+        startActivity(intent);
     }
-
     class WifiReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context c, Intent intent) {
