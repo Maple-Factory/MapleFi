@@ -229,11 +229,18 @@ public class WifiUtil {
         }
     }
     public void removeProfile(int net_id){
-        wifiManager.removeNetwork(net_id);
+        boolean b = wifiManager.removeNetwork(net_id);
+        wifiManager.saveConfiguration();
+        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(net_id));
+        else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
     }
     public void removeProfile(String ssid){
         int net_id = getProfileId(ssid);
-        wifiManager.removeNetwork(net_id);
+        boolean b = wifiManager.removeNetwork(net_id);
+        wifiManager.saveConfiguration();
+
+        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(net_id));
+        else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
     }
 
     // ScanResult Processing Functions
