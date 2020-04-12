@@ -67,9 +67,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 //    }
 
     //생성자에게 리스트 객체 전달 받는 파트
-    ListAdapter(ArrayList<ApItem> list, OnItemClickListener onItemClickListener){
+    ListAdapter(ArrayList<ApItem> list/*, ListAdapterOld.OnItemClickListener onItemClickListener*/){
         mdata = list;
-        this.onItemClickListener = onItemClickListener;
+        this.onItemClickListener = (OnItemClickListener) onItemClickListener;
     }
 
     @NonNull
