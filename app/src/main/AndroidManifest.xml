@@ -24,6 +24,10 @@
         <activity android:name=".PasswdPopupActivity" android:theme="@android:style/Theme.Dialog" />
 
         <activity android:name=".MoreActivity"></activity>
+        <receiver
+            android:name=".MainActivity$WifiReceiver"
+            android:process=":remote" >
+        </receiver>
     </application>
 
 </manifest>

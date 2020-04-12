@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
+import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -29,6 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityNavigator {
     final public int PASSWORD_POPUP_ACTIVITY = 1;
+    public int password_try_net_id = -1;
 
     private WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
@@ -93,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     for (ScanResult scanResult : wifiList) {
-                        Log.d("TEST",scanResult.toString());
+//                        Log.d("TEST",scanResult.toString());
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
-                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,  Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
+                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level, Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                     }
                 }
                 else {
@@ -157,7 +163,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         // - 테스트 샘플
 //        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50);
 //        addItem("IPTIME","[WEP][ESS]",-80);
+
+        WifiReceiver receiverWifi = new WifiReceiver();
+        IntentFilter mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+        registerReceiver(receiverWifi, mIntentFilter);
     }
+
 
     @Override
     public void callMoreActivity(ApItem ap_item) {
@@ -173,11 +185,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     }
 
     public void connection(String ssid, String capabilities){
-        // Test
-//        String TAG = "TEST";
-//        Log.d(TAG,"connection debug");
-//        WifiManager wifiManager = wifiUtil.getWifiManager();
-
         // Profile Check
         if(wifiUtil.getProfileId(ssid) == -1){
             if(wifiUtil.isNeedPassword(capabilities)){
@@ -190,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 wifiUtil.connect(net_id);
             }
         }
-        else {
+        else {  // Already Ap Profile
             wifiUtil.connect(ssid);
         }
     }
@@ -203,6 +210,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 Log.d("TEST","Update Now AP");
                 WifiInfo wifiInfo = wifiUtil.getConnectionInfo();
                 if(wifiInfo.getNetworkId() != -1) {
+                    Log.d("TEST","Update Ap, try_net_id [net_id:"+Integer.toString(wifiInfo.getNetworkId())+"]");
+                    password_try_net_id = wifiInfo.getNetworkId();
+
                     String bssid = wifiInfo.getBSSID();
                     // ISSUE - WifiInfo has not eap_type of toString
                     now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi(), 0); // Integer.parseInt(wifiUtil.parseEapType(wifiInfo.toString())));
@@ -263,8 +273,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         Intent intent = new Intent(this, PasswdPopupActivity.class);
         intent.putExtra("ssid", ssid);
         intent.putExtra("capabilities", capabilities);
+
         startActivityForResult(intent, PASSWORD_POPUP_ACTIVITY);
-        Log.d("TEST","Start Activity");
     }
 
     @Override
@@ -276,9 +286,25 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 String capabilities = data.getStringExtra("capabilities");
                 String password = data.getStringExtra("password");
 
-                int net_id = wifiUtil.addProfile(ssid, capabilities, password);
-                wifiUtil.connect(net_id);
-                Log.d("TEST",ssid+" "+capabilities+" "+password);
+                if(!password.equals("")) {
+                    int net_id = wifiUtil.addProfile(ssid, capabilities, password);
+                    if(net_id != -1) {
+                        Log.d("TEST", "Try Password [net_id:" + Integer.toString(net_id) + "]");
+                        password_try_net_id = net_id;
+
+                        wifiUtil.connect(net_id);
+                        updateNowAp();
+                        Log.d("TEST", ssid + " " + capabilities + " " + password);
+                    }
+                    else {
+                        Toast toast = Toast.makeText(getApplicationContext(), "패스워드의 길이가 부족합니다.", Toast.LENGTH_SHORT);  // Capabilities 에 맞는 비번 가이드라인 제시 추가 필요
+                        toast.show();
+                    }
+                }
+                else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "패스워드가 필요합니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         }
         else {
@@ -300,4 +326,61 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
         }
     }
+
+    class WifiReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context c, Intent intent) {
+            Log.d("TEST", "onReceive() in WifiReceiver");
+            String action  = intent.getAction();
+            if(action.equals(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)){
+                Log.d("TEST", "Check SUPPLICANT_STATE_CHANGED_ACTION");
+                SupplicantState supl_state=((SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE));
+                switch(supl_state){
+                    case ASSOCIATED:Log.i("SupplicantState", "ASSOCIATED");
+                        break;
+                    case ASSOCIATING:Log.i("SupplicantState", "ASSOCIATING");
+                        break;
+                    case AUTHENTICATING:Log.i("SupplicantState", "Authenticating...");
+                        break;
+                    case COMPLETED:Log.i("SupplicantState", "Connected");
+                        break;
+                    case DISCONNECTED:Log.i("SupplicantState", "Disconnected");
+                        break;
+                    case DORMANT:Log.i("SupplicantState", "DORMANT");
+                        break;
+                    case FOUR_WAY_HANDSHAKE:Log.i("SupplicantState", "FOUR_WAY_HANDSHAKE");
+                        break;
+                    case GROUP_HANDSHAKE:Log.i("SupplicantState", "GROUP_HANDSHAKE");
+                        break;
+                    case INACTIVE:Log.i("SupplicantState", "INACTIVE");
+                        break;
+                    case INTERFACE_DISABLED:Log.i("SupplicantState", "INTERFACE_DISABLED");
+                        break;
+                    case INVALID:Log.i("SupplicantState", "INVALID");
+                        break;
+                    case SCANNING:Log.i("SupplicantState", "SCANNING");
+                        break;
+                    case UNINITIALIZED:Log.i("SupplicantState", "UNINITIALIZED");
+                        break;
+                    default:Log.i("SupplicantState", "Unknown");
+                        break;
+
+                }
+
+                int supl_error = intent.getIntExtra(WifiManager.EXTRA_SUPPLICANT_ERROR, -1);
+                if(supl_error==WifiManager.ERROR_AUTHENTICATING){
+                    Log.d("TEST", "ERROR_AUTHENTICATING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Wifi 패스워드가 틀렸습니다.", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    if(password_try_net_id != -1) {
+                        wifiUtil.removeProfile(password_try_net_id);
+                        password_try_net_id = -1;
+                    }
+                }
+
+            }   // if Closed
+        }   // onReceive Closed
+    }   // WifiReceiver Class Closed
 }
