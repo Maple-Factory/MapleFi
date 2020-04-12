@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     for (ScanResult scanResult : wifiList) {
 //                        Log.d("TEST",scanResult.toString());
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
-                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level, Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
+                            addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,
+                                    Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                     }
                 }
                 else {
@@ -189,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
         }
     }
-
     public void updateNowAp(){
         // 텀을 가진 후 업데이트 하는 로직 삭제 후 주기적 업데이트로 수정 필요
         Handler handler = new Handler();
@@ -202,8 +202,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     password_try_net_id = wifiInfo.getNetworkId();
 
                     String bssid = wifiInfo.getBSSID();
-                    // ISSUE - WifiInfo has not eap_type of toString
-                    now_ap_item = new ApItem(wifiInfo.getSSID().replace("\"", ""), wifiUtil.getCapabilities(bssid), wifiInfo.getRssi(), 0); // Integer.parseInt(wifiUtil.parseEapType(wifiInfo.toString())));
+                    String ssid = wifiInfo.getSSID().replace("\"", "");
+                    now_ap_item = new ApItem(ssid, wifiUtil.getCapabilities(bssid),
+                                             wifiInfo.getRssi(), wifiUtil.ssidToEap(ssid));
                 }
                 else {
                     now_ap_item = null;
