@@ -55,7 +55,7 @@ public class ApItem implements Serializable {
     public String getCaps(){
         return this.capabilities;
     }
-    public int getEap_type(){ return this.eap_type;}
+    public int getEapType(){ return this.eap_type;}//TODO: getEap_Type 사용된 함수 이름 getEapType변경 후 commit 필요
 
     public int getRssiLevel(){
         return this.rssi_level;
@@ -77,6 +77,7 @@ public class ApItem implements Serializable {
     public void addSec_Score(int sec_score){
         this.sec_score += sec_score;
     }
+
 
 
 }
