@@ -2,6 +2,8 @@ package com.example.maplefi.ui;
 
 import androidx.annotation.NonNull;
 
+import com.example.maplefi.util.SecurityEstimater;
+
 import java.io.Serializable;
 
 public class ApItem implements Serializable {
@@ -36,7 +38,7 @@ public class ApItem implements Serializable {
         }
 
         this.rssi_score = rssi; // score 대신 rssi 값 그대로 사용. 수정 필요
-        this.sec_score = 100;
+//        this.sec_score = 0;
         this.sec_level = 3;
     }
 
@@ -53,6 +55,7 @@ public class ApItem implements Serializable {
     public String getCaps(){
         return this.capabilities;
     }
+    public int getEap_type(){ return this.eap_type;}
 
     public int getRssiLevel(){
         return this.rssi_level;
@@ -67,5 +70,13 @@ public class ApItem implements Serializable {
     public int getSecLevel(){
         return this.sec_level;
     }
+
+    public void setSec_score(int sec_score) {
+        this.sec_score = sec_score;
+    }
+    public void addSec_Score(int sec_score){
+        this.sec_score += sec_score;
+    }
+
 
 }

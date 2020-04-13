@@ -82,10 +82,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             @Override
             public void onClick(View view) {
                 //security estimater check 용
+                Log.d("scanbutton", "onClick: click");
                 addApinfo("ssid","wpa","psk","ccmp",30);
+                Log.d("scanbutton", "onClick: appApinfo 1");
                 addApinfo("","wep","tkip","ccmp",40);
-                securityEstimater = new SecurityEstimater(apinfoList);
-              
+                Log.d("scanbutton", "onClick: appApinfo 2");
+
                 // AP 스캔
                 updateNowAp();  // 테스트 용도
                 ap_items.clear();
@@ -96,8 +98,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     for (ScanResult scanResult : wifiList) {
                         Log.d("TEST",scanResult.toString());
+                        int position = 0;
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
                             addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,  Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
+                            Log.d("TEST", "onClick: before security");
+                            securityEstimater = new SecurityEstimater(ap_items, position);
+                            //ISSUE : position이 0인 와이파이만 점수가 제대로 나오고 나머진 다 0으로 나옴
+//                            ap_items.get(position).setSec_score(SecurityEstimater.getScore(ap_items.get(position)));
+                            position++;
                     }
                 }
                 else {

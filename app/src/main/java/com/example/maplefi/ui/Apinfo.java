@@ -56,7 +56,7 @@ public class Apinfo {
     }
 
     //점수
-    public void addGrade(int grade){
+    public void addSec_Score(int grade){
         this.grade += grade;
     }
 
