@@ -16,7 +16,6 @@ package com.example.maplefi.util;
 import android.util.Log;
 
 import com.example.maplefi.ui.ApItem;
-import com.example.maplefi.ui.Apinfo;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -24,14 +23,7 @@ import java.util.regex.Pattern;
 
 public class SecurityEstimater {
     //test 용 임의 정보들
-    ArrayList<Apinfo> apinfos = new ArrayList<>();//debug
     ApItem ap_Item = null;
-    String ssid = "";
-    String pwEncType = "wpa";//와이파이 패스워드 암호화 type
-    String packetRule = "";//ex) ccmp
-    String packetEncType = ""; //ex)eap
-    int rssi = 0;
-    int score = 0;
     String TAG = "SecurityEstimater";
 
     public SecurityEstimater(/*ArrayList<Apinfo> apinfos,*/ ArrayList<ApItem> apItems, int position){
@@ -127,7 +119,7 @@ public class SecurityEstimater {
     }
 
     public void packetsnif_checker(ApItem ap_Item){//eap -tls등 고려하여 도청 가능한지 판별
-        if(ap_Item.getEap_type()==-1) {
+        if(ap_Item.getEapType()==-1) {
             Log.d(TAG, "packetsnif_checker: this is not eap");            
         }else{
             Log.d(TAG, "packetsnif_checker: not in our eap case");
