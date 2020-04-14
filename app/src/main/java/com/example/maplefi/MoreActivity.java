@@ -55,6 +55,7 @@ public class MoreActivity extends AppCompatActivity {
         final TextView textViewSpdScore = (TextView) findViewById(R.id.speed_score_tv);
         textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
 //        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
+        TextView textViewReport = (TextView) findViewById(R.id.report_tv);
 
     }
 }
