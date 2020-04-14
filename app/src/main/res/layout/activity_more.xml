@@ -32,28 +32,30 @@
             android:id="@+id/infoLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLength"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLength"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintVertical_bias="1.0">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineWidth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintGuide_percent="0.12"/>
+                app:layout_constraintGuide_percent="0.12"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout
                 android:id="@+id/apItemLayout"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guidelineWidth"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/guidelineWidth">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_ssid"
@@ -68,24 +70,24 @@
                 <ImageView
                     android:id="@+id/img_rssiDegree"
                     android:layout_width="0px"
-                    android:layout_weight="1"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/wifi_3" />
 
                 <ImageButton
                     android:id="@+id/imgb_moreinf"
                     android:layout_width="0px"
-                    android:layout_weight="1"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    app:srcCompat="@android:drawable/ic_menu_add"/>
+                    app:srcCompat="@android:drawable/ic_menu_add" />
 
                 <ImageButton
                     android:id="@+id/imgb_connect"
                     android:layout_width="0px"
-                    android:layout_weight="1"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     app:srcCompat="@android:drawable/btn_star_big_off" />
             </LinearLayout>
 
@@ -96,8 +98,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="sec_text_01"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/speed_score_tv"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guidelineWidth" />
 
             <TextView
@@ -107,9 +109,19 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="speed_text_02"
-                app:layout_constraintStart_toEndOf="@+id/sec_score_tv"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sec_score_tv"
                 app:layout_constraintTop_toTopOf="@+id/guidelineWidth" />
+
+            <TextView
+                android:id="@+id/report_tv"
+                android:layout_width="359dp"
+                android:layout_height="186dp"
+                android:text="Here is report"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sec_score_tv"
+                app:layout_constraintVertical_bias="0.06"
+                tools:layout_editor_absoluteX="0dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
