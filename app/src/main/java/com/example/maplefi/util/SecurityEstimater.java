@@ -15,90 +15,92 @@ package com.example.maplefi.util;
 
 import android.util.Log;
 
-import com.example.maplefi.ui.Apinfo;
+import com.example.maplefi.ui.ApItem;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class SecurityEstimater {
     //test 용 임의 정보들
-    ArrayList<Apinfo> apinfos = new ArrayList<>();
-    int score = 0;
+    ApItem ap_Item = null;
     String TAG = "SecurityEstimater";
 
-    public SecurityEstimater(ArrayList<Apinfo> apinfos/*, int position*/){
-        this.apinfos = apinfos;
-        int position = 0;
-//        while(apinfos.get(position) != null){
-            pw_checker(apinfos, position);
-            ssid_checker(apinfos, position);
-            packet_checker(apinfos, position);
-            packetRule_checker(apinfos, position);
-        Log.d(TAG, "SecurityEstimater: final = "+apinfos.get(position).getGrade());
-            position++;
-//        }
-//        pw_checker(apinfos, position);
-//        ssid_checker(apinfos, position);
-//        packet_checker(apinfos, position);
+    public SecurityEstimater(/*ArrayList<Apinfo> apinfos,*/ ArrayList<ApItem> apItems, int position){
+        Log.d(TAG, "SecurityEstimater: before apitemset");
+        this.ap_Item = apItems.get(position);
+        ap_Item.setSec_score(0);
+        Log.d(TAG, "SecurityEstimater: after apItem set");
+
+        pw_checker(ap_Item);
+        ssid_checker(ap_Item);
+        packet_checker(ap_Item);
+        packetRule_checker(ap_Item);
+        packetsnif_checker(ap_Item);
+        apItems.get(position).setSec_score(ap_Item.getSecScore());
+        Log.d(TAG, "SecurityEstimater: final = "+apItems.get(position).getSecScore());
+
     }
 
     //포지션에 해당하는 리스트의 로그온 암호적용, 암호화 방식평가 여부
-    public void pw_checker(ArrayList<Apinfo> apinfos, int position) {
-        if (!(Objects.equals(apinfos.get(position).getPwEncType(), ""))) {
+    //TODO : contain 사용해서 다시 짜기
+    public void pw_checker(ApItem ap_Item) {
+        if (!/*(Objects.equals(*/(ap_Item.getCaps().toUpperCase().isEmpty())) {
             Log.d(TAG, "pw_checker: pwtype 존재");
-            apinfos.get(position).addGrade(50);//임의
-            Log.d(TAG, "pw_checker: pwtype"+apinfos.get(position).getGrade());
+            ap_Item.addSec_Score(50);//임의
+            Log.d(TAG, "pw_checker: pwtype"+ap_Item.getSecScore());
+            String pw = "";
+            pw = ap_Item.getCaps().split(Pattern.quote("/[A-Z]{3}/i"))[0].toString();
+            Log.d(TAG, "pw_checker: split: "+ pw/*apItems.get(position).getCaps().split("/[A-Z]{3}/i")*/);
 
-            switch (apinfos.get(position).getPwEncType()){//if로 할지 스위치로 할지 고민스러움 함께 고민
-                case "wpa":
-                    Log.d(TAG, "pw_checker: wpa");
-                    apinfos.get(position).addGrade(20);
-                    Log.d(TAG, "pw_checker: "+apinfos.get(position).getGrade());
-                    break;
-                case "wpa2":
-                    Log.d(TAG, "pw_checker: wpa2");
-                    apinfos.get(position).addGrade(40);
-                    Log.d(TAG, "pw_checker: "+apinfos.get(position).getGrade());
-                    break;
-                case "wep" :
-                    Log.d(TAG, "pw_checker: wep");
-                    apinfos.get(position).addGrade(10);
-                    Log.d(TAG, "pw_checker: "+apinfos.get(position).getGrade());
-                    break;
-                default:
-                    Log.d(TAG, "pw_checker: not in our case");
-                    break;
+            if(ap_Item.getCaps().contains("WPA")){
+                Log.d(TAG, "pw_checker: wpa");
+                ap_Item.addSec_Score(20);
+                Log.d(TAG, "pw_checker: " + ap_Item.getSecScore());
+
+            }else if(ap_Item.getCaps().contains("WPA2")){
+                Log.d(TAG, "pw_checker: wpa2");
+                ap_Item.addSec_Score(40);
+                Log.d(TAG, "pw_checker: " + ap_Item.getSecScore());
+
+            }else if(ap_Item.getCaps().contains("WEP")){
+                Log.d(TAG, "pw_checker: wep");
+                ap_Item.addSec_Score(10);
+                Log.d(TAG, "pw_checker: " + ap_Item.getSecScore());
+            }else{
+                Log.d(TAG, "pw_checker: not in our case");
             }
         }
     }
 
     //ssid check
-    public void ssid_checker(ArrayList<Apinfo> apinfos, int position){
-        if (Objects.equals(apinfos.get(position).getSsid(), "")){//숨김모드일경우
+    public void ssid_checker(ApItem ap_Item){
+        Log.d(TAG, "ssid_checker: 여기");
+        if (Objects.equals(ap_Item.getSsid(), "")){//숨김모드일경우
             Log.d(TAG, "ssid_checker: 숨김모드");
-            apinfos.get(position).addGrade(60);
+            ap_Item.addSec_Score(60);
         }else{
             Log.d(TAG, "ssid_checker: 숨김모드 아님");
         }
     }
 
     //프로토콜 방식 판별
-    public void packet_checker(ArrayList<Apinfo> apinfos, int position){
-        if(Objects.equals(apinfos.get(position).getPacketEncType(), "psk")){
+    public void packet_checker(ApItem ap_Item){
+        if(ap_Item.getCaps().contains("PSK")){
             Log.d(TAG, "packet_checker: protocol psk");
-            apinfos.get(position).addGrade(30);
-            Log.d(TAG, "packet_checker: "+apinfos.get(position).getGrade());
+            ap_Item.addSec_Score(30);
+            Log.d(TAG, "packet_checker: "+ap_Item.getSecScore());
 
-        }else if(Objects.equals(apinfos.get(position).getPacketEncType(), "eap")){
+        }else if(ap_Item.getCaps().contains("EAP")){
             Log.d(TAG, "packet_checker: protocol eap");
-            apinfos.get(position).addGrade(40);
-            Log.d(TAG, "packet_checker: "+apinfos.get(position).getGrade());
+            ap_Item.addSec_Score(40);
+            Log.d(TAG, "packet_checker: "+ap_Item.getSecScore());
             //eap tls?면? 뭐면?
 
-        }else if(Objects.equals(apinfos.get(position).getPacketEncType(), "tkip")){
+        }else if(ap_Item.getCaps().contains("TKIP")){
             Log.d(TAG, "packet_checker: protocol tkip");//wep에서 사용하는 암호화 방식
-            apinfos.get(position).addGrade(10);
-            Log.d(TAG, "packet_checker: "+apinfos.get(position).getGrade());
+            ap_Item.addSec_Score(10);
+            Log.d(TAG, "packet_checker: "+ap_Item.getSecScore());
 
         }else{
             Log.d(TAG, "packet_checker: not in our packet case");
@@ -106,31 +108,26 @@ public class SecurityEstimater {
     }
 
     //패킷 규칙 체크 ccmp -> 필요한가??
-    public void packetRule_checker(ArrayList<Apinfo> apinfos, int position){
-        if(Objects.equals(apinfos.get(position).getProtocolEncType(), "ccmp")) {
+    public void packetRule_checker(ApItem ap_Item){
+        if(ap_Item.getCaps().contains("CCMP")) {
             Log.d(TAG, "packetRule_checker: ccmp");
-            apinfos.get(position).addGrade(20);
-            Log.d(TAG, "packetRule_checker: grade "+apinfos.get(position).getGrade());
+            ap_Item.addSec_Score(20);
+            Log.d(TAG, "packetRule_checker: grade "+ap_Item.getSecScore());
         }else{
             Log.d(TAG, "packetRule_checker: not in packetrule case");
         }
     }
 
-//    public void packet_snif_checker(){//eap -tls등 고려하여 도청 가능한지 판별
-//        apinfo.get(position).addGrade(50);
-//    }
-
-    public void setGradeZero() {
-        this.score = 0;
+    public void packetsnif_checker(ApItem ap_Item){//eap -tls등 고려하여 도청 가능한지 판별
+        if(ap_Item.getEapType()==-1) {
+            Log.d(TAG, "packetsnif_checker: this is not eap");            
+        }else{
+            Log.d(TAG, "packetsnif_checker: not in our eap case");
+        }
     }
 
-    public void addGrade(int grade){
-        this.score += grade;
+    public static int getScore(ApItem ap_Item){
+        return ap_Item.getSecScore();
     }
-
-    public int getGrade(){
-        return this.score;
-    }
-
 
 }

@@ -23,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.maplefi.ui.ApItem;
-import com.example.maplefi.ui.Apinfo;
 import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.SecurityEstimater;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
 
     public SecurityEstimater securityEstimater;
-    private ArrayList<Apinfo> apinfoList = new ArrayList<Apinfo>();
 
     // NOW AP
     TextView textViewNowSsid;
@@ -85,11 +83,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         buttonScan.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //security estimater check 용
-                addApinfo("ssid","wpa","psk","ccmp",30);
-                addApinfo("","wep","tkip","ccmp",40);
-                securityEstimater = new SecurityEstimater(apinfoList);
-              
                 // AP 스캔
                 updateNowAp();  // 테스트 용도
                 ap_items.clear();
@@ -99,10 +92,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     for (ScanResult scanResult : wifiList) {
-//                        Log.d("TEST",scanResult.toString());
+
+                        Log.d("TEST",scanResult.toString());
+                        int position = 0;
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
                             addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,
                                     Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
+                            Log.d("TEST", "onClick: before security");
+                            securityEstimater = new SecurityEstimater(ap_items, position);
+                            //ISSUE : position이 0인 와이파이만 점수가 제대로 나오고 나머진 다 0으로 나옴
+//                            ap_items.get(position).setSec_score(SecurityEstimater.getScore(ap_items.get(position)));
+                            position++;
+
                     }
                 }
                 else {
@@ -176,20 +177,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         ap_items.add(item);
         adapter.notifyDataSetChanged();
     }
-    public void addApinfo(String ssid, String pwEncType, String packetRule, String packetEncType, int rssi){
-        Apinfo info = new Apinfo();
-        info.setSsid(ssid);
-        info.setPwEncType(pwEncType);
-        info.setPacketRule(packetRule);
-        info.setPacketEncType(packetEncType);
-        info.setRssi(rssi);
-        info.setGradeZero();
 
-        apinfoList.add(info);
-        for(int i = 0; i < (apinfoList.size()); i++){
-            Log.d("debug", "addApinfo: ssid="+apinfoList.get(i).getSsid()+"pwEncType="+apinfoList.get(i).getPwEncType()+"packetRule="+apinfoList.get(i).getProtocolEncType());
-        }
-    }
     public void updateNowAp(){
         // 텀을 가진 후 업데이트 하는 로직 삭제 후 주기적 업데이트로 수정 필요
         Handler handler = new Handler();
