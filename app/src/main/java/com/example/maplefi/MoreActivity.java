@@ -50,13 +50,14 @@ public class MoreActivity extends AppCompatActivity {
             }
         });
 
-        final TextView textViewSecScore = (TextView) findViewById(R.id.sec_score_tv);
-        textViewSecScore.setText("TEST eap type:"+Integer.toString(ap_item.getEapType()));
-//        textViewSecScore.setText(Integer.toString(ap_item.getSecScore()));
-        final TextView textViewSpdScore = (TextView) findViewById(R.id.speed_score_tv);
-        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
-//        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
-        TextView textViewReport = (TextView) findViewById(R.id.report_tv);
+        final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
+//        textViewSecScore.setText("TEST eap type:"+Integer.toString(ap_item.getEapType()));
+        textViewSecScore.setText(Integer.toString(ap_item.getSecScore()));
+        final TextView textViewSpdScore = (TextView) findViewById(R.id.tv_speed_score);
+//        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
+        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
+
+        TextView textViewReport = (TextView) findViewById(R.id.tv_detail_desc);
         //보안방식에 따른 레포트
         //TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
         if(ap_item.getCaps().contains("WEP")){
