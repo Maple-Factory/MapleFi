@@ -175,7 +175,8 @@
                             android:layout_height="0px"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="sec_text_01" />
+                            android:text="sec_score"
+                            android:textSize="18sp" />
                         <TextView
                             android:id="@+id/img_sec_score"
                             android:layout_width="match_parent"
@@ -198,7 +199,8 @@
                             android:layout_height="0px"
                             android:layout_weight="2"
                             android:gravity="center"
-                            android:text="speed_text_02" />
+                            android:text="rssi_score"
+                            android:textSize="18sp" />
 
                         <ImageButton
                             android:id="@+id/imgb_detail"
