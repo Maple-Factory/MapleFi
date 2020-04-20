@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     final public int PASSWORD_POPUP_ACTIVITY = 1;
     public int password_try_net_id = -1;
 
-    private WifiUtil wifiUtil;
+    public WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
     private ApItem now_ap_item = null;
     private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
         textViewNowSsid = textViewSsid;
-        imgNowcolor = imgcolor;//신호등
+        imgNowcolor = imgcolor; // 신호등
         imgNowRssi = imgRssi;
         imgButtonNowMoreinf = imgButtonMoreinf;
         imgButtonNowConnect = imgButtonConnect;
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 리사이클러뷰에 리스트 어뎁더 객체 지정
-        adapter = new ListAdapterOld(ap_items, new ListAdapterOld.OnApItemClickListener() {
+        adapter = new ListAdapterOld(this, ap_items, new ListAdapterOld.OnApItemClickListener() {
             @Override
             public void onMoreBtnClick(View v, int position) {
                 // ApItem More Button Click Listener
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         updateNowAp();
 
         // - 테스트 샘플
-//        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50);
+        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50,-1);
 //        addItem("IPTIME","[WEP][ESS]",-80);
 
         WifiReceiver receiverWifi = new WifiReceiver();
@@ -201,19 +201,34 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 if(now_ap_item == null){
                     textViewNowSsid.setText("연결된 와이파이가 없습니다.");
                     imgNowRssi.setImageResource(R.drawable.wifi_x);
-                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        }
-                    });
-                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        }
-                    });
+                    imgNowcolor.setImageResource(R.drawable.gray);
+//                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                        }
+//                    });
+//                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                        }
+//                    });
                 }
                 else {
                     textViewNowSsid.setText(now_ap_item.getSsid());
+                    int sec_level = now_ap_item.getSecLevel();
+                    switch (sec_level){
+                        case 1:
+                            imgNowcolor.setImageResource(R.drawable.red);
+                            break;
+                        case 2:
+                            imgNowcolor.setImageResource(R.drawable.orange);
+                            break;
+                        case 3:
+                            imgNowcolor.setImageResource(R.drawable.green);
+                            break;
+                        default:
+                            imgNowcolor.setImageResource(R.drawable.red);
+                    }
                     int rssi_level = now_ap_item.getRssiLevel();
                     switch (rssi_level){
                         case 1:
