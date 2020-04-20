@@ -78,6 +78,13 @@
                 tools:ignore="RtlCompat"/>
 
             <ImageView
+                android:id="@+id/img_color"
+                android:layout_width="0px"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/gray" />
+
+            <ImageView
                 android:id="@+id/img_rssiDegree"
                 android:layout_width="0px"
                 android:layout_weight="1"

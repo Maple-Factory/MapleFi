@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         ImageButton imgButtonMoreinf = (ImageButton) findViewById(R.id.imgb_moreinf) ;
         ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
         textViewNowSsid = textViewSsid;
-        imgNowcolor = imgcolor;//신호등
+        imgNowcolor = imgcolor; // 신호등
         imgNowRssi = imgRssi;
         imgButtonNowMoreinf = imgButtonMoreinf;
         imgButtonNowConnect = imgButtonConnect;
@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 if(now_ap_item == null){
                     textViewNowSsid.setText("연결된 와이파이가 없습니다.");
                     imgNowRssi.setImageResource(R.drawable.wifi_x);
+                    imgNowcolor.setImageResource(R.drawable.gray);
 //                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
 //                        @Override
 //                        public void onClick(View view) {
