@@ -20,7 +20,7 @@ public class ApItem implements Serializable {
 
     private final int RSSI_HIGH = -60;
     private final int RSSI_LOW = -70;
-    private final int SECURE_HIGH = 90;
+    private final int SECURE_HIGH = 90; // TODO: 신호등 점수 분기 값 정하기
     private final int SECURE_LOW = 70;
 
     public ApItem(String name, String capabilities, int rssi, int eap_type) {
@@ -44,7 +44,7 @@ public class ApItem implements Serializable {
         this.rssi_score = rssi; // score 대신 rssi 값 그대로 사용. 수정 필요
 
         // 보안 점수 책정
-        this.sec_score = 77;    // 점수 책정 로직 추가 필요
+        this.sec_score = 77;    // TODO: 점수 책정 로직 추가 필요(Sec_score 계산)
 
 
         // 보안 레벨 책정

@@ -57,10 +57,10 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                     if(pos != RecyclerView.NO_POSITION){
                         // 아이템 클릭 이벤트
                         ApItem apItem = ap_items.get(pos);
-                        Log.d("TEST", "onClick: this is listAdapter" + pos);
+                        Log.d("TEST", "onLongClick: this is listAdapter" + pos);
 
                         ApItem ap_item = ap_items.get(pos);
-                        final int clicked_net_id = mActivity.wifiUtil.getProfileId(ap_item.getSsid());
+                        final int clicked_net_id = mActivity.wifiUtil.getProfileId(ap_item.getSsid());  // 와이파이가 안되는 기기면 에러 발생
                         if(clicked_net_id != -1){
                             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                                 @Override

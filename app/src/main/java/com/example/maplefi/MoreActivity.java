@@ -31,6 +31,7 @@ public class MoreActivity extends AppCompatActivity {
             }
         });
 
+        // AP 기본 정보
         final TextView textViewSsid = (TextView) findViewById(R.id.tv_ssid);
         textViewSsid.setText(ap_item.getSsid());
 
@@ -74,8 +75,9 @@ public class MoreActivity extends AppCompatActivity {
         });
 
         // -------------------------------------------------------------//
+        // AP 상세 정보
         final TextView textViewCap1 = (TextView) findViewById(R.id.tv_cap1);
-        textViewCap1.setText("CAP1 : ");
+        textViewCap1.setText("CAP1 : ");    // TODO: Cap1~4 로직
 
         final TextView textViewCap2 = (TextView) findViewById(R.id.tv_cap2);
         textViewCap2.setText("CAP2 : ");
@@ -86,16 +88,19 @@ public class MoreActivity extends AppCompatActivity {
         final TextView textViewCap4 = (TextView) findViewById(R.id.tv_cap4);
         textViewCap4.setText("CAP4 : ");
 
-
+        // AP 보안 점수
         final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
         textViewSecScore.setText(Integer.toString(ap_item.getSecScore())+" 점");
 
+        // AP 보안 신호등
 //        final ImageView imgViewLightSet = (ImageView) findViewById(R.id.img_sec_score);
 //        imgViewLight.setImageResource(R.drawable.);
 
+        // AP 신호 강도 점수
         final TextView textViewSpeedScore = (TextView) findViewById(R.id.tv_speed_score);
         textViewSpeedScore.setText(Integer.toString(ap_item.getRssiScore()) + " dBm");
 
+        // AP 디테일보기 버튼
         ImageButton imgButtonDetail = (ImageButton) findViewById(R.id.imgb_detail) ;
 
 //        final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
@@ -104,7 +109,7 @@ public class MoreActivity extends AppCompatActivity {
 //        final TextView textViewSpdScore = (TextView) findViewById(R.id.tv_speed_score);
 //        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
 //        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
-
+        // AP 디테일 정보
         final ImageView imgDetailDash = (ImageView) findViewById(R.id.dash_detail);
         imgDetailDash.setVisibility(View.INVISIBLE);
 
@@ -113,8 +118,8 @@ public class MoreActivity extends AppCompatActivity {
 
         final TextView textViewReport = (TextView) findViewById(R.id.tv_detail_desc);
 
-        //보안방식에 따른 레포트
-        //TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
+        // 보안방식에 따른 레포트
+        // TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
         if(ap_item.getCaps().contains("WEP")){
             Log.d("test", "onCreate: wep");
             textViewReport.setText(getString(R.string.wep_report));
@@ -145,6 +150,7 @@ public class MoreActivity extends AppCompatActivity {
             Log.d("test", "onCreate: "+textViewReport.toString());
         }
 
+        // 디테일 설명 펴기/접기 버튼 이벤트
         imgButtonDetail.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
