@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     final public int PASSWORD_POPUP_ACTIVITY = 1;
     public int password_try_net_id = -1;
 
-    private WifiUtil wifiUtil;
+    public WifiUtil wifiUtil;
     ListAdapterOld adapter = null;
     private ApItem now_ap_item = null;
     private ArrayList<ApItem> ap_items = new ArrayList<ApItem>();
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 리사이클러뷰에 리스트 어뎁더 객체 지정
-        adapter = new ListAdapterOld(ap_items, new ListAdapterOld.OnApItemClickListener() {
+        adapter = new ListAdapterOld(this, ap_items, new ListAdapterOld.OnApItemClickListener() {
             @Override
             public void onMoreBtnClick(View v, int position) {
                 // ApItem More Button Click Listener
@@ -201,16 +201,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 if(now_ap_item == null){
                     textViewNowSsid.setText("연결된 와이파이가 없습니다.");
                     imgNowRssi.setImageResource(R.drawable.wifi_x);
-                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        }
-                    });
-                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        }
-                    });
+//                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                        }
+//                    });
+//                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                        }
+//                    });
                 }
                 else {
                     textViewNowSsid.setText(now_ap_item.getSsid());

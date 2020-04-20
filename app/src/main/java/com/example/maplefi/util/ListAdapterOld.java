@@ -1,6 +1,7 @@
 package com.example.maplefi.util;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.maplefi.MainActivity;
 import com.example.maplefi.R;
 import com.example.maplefi.ui.ApItem;
 
@@ -25,6 +28,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
         void onConBtnClick(View v, int position);
         void onItemClick(View v, int position);
     }
+    private MainActivity mActivity;
     private ArrayList<ApItem> ap_items = null;
     public OnApItemClickListener OnApItemClickListener;
 
@@ -54,8 +58,28 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                         // 아이템 클릭 이벤트
                         ApItem apItem = ap_items.get(pos);
                         Log.d("TEST", "onClick: this is listAdapter" + pos);
-                        // TODO: 토리 profile 삭제 넣으면 됨
 
+                        ApItem ap_item = ap_items.get(pos);
+                        final int clicked_net_id = mActivity.wifiUtil.getProfileId(ap_item.getSsid());
+                        if(clicked_net_id != -1){
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            // 삭제하기
+                                            mActivity.wifiUtil.removeProfile(clicked_net_id);
+                                            break;
+                                        case DialogInterface.BUTTON_NEGATIVE:
+                                            break;
+                                    }
+                                }
+                            };
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                            builder.setMessage("저장된 패스워드를 삭제하시겠습니까?").setPositiveButton("네", dialogClickListener)
+                                    .setNegativeButton("아니오", dialogClickListener).show();
+                        }
                         notifyItemChanged(pos);
                     }
                     return true;
@@ -66,7 +90,8 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     }
 
     // 생성자에게 리스트 객체 전달 받는 파트
-    public ListAdapterOld(ArrayList<ApItem> list, OnApItemClickListener onApItemClickListener/*, OnItemClickListener itemClickListener*/){
+    public ListAdapterOld(MainActivity activity, ArrayList<ApItem> list, OnApItemClickListener onApItemClickListener/*, OnItemClickListener itemClickListener*/){
+        this.mActivity = activity;
         this.ap_items = list;
         this.OnApItemClickListener = onApItemClickListener;
 //        this.itemClickListener =  itemClickListener;
