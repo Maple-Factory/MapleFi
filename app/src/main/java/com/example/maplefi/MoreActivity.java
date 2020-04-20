@@ -104,7 +104,14 @@ public class MoreActivity extends AppCompatActivity {
 //        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
 //        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
 
-        TextView textViewReport = (TextView) findViewById(R.id.tv_detail_desc);
+        final ImageView imgDetailDash = (ImageView) findViewById(R.id.dash_detail);
+        imgDetailDash.setVisibility(View.INVISIBLE);
+
+        final LinearLayout linearLayoutDetail = (LinearLayout) findViewById(R.id.detailLayout);
+        linearLayoutDetail.setVisibility(View.INVISIBLE);
+
+        final TextView textViewReport = (TextView) findViewById(R.id.tv_detail_desc);
+
         //보안방식에 따른 레포트
         //TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
         if(ap_item.getCaps().contains("WEP")){
@@ -137,5 +144,19 @@ public class MoreActivity extends AppCompatActivity {
             Log.d("test", "onCreate: "+textViewReport.toString());
         }
 
+        imgButtonDetail.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(linearLayoutDetail.getVisibility() == View.VISIBLE){
+                    linearLayoutDetail.setVisibility(View.INVISIBLE);
+                    imgDetailDash.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    linearLayoutDetail.setVisibility(View.VISIBLE);
+                    imgDetailDash.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
     }
 }
