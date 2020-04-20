@@ -39,7 +39,7 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="15dp"
                 android:text="ON"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +50,7 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="15dp"
                 android:text="SCAN"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_onoff" />
@@ -76,6 +76,13 @@
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
                 tools:ignore="RtlCompat"/>
+
+            <ImageView
+                android:id="@+id/img_color"
+                android:layout_width="0px"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/gray" />
 
             <ImageView
                 android:id="@+id/img_rssiDegree"
