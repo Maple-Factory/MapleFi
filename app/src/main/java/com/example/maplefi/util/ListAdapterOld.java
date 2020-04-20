@@ -31,6 +31,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     // 아이템 뷰를 저장하는 뷰 홀더 클래스
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView_SSID;
+        ImageView img_ap_color;
         ImageView img_ap_rssi;
         ImageButton btn_ap_info;
         ImageButton btn_ap_connect;
@@ -39,6 +40,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
             super(itemView);
             // 뷰 객체에 대한 참조
             textView_SSID = itemView.findViewById(R.id.tv_ssid);
+            img_ap_color = itemView.findViewById(R.id.img_color);
             img_ap_rssi = itemView.findViewById(R.id.img_rssiDegree);
             btn_ap_info = itemView.findViewById(R.id.imgb_moreinf);
             btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
@@ -87,9 +89,23 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
         ApItem ap_item = ap_items.get(position);
 
         String text = ap_item.getSsid();
+        int sec_level = ap_item.getSecLevel();
         int rssi_level = ap_item.getRssiLevel();
 
         holder.textView_SSID.setText(text);
+        switch (sec_level){
+            case 1:
+                holder.img_ap_color.setImageResource(R.drawable.red);
+                break;
+            case 2:
+                holder.img_ap_color.setImageResource(R.drawable.orange);
+                break;
+            case 3:
+                holder.img_ap_color.setImageResource(R.drawable.green);
+                break;
+            default:
+                holder.img_ap_color.setImageResource(R.drawable.red);
+        }
         switch (rssi_level){
             case 1:
                 holder.img_ap_rssi.setImageResource(R.drawable.wifi_1);

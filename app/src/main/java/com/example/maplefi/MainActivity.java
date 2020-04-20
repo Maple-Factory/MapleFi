@@ -214,6 +214,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 }
                 else {
                     textViewNowSsid.setText(now_ap_item.getSsid());
+                    int sec_level = now_ap_item.getSecLevel();
+                    switch (sec_level){
+                        case 1:
+                            imgNowcolor.setImageResource(R.drawable.red);
+                            break;
+                        case 2:
+                            imgNowcolor.setImageResource(R.drawable.orange);
+                            break;
+                        case 3:
+                            imgNowcolor.setImageResource(R.drawable.green);
+                            break;
+                        default:
+                            imgNowcolor.setImageResource(R.drawable.red);
+                    }
                     int rssi_level = now_ap_item.getRssiLevel();
                     switch (rssi_level){
                         case 1:
