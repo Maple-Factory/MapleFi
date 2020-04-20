@@ -61,33 +61,33 @@ public class MoreActivity extends AppCompatActivity {
         //TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
         if(ap_item.getCaps().contains("WEP")){
             Log.d("test", "onCreate: wep");
-            textViewReport.setText(R.string.wep_report);
+            textViewReport.setText(getString(R.string.wep_report));
             Log.d("test", "onCreate: "+textViewReport.toString());
         }else if(ap_item.getCaps().contains("WPA")){
             Log.d("test", "onCreate: wpa");
             if(ap_item.getCaps().contains("TKIP")){
                 Log.d("test", "onCreate: wpa-tkip");
-                textViewReport.setText((R.string.wpa_report+"" +
-                        +R.string.tkip_report).toString());
+                textViewReport.setText(getString(R.string.wpa_report)+" "
+                        + getString(R.string.tkip_report));
                 Log.d("test", "onCreate: "+textViewReport.toString());
             }else if(ap_item.getCaps().contains("PSK")){
                 Log.d("test", "onCreate: wpa-psk");
-                textViewReport.setText((R.string.wpa_report+"" +
-                        +R.string.psk_report).toString());
+                textViewReport.setText(getString(R.string.wpa_report) + ""
+                        + getString(R.string.psk_report));
                 Log.d("test", "onCreate: "+textViewReport.toString());
             }
         }else if(ap_item.getCaps().contains("WPA2")){
             Log.d("test", "onCreate: wpa2");
-            textViewReport.setText(R.string.wpa2_report);
+            textViewReport.setText(getString(R.string.wpa2_report));
             Log.d("test", "onCreate: "+textViewReport.toString());
             if(ap_item.getCaps().contains("EAP")){
                 Log.d("test", "onCreate: eap");
-                textViewReport.setText(R.string.eap_report);
+                textViewReport.setText(getString(R.string.eap_report));
                 Log.d("test", "onCreate: "+textViewReport);
             }
         }else{
             Log.d("test", "onCreate: else");
-            textViewReport.setText(R.string.none_report);
+            textViewReport.setText(getString(R.string.none_report));
             Log.d("test", "onCreate: "+textViewReport.toString());
         }
 
