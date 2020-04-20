@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,14 +89,6 @@ public class MoreActivity extends AppCompatActivity {
         textViewSpeedScore.setText(Integer.toString(ap_item.getRssiScore()) + " dBm");
 
         ImageButton imgButtonDetail = (ImageButton) findViewById(R.id.imgb_detail) ;
-        imgButtonDetail.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Extend Detail Info
-
-
-            }
-        });
 
 //        final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
 //        textViewSecScore.setText("TEST eap type:"+Integer.toString(ap_item.getEapType()));

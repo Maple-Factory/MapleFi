@@ -199,6 +199,14 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/dash_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layerType="software"
+                    android:src="@drawable/drawable_dash_line"
+                    android:contentDescription="TODO" />
+
                 <LinearLayout
                     android:id="@+id/detailLayout"
                     android:layout_width="match_parent"
@@ -209,6 +217,7 @@
                     android:paddingRight="2dp"
                     android:paddingBottom="2dp"
                     android:orientation="vertical">
+
 
                     <TextView
                         android:id="@+id/tv_detail_desc"
