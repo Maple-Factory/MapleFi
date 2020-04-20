@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         updateNowAp();
 
         // - 테스트 샘플
-//        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50);
+        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50,-1);
 //        addItem("IPTIME","[WEP][ESS]",-80);
 
         WifiReceiver receiverWifi = new WifiReceiver();
