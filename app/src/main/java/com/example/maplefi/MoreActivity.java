@@ -23,6 +23,14 @@ public class MoreActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ApItem ap_item = (ApItem) intent.getSerializableExtra("AP_ITEM");
 
+        final Button buttonBack = (Button) findViewById(R.id.btn_back) ;
+        buttonBack.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         final TextView textViewSsid = (TextView) findViewById(R.id.tv_ssid);
         textViewSsid.setText(ap_item.getSsid());
 
