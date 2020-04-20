@@ -46,9 +46,9 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
             btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
 
             // 아이템 클릭 이벤트 처리
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
+                public boolean onLongClick(View v) {
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
                         // 아이템 클릭 이벤트
@@ -56,8 +56,9 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                         Log.d("TEST", "onClick: this is listAdapter" + pos);
                         // TODO: 토리 profile 삭제 넣으면 됨
 
-                        notifyItemChanged(pos) ;
+                        notifyItemChanged(pos);
                     }
+                    return true;
                 }
             });
 
