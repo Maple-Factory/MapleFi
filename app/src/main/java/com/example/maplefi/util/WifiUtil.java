@@ -19,6 +19,7 @@ public class WifiUtil {
     private WifiManager wifiManager;
 
     private final int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1;
+    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 0;
     private final String TAG = "WIFIIUTILL";
 
     public WifiUtil(@NonNull Context context, @NonNull Activity activity){
@@ -29,6 +30,11 @@ public class WifiUtil {
             ActivityCompat.requestPermissions(activity, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION
             }, MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+        }
+        if(ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(activity, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, MY_PERMISSION_ACCESS_FINE_LOCATION);
         }
     }
 

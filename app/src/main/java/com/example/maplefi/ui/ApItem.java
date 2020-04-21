@@ -1,5 +1,7 @@
 package com.example.maplefi.ui;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.maplefi.util.SecurityEstimater;
@@ -15,7 +17,7 @@ public class ApItem implements Serializable {
     public int rssi_level;
     public int rssi_score;
 
-    public int sec_score;
+    public int[] sec_score;//int[5] 생성자
     public int sec_level;
 
     private final int RSSI_HIGH = -60;
@@ -28,6 +30,7 @@ public class ApItem implements Serializable {
         this.capabilities = capabilities;
         this.rssi = rssi;
         this.eap_type = eap_type;
+        SecurityEstimater securityEstimater = new SecurityEstimater(name, capabilities, eap_type);
 
         // 신호강도 레벨 책정
         if(this.rssi > RSSI_HIGH){
@@ -44,14 +47,14 @@ public class ApItem implements Serializable {
         this.rssi_score = rssi; // score 대신 rssi 값 그대로 사용. 수정 필요
 
         // 보안 점수 책정
-        this.sec_score = 77;    // TODO: 점수 책정 로직 추가 필요(Sec_score 계산)
-
+        this.sec_score = securityEstimater.getScore();/*securityEstimater(name, capabilities, eap_type)*/    // TODO: 점수 책정 로직 추가 필요(Sec_score 계산)
+        Log.d("TEST add", "ApItem: sec store 지정");
 
         // 보안 레벨 책정
-        if(this.sec_score > SECURE_HIGH){
+        if(this.sec_score[0] > SECURE_HIGH){
             this.sec_level = 3;
         }
-        else if(this.sec_score > SECURE_LOW){
+        else if(this.sec_score[0] > SECURE_LOW){
             this.sec_level = 2;
         }
         else {
@@ -81,20 +84,11 @@ public class ApItem implements Serializable {
         return this.rssi_score;
     }
 
-    public int getSecScore(){
-        return this.sec_score;
+    public int getSecScore(int index){
+        return this.sec_score[index];
     }
     public int getSecLevel(){
         return this.sec_level;
     }
-
-    public void setSec_score(int sec_score) {
-        this.sec_score = sec_score;
-    }
-    public void addSec_Score(int sec_score){
-        this.sec_score += sec_score;
-    }
-
-
 
 }
