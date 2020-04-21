@@ -23,7 +23,7 @@ public class ApItem implements Serializable {
     private final int RSSI_HIGH = -60;
     private final int RSSI_LOW = -70;
     private final int SECURE_HIGH = 200;
-    private final int SECURE_LOW = 150;
+    private final int SECURE_LOW = 100;
 
     public ApItem(String name, String capabilities, int rssi, int eap_type) {
         this.ap_name = name;

@@ -49,14 +49,14 @@ public class SecurityEstimater {
                 score[1] += 20;
                 Log.d(TAG, "pw_checker: score[1] = " + score[1]);
             }
-            else if (capabilities.contains("WPA2")) {
+            if (capabilities.contains("WPA2")) {
                 Log.d(TAG, "pw_checker: wpa2");
 //                capabilities.addSec_Score(40);
                 score[1] += 40;
                 Log.d(TAG, "pw_checker: score[1] = " + score[1]);
 
             }
-            else if (capabilities.contains("WEP")) {
+            if (capabilities.contains("WEP")) {
                 Log.d(TAG, "pw_checker: wep");
 //                ap_Item.addSec_Score(10);
                 score[1] += 10;
