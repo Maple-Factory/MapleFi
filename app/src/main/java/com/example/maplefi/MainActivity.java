@@ -83,26 +83,29 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         buttonScan.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("buttonScan", "onClick: 스캔버튼 클릭");
                 // AP 스캔
                 updateNowAp();  // 테스트 용도
                 ap_items.clear();
                 adapter.notifyDataSetChanged();
                 if(wifiUtil.isWifiEnabled()) {
                     wifiUtil.scan();
+                    Log.d("buttonScan", "onClick: 와이파이 유틸 슽캔 완료");
 
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
-                    for (ScanResult scanResult : wifiList) {
+                    Log.d("buttonScan", "onClick: 리스트생성");
+                    for (ScanResult scanResult : wifiList) {//여기 진입을 안함.
+                        Log.d("buttonScan", "onClick: 포문");
+
 
                         Log.d("TEST",scanResult.toString());
-                        int position = 0;
                         if(!scanResult.SSID.equals(""))   // 임시로 숨겨진 ap 스킵. 수정 필요
                             addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,
                                     Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                             Log.d("TEST", "onClick: before security");
-                            securityEstimater = new SecurityEstimater(ap_items, position);
                             //ISSUE : position이 0인 와이파이만 점수가 제대로 나오고 나머진 다 0으로 나옴
 //                            ap_items.get(position).setSec_score(SecurityEstimater.getScore(ap_items.get(position)));
-                            position++;
+
 
                     }
                 }
@@ -174,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
     public void addItem(String item_ssid, String capabilities, int rssi, int eap_type){
         ApItem item = new ApItem(item_ssid, capabilities, rssi, eap_type);
+        Log.d("TEST add", "addItem: "+item_ssid);
         ap_items.add(item);
         adapter.notifyDataSetChanged();
     }

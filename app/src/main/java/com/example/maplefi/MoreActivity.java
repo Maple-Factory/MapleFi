@@ -77,20 +77,21 @@ public class MoreActivity extends AppCompatActivity {
         // -------------------------------------------------------------//
         // AP 상세 정보
         final TextView textViewCap1 = (TextView) findViewById(R.id.tv_cap1);
-        textViewCap1.setText("CAP1 : ");    // TODO: Cap1~4 로직
+        textViewCap1.setText("Password : "+ap_item.getSecScore(2));
 
         final TextView textViewCap2 = (TextView) findViewById(R.id.tv_cap2);
-        textViewCap2.setText("CAP2 : ");
+        textViewCap2.setText("Packet : "+ap_item.getSecScore(3));
 
         final TextView textViewCap3 = (TextView) findViewById(R.id.tv_cap3);
-        textViewCap3.setText("CAP3 : ");
+        textViewCap3.setText("Packet snif : "+ap_item.getSecScore(4));
 
         final TextView textViewCap4 = (TextView) findViewById(R.id.tv_cap4);
-        textViewCap4.setText("CAP4 : ");
+        textViewCap4.setText("SSID : "+ap_item.getSecScore(1));
+
 
         // AP 보안 점수
         final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
-        textViewSecScore.setText(Integer.toString(ap_item.getSecScore())+" 점");
+        textViewSecScore.setText(Integer.toString(ap_item.getSecScore(0))+" 점");
 
         // AP 보안 신호등
 //        final ImageView imgViewLightSet = (ImageView) findViewById(R.id.img_sec_score);
