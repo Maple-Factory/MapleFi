@@ -22,9 +22,8 @@ public class ApItem implements Serializable {
 
     private final int RSSI_HIGH = -60;
     private final int RSSI_LOW = -70;
-    private final int SECURE_HIGH = 90; // TODO: 신호등 :wq!
-    // 점수 분기 값 정하기
-    private final int SECURE_LOW = 70;
+    private final int SECURE_HIGH = 200;
+    private final int SECURE_LOW = 150;
 
     public ApItem(String name, String capabilities, int rssi, int eap_type) {
         this.ap_name = name;

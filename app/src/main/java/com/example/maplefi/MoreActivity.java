@@ -78,24 +78,19 @@ public class MoreActivity extends AppCompatActivity {
         // AP 상세 정보
         final TextView textViewCap1 = (TextView) findViewById(R.id.tv_cap1);
 //        textViewCap1.setText(" Password : "+ap_item.getSecScore(1));
-        textViewCap1.setText(" Password : 90");
-
+        textViewCap1.setText("Password : 90");
 
         final TextView textViewCap2 = (TextView) findViewById(R.id.tv_cap2);
 //        textViewCap2.setText(" Packet : "+ap_item.getSecScore(2));
-        textViewCap2.setText(" Packet : 50");
-
+        textViewCap2.setText("Packet : 50");
 
         final TextView textViewCap3 = (TextView) findViewById(R.id.tv_cap3);
 //        textViewCap3.setText(" Packet snif : "+ap_item.getSecScore(3));
-        textViewCap3.setText(" Packet snif : 0");
-
+        textViewCap3.setText("Packet snif : 0");
 
         final TextView textViewCap4 = (TextView) findViewById(R.id.tv_cap4);
 //        textViewCap4.setText(" Hide : "+ap_item.getSecScore(4));
-        textViewCap4.setText(" Hide : 0");
-
-
+        textViewCap4.setText("Hide : 0");
 
         // AP 보안 점수
         final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
@@ -160,6 +155,12 @@ public class MoreActivity extends AppCompatActivity {
             textViewReport.setText(getString(R.string.none_report));
             Log.d("test", "onCreate: "+textViewReport.toString());
         }
+        textViewReport.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
+                               "PSK 키 관리 방식을 사용하여 해커에게 도청당할 위험이 약간 있고, " +
+                               "네트워크 이름이 숨겨져 있지 않아 해커가 접근하기 용이합니다.\n\n" +
+                               "더 나은 보안을 위해서는 와이파이의 네트워크(디바이스) 숨기기 기능을 활성화하시고 " +
+                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다. \n\n" +
+                               "추천 형태: 숨겨진 네트워크, \n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]");
 
         // 디테일 설명 펴기/접기 버튼 이벤트
         imgButtonDetail.setOnClickListener(new Button.OnClickListener() {
