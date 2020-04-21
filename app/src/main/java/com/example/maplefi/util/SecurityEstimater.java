@@ -96,6 +96,7 @@ public class SecurityEstimater {
 //            Log.d(TAG, "packet_checker: " + ap_Item.getSecScore());
             score[2] += 40;
             Log.d(TAG, "packet_checker: "+score);
+            //just
 
         } else {
             Log.d(TAG, "packet_checker: not in our packet case");
