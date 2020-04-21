@@ -77,16 +77,16 @@ public class MoreActivity extends AppCompatActivity {
         // -------------------------------------------------------------//
         // AP 상세 정보
         final TextView textViewCap1 = (TextView) findViewById(R.id.tv_cap1);
-        textViewCap1.setText("SSID : "+ap_item.getSecScore(1));    // TODO: Cap1~4 로직
+        textViewCap1.setText("Password : "+ap_item.getSecScore(2));
 
         final TextView textViewCap2 = (TextView) findViewById(R.id.tv_cap2);
-        textViewCap2.setText("Password : "+ap_item.getSecScore(2));
+        textViewCap2.setText("Packet : "+ap_item.getSecScore(3));
 
         final TextView textViewCap3 = (TextView) findViewById(R.id.tv_cap3);
-        textViewCap3.setText("Packet : "+ap_item.getSecScore(3));
+        textViewCap3.setText("Packet snif : "+ap_item.getSecScore(4));
 
         final TextView textViewCap4 = (TextView) findViewById(R.id.tv_cap4);
-        textViewCap4.setText("Packet snif : "+ap_item.getSecScore(4));
+        textViewCap4.setText("SSID : "+ap_item.getSecScore(1));
 
 
         // AP 보안 점수
