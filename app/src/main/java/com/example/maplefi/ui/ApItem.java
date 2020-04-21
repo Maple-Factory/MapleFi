@@ -48,7 +48,8 @@ public class ApItem implements Serializable {
         this.rssi_score = rssi; // score 대신 rssi 값 그대로 사용. 수정 필요
 
         // 보안 점수 책정
-        this.sec_score = securityEstimater.getScore();/*securityEstimater(name, capabilities, eap_type)*/    // TODO: 점수 책정 로직 추가 필요(Sec_score 계산)
+        this.sec_score = securityEstimater.getScore();
+//        this.sec_score = {140,90,50,0,0};
         Log.d("TEST add", "ApItem: sec store 지정");
 
         // 보안 레벨 책정
@@ -76,7 +77,7 @@ public class ApItem implements Serializable {
     public String getCaps(){
         return this.capabilities;
     }
-    public int getEapType(){ return this.eap_type;} // TODO: getEap_Type 사용된 함수 이름 getEapType변경 후 commit 필요
+    public int getEapType(){ return this.eap_type;}
 
     public int getRssiLevel(){
         return this.rssi_level;
