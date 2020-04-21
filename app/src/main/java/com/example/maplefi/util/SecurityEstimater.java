@@ -47,23 +47,24 @@ public class SecurityEstimater {
                 Log.d(TAG, "pw_checker: wpa");
 //                ap_Item.addSec_Score(20);
                 score[1] += 20;
-                Log.d(TAG, "pw_checker: " + score);
+                Log.d(TAG, "pw_checker: score[1] = " + score[1]);
             }
-            if (capabilities.contains("WPA2")) {
+            else if (capabilities.contains("WPA2")) {
                 Log.d(TAG, "pw_checker: wpa2");
 //                capabilities.addSec_Score(40);
                 score[1] += 40;
-                Log.d(TAG, "pw_checker: " + score);
+                Log.d(TAG, "pw_checker: score[1] = " + score[1]);
 
             }
-            if (capabilities.contains("WEP")) {
+            else if (capabilities.contains("WEP")) {
                 Log.d(TAG, "pw_checker: wep");
 //                ap_Item.addSec_Score(10);
                 score[1] += 10;
-                Log.d(TAG, "pw_checker: " + score);
+                Log.d(TAG, "pw_checker: " + score[1]);
             }
             score[0] += score[1];// 총점에 개별점수 더하기
-            Log.d(TAG, "pw_checker: " + score);
+            Log.d(TAG, "pw_checker: score[1] = " + score[1]);
+            Log.d(TAG, "pw_checker: score[0] = "+score[0]);
 
         }
     }
@@ -134,7 +135,7 @@ public class SecurityEstimater {
             Log.d(TAG, "packetsnif_checker: this is not eap");
         } else {
             Log.d(TAG, "packetsnif_checker: not in our eap case");
-            score[3] += 50;
+//            score[3] += 50;
         }
         score[0] += score[3];
     }
