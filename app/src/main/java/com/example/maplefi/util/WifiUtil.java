@@ -19,6 +19,7 @@ public class WifiUtil {
     private WifiManager wifiManager;
 
     private final int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1;
+    private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 0;
     private final String TAG = "WIFIIUTILL";
 
     public WifiUtil(@NonNull Context context, @NonNull Activity activity){
@@ -29,6 +30,11 @@ public class WifiUtil {
             ActivityCompat.requestPermissions(activity, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION
             }, MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+        }
+        if(ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(activity, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, MY_PERMISSION_ACCESS_FINE_LOCATION);
         }
     }
 
@@ -229,11 +235,27 @@ public class WifiUtil {
         }
     }
     public void removeProfile(int net_id){
-        wifiManager.removeNetwork(net_id);
+        boolean b = wifiManager.removeNetwork(net_id);
+        wifiManager.saveConfiguration();
+        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(net_id));
+        else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
     }
     public void removeProfile(String ssid){
         int net_id = getProfileId(ssid);
-        wifiManager.removeNetwork(net_id);
+        boolean b = wifiManager.removeNetwork(net_id);
+        wifiManager.saveConfiguration();
+
+        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(net_id));
+        else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
+    }
+
+    public int ssidToEap(String ssid){
+        List<ScanResult> wifiList = wifiManager.getScanResults();
+        for (ScanResult scanResult : wifiList) {
+            if(!scanResult.SSID.equals(ssid))   // 임시로 숨겨진 ap 스킵. 수정 필요
+                return Integer.parseInt(parseEapType(scanResult.toString()));
+        }
+        return -2;  // 예외 처리 값 설정 필요
     }
 
     // ScanResult Processing Functions

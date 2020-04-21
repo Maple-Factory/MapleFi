@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">MapleFi</string>
     <string name="proto_onoff_btn"></string>
+    <string name="wpa_report">여기에 wpa 보안 report</string>
+    <string name="wpa2_report">wpa2 보안 report</string>
+    <string name="wep_report">wep report</string>
+    <string name="none_report">암호화 방식 없는 거 report</string>
+    <string name="psk_report">psk report</string>
+    <string name="tkip_report">tkip report</string>
+    <string name="eap_report">eap report eap는 보안 강도가 높지용~~</string>
 </resources>
