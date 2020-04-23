@@ -76,7 +76,7 @@
                         android:layout_height="50dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:paddingLeft="2dp"
+                        android:paddingLeft="4dp"
                         android:paddingTop="2dp"
                         android:paddingRight="2dp"
                         android:paddingBottom="2dp"
@@ -138,6 +138,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="1"
+                            android:paddingLeft="2dp"
                             android:text="CAP1 : " />
 
                         <TextView
@@ -145,6 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="1"
+                            android:paddingLeft="2dp"
                             android:text="CAP2 : " />
 
                         <TextView
@@ -152,6 +154,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="1"
+                            android:paddingLeft="2dp"
                             android:text="CAP3 : " />
 
                         <TextView
@@ -159,6 +162,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="1"
+                            android:paddingLeft="2dp"
                             android:text="CAP4 : " />
                     </LinearLayout>
 
