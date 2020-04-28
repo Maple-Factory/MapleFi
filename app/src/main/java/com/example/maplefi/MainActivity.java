@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                 adapter.notifyDataSetChanged();
                 if(wifiUtil.isWifiEnabled()) {
                     wifiUtil.scan();
-                    Log.d("buttonScan", "onClick: 와이파이 유틸 슽캔 완료");
+                    Log.d("buttonScan", "onClick: 와이파이 유틸 스캔 완료");
 
                     List<ScanResult> wifiList = wifiUtil.getScanResults();
                     Log.d("buttonScan", "onClick: 리스트생성");
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         updateNowAp();
 
         // - 테스트 샘플
-//        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50,-1);
+        addItem("CJWIFI_9C1A","[WPA-PSK-CCMP+TKIP]",-50,-1);
 //        addItem("IPTIME","[WEP][ESS]",-80);
 
         WifiReceiver receiverWifi = new WifiReceiver();
