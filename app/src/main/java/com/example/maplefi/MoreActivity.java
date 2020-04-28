@@ -77,25 +77,25 @@ public class MoreActivity extends AppCompatActivity {
         // -------------------------------------------------------------//
         // AP 상세 정보
         final TextView textViewCap1 = (TextView) findViewById(R.id.tv_cap1);
-//        textViewCap1.setText(" Password : "+ap_item.getSecScore(1));
-        textViewCap1.setText("Password : 90");
+        textViewCap1.setText(" Password : "+ap_item.getSecScore(1));
+//        textViewCap1.setText("Password : 90");
 
         final TextView textViewCap2 = (TextView) findViewById(R.id.tv_cap2);
-//        textViewCap2.setText(" Packet : "+ap_item.getSecScore(2));
-        textViewCap2.setText("Packet : 50");
+        textViewCap2.setText(" Packet : "+ap_item.getSecScore(2));
+//        textViewCap2.setText("Packet : 50");
 
         final TextView textViewCap3 = (TextView) findViewById(R.id.tv_cap3);
-//        textViewCap3.setText(" Packet snif : "+ap_item.getSecScore(3));
-        textViewCap3.setText("Packet snif : 0");
+        textViewCap3.setText(" Packet snif : "+ap_item.getSecScore(3));
+//        textViewCap3.setText("Packet snif : 0");
 
         final TextView textViewCap4 = (TextView) findViewById(R.id.tv_cap4);
-//        textViewCap4.setText(" Hide : "+ap_item.getSecScore(4));
-        textViewCap4.setText("Hide : 0");
+        textViewCap4.setText(" Hide : "+ap_item.getSecScore(4));
+//        textViewCap4.setText("Hide : 0");
 
         // AP 보안 점수
         final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
-//        textViewSecScore.setText(Integer.toString(ap_item.getSecScore(0))+" 점");
-        textViewSecScore.setText("140 점");
+        textViewSecScore.setText(Integer.toString(ap_item.getSecScore(0))+" 점");
+//        textViewSecScore.setText("140 점");
 
 
         // AP 보안 신호등
@@ -109,12 +109,6 @@ public class MoreActivity extends AppCompatActivity {
         // AP 디테일보기 버튼
         ImageButton imgButtonDetail = (ImageButton) findViewById(R.id.imgb_detail) ;
 
-//        final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
-//        textViewSecScore.setText("TEST eap type:"+Integer.toString(ap_item.getEapType()));
-//        textViewSecScore.setText(Integer.toString(ap_item.getSecScore()));
-//        final TextView textViewSpdScore = (TextView) findViewById(R.id.tv_speed_score);
-//        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
-//        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
         // AP 디테일 정보
         final ImageView imgDetailDash = (ImageView) findViewById(R.id.dash_detail);
         imgDetailDash.setVisibility(View.INVISIBLE);
@@ -126,40 +120,46 @@ public class MoreActivity extends AppCompatActivity {
 
         // 보안방식에 따른 레포트
         // TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
-        if(ap_item.getCaps().contains("WEP")){
-            Log.d("test", "onCreate: wep");
-            textViewReport.setText(getString(R.string.wep_report));
-            Log.d("test", "onCreate: "+textViewReport.toString());
-        }else if(ap_item.getCaps().contains("WPA")){
-            Log.d("test", "onCreate: wpa");
-            if(ap_item.getCaps().contains("TKIP")){
-                Log.d("test", "onCreate: wpa-tkip");
-                textViewReport.setText(getString(R.string.wpa_report) + " " + getString(R.string.tkip_report));
-                Log.d("test", "onCreate: "+textViewReport.toString());
-            }else if(ap_item.getCaps().contains("PSK")){
-                Log.d("test", "onCreate: wpa-psk");
-                textViewReport.setText(getString(R.string.wpa_report) + "" + getString(R.string.psk_report));
-                Log.d("test", "onCreate: "+textViewReport.toString());
-            }
-        }else if(ap_item.getCaps().contains("WPA2")){
-            Log.d("test", "onCreate: wpa2");
-            textViewReport.setText(getString(R.string.wpa2_report));
-            Log.d("test", "onCreate: "+textViewReport.toString());
-            if(ap_item.getCaps().contains("EAP")){
-                Log.d("test", "onCreate: eap");
-                textViewReport.setText(getString(R.string.eap_report));
-                Log.d("test", "onCreate: "+textViewReport);
-            }
-        }else{
-            Log.d("test", "onCreate: else");
-            textViewReport.setText(getString(R.string.none_report));
-            Log.d("test", "onCreate: "+textViewReport.toString());
-        }
+//        if(ap_item.getCaps().contains("WEP")){
+//            Log.d("test", "onCreate: wep");
+//            textViewReport.setText(getString(R.string.wep_report));
+//
+//            Log.d("test", "onCreate: "+textViewReport.toString());
+//        }else if(ap_item.getCaps().contains("WPA")){
+//            Log.d("test", "onCreate: wpa");
+//            if(ap_item.getCaps().contains("TKIP")){
+//                Log.d("test", "onCreate: wpa-tkip");
+//                textViewReport.setText(getString(R.string.wpa_report) + " " + getString(R.string.tkip_report));
+//
+//                Log.d("test", "onCreate: "+textViewReport.toString());
+//            }else if(ap_item.getCaps().contains("PSK")){
+//                Log.d("test", "onCreate: wpa-psk");
+//                textViewReport.setText(getString(R.string.wpa_report) + "" + getString(R.string.psk_report));
+//
+//                Log.d("test", "onCreate: "+textViewReport.toString());
+//            }
+//        }else if(ap_item.getCaps().contains("WPA2")){
+//            Log.d("test", "onCreate: wpa2");
+//            textViewReport.setText(getString(R.string.wpa2_report));
+//
+//            Log.d("test", "onCreate: "+textViewReport.toString());
+//            if(ap_item.getCaps().contains("EAP")){
+//                Log.d("test", "onCreate: eap");
+//                textViewReport.setText(getString(R.string.eap_report));
+//
+//                Log.d("test", "onCreate: "+textViewReport);
+//            }
+//        }else{
+//            Log.d("test", "onCreate: else");
+//            textViewReport.setText(getString(R.string.none_report));
+//
+//            Log.d("test", "onCreate: "+textViewReport.toString());
+//        }
         textViewReport.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
                                "PSK 키 관리 방식을 사용하여 해커에게 도청당할 위험이 약간 있고, " +
                                "네트워크 이름이 숨겨져 있지 않아 해커가 접근하기 용이합니다.\n\n" +
                                "더 나은 보안을 위해서는 와이파이의 네트워크(디바이스) 숨기기 기능을 활성화하시고 " +
-                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다. \n\n" +
+                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다.\n\n" +
                                "추천 형태: 숨겨진 네트워크, \n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]");
 
         // 디테일 설명 펴기/접기 버튼 이벤트
