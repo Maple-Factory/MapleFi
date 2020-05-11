@@ -43,9 +43,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
 //            //뷰 객체에 대한 참조
             textView_SSID = itemView.findViewById(R.id.tv_ssid);
-            ap_state = itemView.findViewById(R.id.img_rssiDegree);
+            ap_state = itemView.findViewById(R.id.img_strDegree);
             btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
-            btn_ap_info = itemView.findViewById(R.id.imgb_moreinf);
+            btn_ap_info = itemView.findViewById(R.id.imgb_moreinfo);
 
         }
         public ImageButton getMoreinf(){

@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class PasswdPopupActivity extends Activity {
     @Override
@@ -24,25 +22,24 @@ public class PasswdPopupActivity extends Activity {
         final String ssid = intent.getStringExtra("ssid");
         final String capabilities = intent.getStringExtra("capabilities");
 
-        final EditText editTxt_passwd = (EditText)findViewById(R.id.et_passwd);
-        Button button_ok = (Button)findViewById(R.id.btn_ok);
-        Button button_no = (Button)findViewById(R.id.btn_no);
+        final EditText passwdEditText = (EditText) findViewById(R.id.et_passwd);
+        Button okButton = (Button) findViewById(R.id.btn_ok);
+        Button noButton = (Button) findViewById(R.id.btn_no);
 
-
-        button_ok.setOnClickListener(new Button.OnClickListener() {
+        okButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("TEST","Ok Click");
                 Intent intent = new Intent();
                 intent.putExtra("ssid", ssid);
                 intent.putExtra("capabilities", capabilities);
-                intent.putExtra("password", editTxt_passwd.getText().toString());
+                intent.putExtra("password", passwdEditText.getText().toString());
 
                 setResult(RESULT_OK, intent);
                 finish();
             }
         });
-        button_no.setOnClickListener(new Button.OnClickListener() {
+        noButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setResult(RESULT_CANCELED);
