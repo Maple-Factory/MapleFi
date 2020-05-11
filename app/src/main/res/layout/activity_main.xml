@@ -9,7 +9,7 @@
         tools:context=".MainActivity">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineLength"
+            android:id="@+id/guideline_length"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -17,7 +17,7 @@
             app:layout_constraintGuide_percent="0.12"/>
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineWidth"
+            android:id="@+id/guideline_width"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -25,11 +25,11 @@
             app:layout_constraintGuide_percent="0.10"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sideLayout"
+            android:id="@+id/constLayout_sidebar"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/guidelineLength"
+            app:layout_constraintEnd_toEndOf="@+id/guideline_length"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -57,13 +57,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:id="@+id/nowApLayout"
+            android:id="@+id/linLayout_nowAp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineWidth"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_width"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLength"
+            app:layout_constraintStart_toStartOf="@+id/guideline_length"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -78,21 +78,21 @@
                 tools:ignore="RtlCompat"/>
 
             <ImageView
-                android:id="@+id/img_color"
+                android:id="@+id/img_secColor"
                 android:layout_width="0px"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/gray" />
 
             <ImageView
-                android:id="@+id/img_rssiDegree"
+                android:id="@+id/img_strDegree"
                 android:layout_width="0px"
                 android:layout_weight="1"
                 android:layout_height="50dp"
                 app:srcCompat="@drawable/wifi_3" />
 
             <ImageButton
-                android:id="@+id/imgb_moreinf"
+                android:id="@+id/imgb_moreinfo"
                 android:layout_width="0px"
                 android:layout_weight="1"
                 android:layout_height="50dp"
@@ -109,17 +109,17 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/apListLayout"
+            android:id="@+id/constLayout_apList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="true"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLength"
+            app:layout_constraintStart_toStartOf="@+id/guideline_length"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guidelineWidth"
+            app:layout_constraintTop_toTopOf="@+id/guideline_width"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/wifiListOld"
+                android:id="@+id/recycleView_wifiListOld"
                 android:layout_width="match_parent"
                 android:layout_weight="5"
                 android:layout_height="match_parent"

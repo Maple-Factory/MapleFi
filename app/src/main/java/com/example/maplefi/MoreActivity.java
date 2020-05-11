@@ -2,7 +2,6 @@ package com.example.maplefi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -21,10 +20,10 @@ public class MoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_more);
 
         Intent intent = getIntent();
-        ApItem ap_item = (ApItem) intent.getSerializableExtra("AP_ITEM");
+        ApItem apItem = (ApItem) intent.getSerializableExtra("AP_ITEM");
 
-        final Button buttonBack = (Button) findViewById(R.id.btn_back) ;
-        buttonBack.setOnClickListener(new Button.OnClickListener() {
+        final Button backButton = (Button) findViewById(R.id.btn_back) ;
+        backButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -32,42 +31,42 @@ public class MoreActivity extends AppCompatActivity {
         });
 
         // AP 기본 정보
-        final TextView textViewSsid = (TextView) findViewById(R.id.tv_ssid);
-        textViewSsid.setText(ap_item.getSsid());
+        final TextView ssidTextView = (TextView) findViewById(R.id.tv_ssid);
+        ssidTextView.setText(apItem.getSsid());
 
-        final ImageView imgViewLight = (ImageView) findViewById(R.id.img_color);
-        int secure_level = ap_item.getSecLevel();
-        switch (secure_level){
+        final ImageView secColorImgView = (ImageView) findViewById(R.id.img_secColor);
+        int secLevel = apItem.getSecLevel();
+        switch (secLevel){
             case 1:
-                imgViewLight.setImageResource(R.drawable.red);
+                secColorImgView.setImageResource(R.drawable.red);
                 break;
             case 2:
-                imgViewLight.setImageResource(R.drawable.orange);
+                secColorImgView.setImageResource(R.drawable.orange);
                 break;
             case 3:
-                imgViewLight.setImageResource(R.drawable.green);
+                secColorImgView.setImageResource(R.drawable.green);
                 break;
             default:
-                imgViewLight.setImageResource(R.drawable.red);
+                secColorImgView.setImageResource(R.drawable.red);
         }
-        final ImageView imgRssi = (ImageView) findViewById(R.id.img_rssiDegree);
-        int rssi_level = ap_item.getRssiLevel();
-        switch (rssi_level){
+        final ImageView rssiImgView = (ImageView) findViewById(R.id.img_strDegree);
+        int rssiLevel = apItem.getRssiLevel();
+        switch (rssiLevel){
             case 1:
-                imgRssi.setImageResource(R.drawable.wifi_1);
+                rssiImgView.setImageResource(R.drawable.wifi_1);
                 break;
             case 2:
-                imgRssi.setImageResource(R.drawable.wifi_2);
+                rssiImgView.setImageResource(R.drawable.wifi_2);
                 break;
             case 3:
-                imgRssi.setImageResource(R.drawable.wifi_3);
+                rssiImgView.setImageResource(R.drawable.wifi_3);
                 break;
             default:
-                imgRssi.setImageResource(R.drawable.wifi_x);
+                rssiImgView.setImageResource(R.drawable.wifi_x);
         }
 
-        ImageButton imgButtonConnect = (ImageButton) findViewById(R.id.imgb_connect) ;
-        imgButtonConnect.setOnClickListener(new Button.OnClickListener() {
+        ImageButton connectImgButton = (ImageButton) findViewById(R.id.imgb_connect) ;
+        connectImgButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                wifiUtil.connect("","","");
@@ -76,26 +75,26 @@ public class MoreActivity extends AppCompatActivity {
 
         // -------------------------------------------------------------//
         // AP 상세 정보
-        final TextView textViewCap1 = (TextView) findViewById(R.id.tv_cap1);
-//        textViewCap1.setText(" Password : "+ap_item.getSecScore(1));
-        textViewCap1.setText("Password : 90");
+        final TextView evalItemTextView1 = (TextView) findViewById(R.id.tv_evalItem1);
+        evalItemTextView1.setText(" Password : " + apItem.getSecScore(1));
+//        textViewCap1.setText("Password : 90");
 
-        final TextView textViewCap2 = (TextView) findViewById(R.id.tv_cap2);
-//        textViewCap2.setText(" Packet : "+ap_item.getSecScore(2));
-        textViewCap2.setText("Packet : 50");
+        final TextView evalItemTextView2 = (TextView) findViewById(R.id.tv_evalItem2);
+        evalItemTextView2.setText(" Packet : " + apItem.getSecScore(2));
+//        textViewCap2.setText("Packet : 50");
 
-        final TextView textViewCap3 = (TextView) findViewById(R.id.tv_cap3);
-//        textViewCap3.setText(" Packet snif : "+ap_item.getSecScore(3));
-        textViewCap3.setText("Packet snif : 0");
+        final TextView evalItemTextView3 = (TextView) findViewById(R.id.tv_evalItem3);
+        evalItemTextView3.setText(" Packet snif : " + apItem.getSecScore(3));
+//        textViewCap3.setText("Packet snif : 0");
 
-        final TextView textViewCap4 = (TextView) findViewById(R.id.tv_cap4);
-//        textViewCap4.setText(" Hide : "+ap_item.getSecScore(4));
-        textViewCap4.setText("Hide : 0");
+        final TextView evalItemTextView4 = (TextView) findViewById(R.id.tv_evalItem4);
+        evalItemTextView4.setText(" Hide : " + apItem.getSecScore(4));
+//        textViewCap4.setText("Hide : 0");
 
         // AP 보안 점수
-        final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
-//        textViewSecScore.setText(Integer.toString(ap_item.getSecScore(0))+" 점");
-        textViewSecScore.setText("140 점");
+        final TextView secScoreTextView = (TextView) findViewById(R.id.tv_secScore);
+        secScoreTextView.setText(Integer.toString(apItem.getSecScore(0)) + " 점");
+//        textViewSecScore.setText("140 점");
 
 
         // AP 보안 신호등
@@ -103,78 +102,76 @@ public class MoreActivity extends AppCompatActivity {
 //        imgViewLight.setImageResource(R.drawable.);
 
         // AP 신호 강도 점수
-        final TextView textViewSpeedScore = (TextView) findViewById(R.id.tv_speed_score);
-        textViewSpeedScore.setText(Integer.toString(ap_item.getRssiScore()) + " dBm");
+        final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);
+        strScoreTextView.setText(Integer.toString(apItem.getRssiScore()) + " dBm");
 
         // AP 디테일보기 버튼
-        ImageButton imgButtonDetail = (ImageButton) findViewById(R.id.imgb_detail) ;
+        ImageButton detailImgButton = (ImageButton) findViewById(R.id.imgb_detail) ;
 
-//        final TextView textViewSecScore = (TextView) findViewById(R.id.tv_sec_score);
-//        textViewSecScore.setText("TEST eap type:"+Integer.toString(ap_item.getEapType()));
-//        textViewSecScore.setText(Integer.toString(ap_item.getSecScore()));
-//        final TextView textViewSpdScore = (TextView) findViewById(R.id.tv_speed_score);
-//        textViewSpdScore.setText("TEST caps:"+ap_item.getCaps());
-//        textViewSpdScore.setText(Integer.toString(ap_item.getRssiScore()));
         // AP 디테일 정보
-        final ImageView imgDetailDash = (ImageView) findViewById(R.id.dash_detail);
-        imgDetailDash.setVisibility(View.INVISIBLE);
+        final ImageView detailDashImgView = (ImageView) findViewById(R.id.img_dashDetail);
+        detailDashImgView.setVisibility(View.INVISIBLE);
 
-        final LinearLayout linearLayoutDetail = (LinearLayout) findViewById(R.id.detailLayout);
-        linearLayoutDetail.setVisibility(View.INVISIBLE);
+        final LinearLayout detailLinearLayout = (LinearLayout) findViewById(R.id.linLayout_detailReport);
+        detailLinearLayout.setVisibility(View.INVISIBLE);
 
-        final TextView textViewReport = (TextView) findViewById(R.id.tv_detail_desc);
+        final TextView reportTextView = (TextView) findViewById(R.id.tv_detailReport);
 
         // 보안방식에 따른 레포트
-        // TODO : 없는거 제외하곤 report set text 제대로 안됨. 수정요함
-        if(ap_item.getCaps().contains("WEP")){
-            Log.d("test", "onCreate: wep");
-            textViewReport.setText(getString(R.string.wep_report));
-            Log.d("test", "onCreate: "+textViewReport.toString());
-        }else if(ap_item.getCaps().contains("WPA")){
-            Log.d("test", "onCreate: wpa");
-            if(ap_item.getCaps().contains("TKIP")){
-                Log.d("test", "onCreate: wpa-tkip");
-                textViewReport.setText(getString(R.string.wpa_report) + " " + getString(R.string.tkip_report));
-                Log.d("test", "onCreate: "+textViewReport.toString());
-            }else if(ap_item.getCaps().contains("PSK")){
-                Log.d("test", "onCreate: wpa-psk");
-                textViewReport.setText(getString(R.string.wpa_report) + "" + getString(R.string.psk_report));
-                Log.d("test", "onCreate: "+textViewReport.toString());
-            }
-        }else if(ap_item.getCaps().contains("WPA2")){
-            Log.d("test", "onCreate: wpa2");
-            textViewReport.setText(getString(R.string.wpa2_report));
-            Log.d("test", "onCreate: "+textViewReport.toString());
-            if(ap_item.getCaps().contains("EAP")){
-                Log.d("test", "onCreate: eap");
-                textViewReport.setText(getString(R.string.eap_report));
-                Log.d("test", "onCreate: "+textViewReport);
-            }
-        }else{
-            Log.d("test", "onCreate: else");
-            textViewReport.setText(getString(R.string.none_report));
-            Log.d("test", "onCreate: "+textViewReport.toString());
-        }
-        textViewReport.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
+//        if(ap_item.getCaps().contains("WEP")){
+//            Log.d("test", "onCreate: wep");
+//            textViewReport.setText(getString(R.string.wep_report));
+//
+//            Log.d("test", "onCreate: "+textViewReport.toString());
+//        }else if(ap_item.getCaps().contains("WPA")){
+//            Log.d("test", "onCreate: wpa");
+//            if(ap_item.getCaps().contains("TKIP")){
+//                Log.d("test", "onCreate: wpa-tkip");
+//                textViewReport.setText(getString(R.string.wpa_report) + " " + getString(R.string.tkip_report));
+//
+//                Log.d("test", "onCreate: "+textViewReport.toString());
+//            }else if(ap_item.getCaps().contains("PSK")){
+//                Log.d("test", "onCreate: wpa-psk");
+//                textViewReport.setText(getString(R.string.wpa_report) + "" + getString(R.string.psk_report));
+//
+//                Log.d("test", "onCreate: "+textViewReport.toString());
+//            }
+//        }else if(ap_item.getCaps().contains("WPA2")){
+//            Log.d("test", "onCreate: wpa2");
+//            textViewReport.setText(getString(R.string.wpa2_report));
+//
+//            Log.d("test", "onCreate: "+textViewReport.toString());
+//            if(ap_item.getCaps().contains("EAP")){
+//                Log.d("test", "onCreate: eap");
+//                textViewReport.setText(getString(R.string.eap_report));
+//
+//                Log.d("test", "onCreate: "+textViewReport);
+//            }
+//        }else{
+//            Log.d("test", "onCreate: else");
+//            textViewReport.setText(getString(R.string.none_report));
+//
+//            Log.d("test", "onCreate: "+textViewReport.toString());
+//        }
+        reportTextView.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
                                "PSK 키 관리 방식을 사용하여 해커에게 도청당할 위험이 약간 있고, " +
                                "네트워크 이름이 숨겨져 있지 않아 해커가 접근하기 용이합니다.\n\n" +
                                "더 나은 보안을 위해서는 와이파이의 네트워크(디바이스) 숨기기 기능을 활성화하시고 " +
-                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다. \n\n" +
+                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다.\n\n" +
                                "추천 형태: 숨겨진 네트워크, \n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]");
 
         // 디테일 설명 펴기/접기 버튼 이벤트
-        imgButtonDetail.setOnClickListener(new Button.OnClickListener() {
+        detailImgButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(linearLayoutDetail.getVisibility() == View.VISIBLE){
-                    linearLayoutDetail.setVisibility(View.INVISIBLE);
-                    imgDetailDash.setVisibility(View.INVISIBLE);
+                if(detailLinearLayout.getVisibility() == View.VISIBLE){
+                    detailLinearLayout.setVisibility(View.INVISIBLE);
+                    detailDashImgView.setVisibility(View.INVISIBLE);
                 }
                 else {
-                    linearLayoutDetail.setVisibility(View.VISIBLE);
-                    imgDetailDash.setVisibility(View.VISIBLE);
+                    detailLinearLayout.setVisibility(View.VISIBLE);
+                    detailDashImgView.setVisibility(View.VISIBLE);
                 }
-
             }
         });
     }

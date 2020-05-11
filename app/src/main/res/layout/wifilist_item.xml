@@ -19,21 +19,21 @@
             tools:ignore="RtlCompat" />
 
         <ImageView
-            android:id="@+id/img_color"
+            android:id="@+id/img_secColor"
             android:layout_width="0px"
             android:layout_height="50dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/red" />
 
         <ImageView
-            android:id="@+id/img_rssiDegree"
+            android:id="@+id/img_strDegree"
             android:layout_width="0px"
             android:layout_height="50dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/wifi_3" />
 
         <ImageButton
-            android:id="@+id/imgb_moreinf"
+            android:id="@+id/imgb_moreinfo"
             android:layout_width="0px"
             android:layout_height="50dp"
             android:layout_weight="1"
