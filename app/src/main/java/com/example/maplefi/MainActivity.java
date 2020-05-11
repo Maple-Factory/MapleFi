@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
     public void addItem(String itemSsid, String capabilities, int rssi, int eapType){
         ApItem item = new ApItem(itemSsid, capabilities, rssi, eapType);
-        Log.d("TEST add", "addItem: "+itemSsid);
+        Log.d("TEST add", "addItem: " + itemSsid);
         apItems.add(item);
         adapter.notifyDataSetChanged();
     }

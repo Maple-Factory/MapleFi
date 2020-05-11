@@ -237,16 +237,16 @@ public class WifiUtil {
     public void removeProfile(int netId){
         boolean b = wifiManager.removeNetwork(netId);
         wifiManager.saveConfiguration();
-        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(netId));
-        else Log.d("TEST","Remove False net_id:"+Integer.toString(netId));
+        if(b) Log.d("TEST","Remove True net_id:" + Integer.toString(netId));
+        else Log.d("TEST","Remove False net_id:" + Integer.toString(netId));
     }
     public void removeProfile(String ssid){
         int netId = getProfileId(ssid);
         boolean b = wifiManager.removeNetwork(netId);
         wifiManager.saveConfiguration();
 
-        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(netId));
-        else Log.d("TEST","Remove False net_id:"+Integer.toString(netId));
+        if(b) Log.d("TEST","Remove True net_id:" + Integer.toString(netId));
+        else Log.d("TEST","Remove False net_id:" + Integer.toString(netId));
     }
 
     public int ssidToEap(String ssid){
