@@ -2,7 +2,6 @@ package com.example.maplefi;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,7 +34,7 @@ public class MoreActivity extends AppCompatActivity {
         final TextView ssidTextView = (TextView) findViewById(R.id.tv_ssid);
         ssidTextView.setText(apItem.getSsid());
 
-        final ImageView secColorImgView = (ImageView) findViewById(R.id.img_color);
+        final ImageView secColorImgView = (ImageView) findViewById(R.id.img_secColor);
         int secLevel = apItem.getSecLevel();
         switch (secLevel){
             case 1:
@@ -50,7 +49,7 @@ public class MoreActivity extends AppCompatActivity {
             default:
                 secColorImgView.setImageResource(R.drawable.red);
         }
-        final ImageView rssiImgView = (ImageView) findViewById(R.id.img_rssiDegree);
+        final ImageView rssiImgView = (ImageView) findViewById(R.id.img_strDegree);
         int rssiLevel = apItem.getRssiLevel();
         switch (rssiLevel){
             case 1:
@@ -76,24 +75,24 @@ public class MoreActivity extends AppCompatActivity {
 
         // -------------------------------------------------------------//
         // AP 상세 정보
-        final TextView evalItemTextView1 = (TextView) findViewById(R.id.tv_cap1);
+        final TextView evalItemTextView1 = (TextView) findViewById(R.id.tv_evalItem1);
         evalItemTextView1.setText(" Password : "+apItem.getSecScore(1));
 //        textViewCap1.setText("Password : 90");
 
-        final TextView evalItemTextView2 = (TextView) findViewById(R.id.tv_cap2);
+        final TextView evalItemTextView2 = (TextView) findViewById(R.id.tv_evalItem2);
         evalItemTextView2.setText(" Packet : "+apItem.getSecScore(2));
 //        textViewCap2.setText("Packet : 50");
 
-        final TextView evalItemTextView3 = (TextView) findViewById(R.id.tv_cap3);
+        final TextView evalItemTextView3 = (TextView) findViewById(R.id.tv_evalItem3);
         evalItemTextView3.setText(" Packet snif : "+apItem.getSecScore(3));
 //        textViewCap3.setText("Packet snif : 0");
 
-        final TextView evalItemTextView4 = (TextView) findViewById(R.id.tv_cap4);
+        final TextView evalItemTextView4 = (TextView) findViewById(R.id.tv_evalItem4);
         evalItemTextView4.setText(" Hide : "+apItem.getSecScore(4));
 //        textViewCap4.setText("Hide : 0");
 
         // AP 보안 점수
-        final TextView secScoreTextView = (TextView) findViewById(R.id.tv_sec_score);
+        final TextView secScoreTextView = (TextView) findViewById(R.id.tv_secScore);
         secScoreTextView.setText(Integer.toString(apItem.getSecScore(0))+" 점");
 //        textViewSecScore.setText("140 점");
 
@@ -103,20 +102,20 @@ public class MoreActivity extends AppCompatActivity {
 //        imgViewLight.setImageResource(R.drawable.);
 
         // AP 신호 강도 점수
-        final TextView strScoreTextView = (TextView) findViewById(R.id.tv_speed_score);
+        final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);
         strScoreTextView.setText(Integer.toString(apItem.getRssiScore()) + " dBm");
 
         // AP 디테일보기 버튼
         ImageButton detailImgButton = (ImageButton) findViewById(R.id.imgb_detail) ;
 
         // AP 디테일 정보
-        final ImageView detailDashImgView = (ImageView) findViewById(R.id.dash_detail);
+        final ImageView detailDashImgView = (ImageView) findViewById(R.id.img_dashDetail);
         detailDashImgView.setVisibility(View.INVISIBLE);
 
-        final LinearLayout detailLinearLayout = (LinearLayout) findViewById(R.id.detailLayout);
+        final LinearLayout detailLinearLayout = (LinearLayout) findViewById(R.id.linLayout_detailReport);
         detailLinearLayout.setVisibility(View.INVISIBLE);
 
-        final TextView reportTextView = (TextView) findViewById(R.id.tv_detail_desc);
+        final TextView reportTextView = (TextView) findViewById(R.id.tv_detailReport);
 
         // 보안방식에 따른 레포트
 //        if(ap_item.getCaps().contains("WEP")){

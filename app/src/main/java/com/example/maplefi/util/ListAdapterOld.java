@@ -42,9 +42,9 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
             super(itemView);
             // 뷰 객체에 대한 참조
             ssidTextView = itemView.findViewById(R.id.tv_ssid);
-            secColorImgView = itemView.findViewById(R.id.img_color);
-            rssiImgView = itemView.findViewById(R.id.img_rssiDegree);
-            moreinfoImgButton = itemView.findViewById(R.id.imgb_moreinf);
+            secColorImgView = itemView.findViewById(R.id.img_secColor);
+            rssiImgView = itemView.findViewById(R.id.img_strDegree);
+            moreinfoImgButton = itemView.findViewById(R.id.imgb_moreinfo);
             connectImgButton = itemView.findViewById(R.id.imgb_connect);
 
             // 아이템 클릭 이벤트 처리

@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
         // - 연결된 AP 아이템 요소
         final TextView ssidTextView = (TextView) findViewById(R.id.tv_ssid);
-        final ImageView colorImgView = (ImageView) findViewById(R.id.img_color);
-        final ImageView rssiImgView = (ImageView) findViewById(R.id.img_rssiDegree);
-        ImageButton moreinfoImgButton = (ImageButton) findViewById(R.id.imgb_moreinf) ;
+        final ImageView colorImgView = (ImageView) findViewById(R.id.img_secColor);
+        final ImageView rssiImgView = (ImageView) findViewById(R.id.img_strDegree);
+        ImageButton moreinfoImgButton = (ImageButton) findViewById(R.id.imgb_moreinfo) ;
         ImageButton connectImgButton = (ImageButton) findViewById(R.id.imgb_connect) ;
         nowSsidTextView = ssidTextView;
         nowSecColorImgView = colorImgView;
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 
         // - AP 리스트뷰 요소
         // 리사이클러뷰 리니어 레이아웃 매니저 지정
-        RecyclerView recyclerView = findViewById(R.id.wifiListOld);
+        RecyclerView recyclerView = findViewById(R.id.recycleView_wifiListOld);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // 리사이클러뷰에 리스트 어뎁더 객체 지정
