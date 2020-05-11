@@ -143,9 +143,9 @@ public class WifiUtil {
 
     public int getProfileId(String ssid){
         List<WifiConfiguration> list = this.wifiManager.getConfiguredNetworks();
-        for (WifiConfiguration wifi_conf : list) {
-            if (wifi_conf.SSID != null && wifi_conf.SSID.equals("\"" + ssid + "\"")) {
-                return wifi_conf.networkId;
+        for (WifiConfiguration wifiConf : list) {
+            if (wifiConf.SSID != null && wifiConf.SSID.equals("\"" + ssid + "\"")) {
+                return wifiConf.networkId;
             }
         }
         return -1;
@@ -234,19 +234,19 @@ public class WifiUtil {
             return -1;
         }
     }
-    public void removeProfile(int net_id){
-        boolean b = wifiManager.removeNetwork(net_id);
+    public void removeProfile(int netId){
+        boolean b = wifiManager.removeNetwork(netId);
         wifiManager.saveConfiguration();
-        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(net_id));
-        else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
+        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(netId));
+        else Log.d("TEST","Remove False net_id:"+Integer.toString(netId));
     }
     public void removeProfile(String ssid){
-        int net_id = getProfileId(ssid);
-        boolean b = wifiManager.removeNetwork(net_id);
+        int netId = getProfileId(ssid);
+        boolean b = wifiManager.removeNetwork(netId);
         wifiManager.saveConfiguration();
 
-        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(net_id));
-        else Log.d("TEST","Remove False net_id:"+Integer.toString(net_id));
+        if(b) Log.d("TEST","Remove True net_id:"+Integer.toString(netId));
+        else Log.d("TEST","Remove False net_id:"+Integer.toString(netId));
     }
 
     public int ssidToEap(String ssid){

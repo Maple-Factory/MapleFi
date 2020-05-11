@@ -17,133 +17,131 @@ public class SecurityEstimater {
     //test 용 임의 정보들
 //    ApItem ap_Item = null;
     String TAG = "SecurityEstimater";
-    int score[] = new int[5];//score array
+    int scores[] = new int[5];//score array
     //0 : 총점,  1 : pw, 2 : packet,packet rule , 3 : packet snif, 4 : ssid,
 
     public SecurityEstimater(String ap_name, String capabilities, int eap_type) {
         Log.d(TAG, "SecurityEstimater: after apItem set");
-        int score[] = new int[5];//score array
-        Log.d(TAG, "SecurityEstimater: 계산 전 " +score[0]);
+//        int scores[] = new int[5];   //score array
+        Log.d(TAG, "SecurityEstimater: 계산 전 " +scores[0]);
 
-        pw_checker(capabilities);
-        ssid_checker(ap_name);
-        packet_checker(capabilities);
-        packetRule_checker(capabilities);
-        packetsnif_checker(eap_type);
+        checkPassword(capabilities);
+        checkSsid(ap_name);
+        checkPacket(capabilities);
+        checkPacketRule(capabilities);
+        checkPacketsnif(eap_type);
 
-        Log.d(TAG, "SecurityEstimater: final = " + score[0]);
-
+        Log.d(TAG, "SecurityEstimater: final = " + scores[0]);
     }
 
     //포지션에 해당하는 리스트의 로그온 암호적용, 암호화 방식평가 여부
-    public void pw_checker(String capabilities) {
+    public void checkPassword(String capabilities) {
         if (!(capabilities.toUpperCase().isEmpty())) {
             Log.d(TAG, "pw_checker: pwtype 존재");
-            score[1] += 50;//pwchecker 개별 점수
+            scores[1] += 50;//pwchecker 개별 점수
 //            ap_Item.addSec_Score(50);//임의
-            Log.d(TAG, "pw_checker: pwtype = " + score);
+            Log.d(TAG, "pw_checker: pwtype = " + scores);
 
             if (capabilities.contains("WPA")) {
                 Log.d(TAG, "pw_checker: wpa");
 //                ap_Item.addSec_Score(20);
-                score[1] += 20;
-                Log.d(TAG, "pw_checker: score[1] = " + score[1]);
+                scores[1] += 20;
+                Log.d(TAG, "pw_checker: score[1] = " + scores[1]);
             }
             if (capabilities.contains("WPA2")) {
                 Log.d(TAG, "pw_checker: wpa2");
 //                capabilities.addSec_Score(40);
-                score[1] += 40;
-                Log.d(TAG, "pw_checker: score[1] = " + score[1]);
+                scores[1] += 40;
+                Log.d(TAG, "pw_checker: score[1] = " + scores[1]);
 
             }
             if (capabilities.contains("WEP")) {
                 Log.d(TAG, "pw_checker: wep");
 //                ap_Item.addSec_Score(10);
-                score[1] += 10;
-                Log.d(TAG, "pw_checker: " + score[1]);
+                scores[1] += 10;
+                Log.d(TAG, "pw_checker: " + scores[1]);
             }
-            score[0] += score[1];// 총점에 개별점수 더하기
-            Log.d(TAG, "pw_checker: score[1] = " + score[1]);
-            Log.d(TAG, "pw_checker: score[0] = "+score[0]);
+            scores[0] += scores[1];// 총점에 개별점수 더하기
+            Log.d(TAG, "pw_checker: score[1] = " + scores[1]);
+            Log.d(TAG, "pw_checker: score[0] = "+ scores[0]);
 
         }
     }
 
     //ssid check
-    public void ssid_checker(String ap_name) {
+    public void checkSsid(String ap_name) {
         Log.d(TAG, "ssid_checker: 여기");
         if (Objects.equals(ap_name, "")) {//숨김모드일경우
             Log.d(TAG, "ssid_checker: 숨김모드");
 //            ap_Item.addSec_Score(60);
-            score[4] += 60;
+            scores[4] += 60;
         } else {
             Log.d(TAG, "ssid_checker: 숨김모드 아님");
         }
-        score[0] += score[4];
+        scores[0] += scores[4];
     }
 
     //프로토콜 방식 판별
-    public void packet_checker(String capabilities) {
+    public void checkPacket(String capabilities) {
         if (capabilities.contains("PSK")) {
             Log.d(TAG, "packet_checker: protocol psk");
 //            ap_Item.addSec_Score(30);
 //            Log.d(TAG, "packet_checker: " + ap_Item.getSecScore());
-            score[2] += 30;
-            Log.d(TAG, "packet_checker: "+score);
+            scores[2] += 30;
+            Log.d(TAG, "packet_checker: "+ scores);
 
         } else if (capabilities.contains("EAP")) {
             Log.d(TAG, "packet_checker: protocol eap");
 //            ap_Item.addSec_Score(40);
 //            Log.d(TAG, "packet_checker: " + ap_Item.getSecScore());
-            score[2] += 40;
-            Log.d(TAG, "packet_checker: "+score);
+            scores[2] += 40;
+            Log.d(TAG, "packet_checker: "+ scores);
             //just
 
         } else {
             Log.d(TAG, "packet_checker: not in our packet case");
-            Log.d(TAG, "packet_checker: "+score);
+            Log.d(TAG, "packet_checker: "+ scores);
         }
 
         if (capabilities.contains("TKIP")) {
             Log.d(TAG, "packet_checker: protocol tkip");//wep에서 사용하는 암호화 방식
 //            ap_Item.addSec_Score(10);
 //            Log.d(TAG, "packet_checker: " + ap_Item.getSecScore());
-            score[2] += 10;
-            Log.d(TAG, "packet_checker: "+score);
+            scores[2] += 10;
+            Log.d(TAG, "packet_checker: "+ scores);
         }
-        score[0] += score[2];
-        Log.d(TAG, "packet_checker: "+score);
+        scores[0] += scores[2];
+        Log.d(TAG, "packet_checker: "+ scores);
     }
 
 
         //패킷 규칙 체크 ccmp -> 필요한가??
-    public void packetRule_checker (String capabilities){
+    public void checkPacketRule(String capabilities){
        if (capabilities.contains("CCMP")) {
           Log.d(TAG, "packetRule_checker: ccmp");
 //           ap_Item.addSec_Score(20);
 //           Log.d(TAG, "packetRule_checker: grade " + ap_Item.getSecScore());
-           score[2] += 20;
+           scores[2] += 20;
        } else {
            Log.d(TAG, "packetRule_checker: not in packetrule case");
        }
-       score[0] += score[2];
-        Log.d(TAG, "packetRule_checker: "+score[0]);
+       scores[0] += scores[2];
+        Log.d(TAG, "packetRule_checker: "+ scores[0]);
     }
 
-    public void packetsnif_checker (int eap_type){//eap -tls등 고려하여 도청 가능한지 판별
+    public void checkPacketsnif(int eap_type){//eap -tls등 고려하여 도청 가능한지 판별
         if (eap_type == -1) {
             Log.d(TAG, "packetsnif_checker: this is not eap");
         } else {
             Log.d(TAG, "packetsnif_checker: not in our eap case");
 //            score[3] += 50;
         }
-        score[0] += score[3];
+        scores[0] += scores[3];
     }
 
-    public int[] getScore () {
-       return this.score;
+    public int[] getScores() {
+       return this.scores;
     }
-
 }
 
 

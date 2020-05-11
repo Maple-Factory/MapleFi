@@ -6,11 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,28 +24,28 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     public interface OnApItemClickListener {
         void onMoreBtnClick(View v, int position);
         void onConBtnClick(View v, int position);
-        void onItemClick(View v, int position);
+//        void onItemClick(View v, int position);
     }
     private MainActivity mActivity;
-    private ArrayList<ApItem> ap_items = null;
+    private ArrayList<ApItem> apItems = null;
     public OnApItemClickListener OnApItemClickListener;
 
     // 아이템 뷰를 저장하는 뷰 홀더 클래스
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView_SSID;
-        ImageView img_ap_color;
-        ImageView img_ap_rssi;
-        ImageButton btn_ap_info;
-        ImageButton btn_ap_connect;
+        TextView ssidTextView;
+        ImageView secColorImgView;
+        ImageView rssiImgView;
+        ImageButton moreinfoImgButton;
+        ImageButton connectImgButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // 뷰 객체에 대한 참조
-            textView_SSID = itemView.findViewById(R.id.tv_ssid);
-            img_ap_color = itemView.findViewById(R.id.img_color);
-            img_ap_rssi = itemView.findViewById(R.id.img_rssiDegree);
-            btn_ap_info = itemView.findViewById(R.id.imgb_moreinf);
-            btn_ap_connect = itemView.findViewById(R.id.imgb_connect);
+            ssidTextView = itemView.findViewById(R.id.tv_ssid);
+            secColorImgView = itemView.findViewById(R.id.img_color);
+            rssiImgView = itemView.findViewById(R.id.img_rssiDegree);
+            moreinfoImgButton = itemView.findViewById(R.id.imgb_moreinf);
+            connectImgButton = itemView.findViewById(R.id.imgb_connect);
 
             // 아이템 클릭 이벤트 처리
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -56,19 +54,18 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                     int pos = getAdapterPosition();
                     if(pos != RecyclerView.NO_POSITION){
                         // 아이템 클릭 이벤트
-                        ApItem apItem = ap_items.get(pos);
+                        ApItem apItem = apItems.get(pos);
                         Log.d("TEST", "onLongClick: this is listAdapter" + pos);
 
-                        ApItem ap_item = ap_items.get(pos);
-                        final int clicked_net_id = mActivity.wifiUtil.getProfileId(ap_item.getSsid());  // 와이파이가 안되는 기기면 에러 발생
-                        if(clicked_net_id != -1){
+                        final int clickedNetId = mActivity.wifiUtil.getProfileId(apItem.getSsid()); // 와이파이가 안되는 기기면 에러 발생
+                        if(clickedNetId != -1){
                             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which){
                                         case DialogInterface.BUTTON_POSITIVE:
                                             // 삭제하기
-                                            mActivity.wifiUtil.removeProfile(clicked_net_id);
+                                            mActivity.wifiUtil.removeProfile(clickedNetId);
                                             break;
                                         case DialogInterface.BUTTON_NEGATIVE:
                                             break;
@@ -85,14 +82,13 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                     return true;
                 }
             });
-
         }
     }
 
     // 생성자에게 리스트 객체 전달 받는 파트
     public ListAdapterOld(MainActivity activity, ArrayList<ApItem> list, OnApItemClickListener onApItemClickListener/*, OnItemClickListener itemClickListener*/){
         this.mActivity = activity;
-        this.ap_items = list;
+        this.apItems = list;
         this.OnApItemClickListener = onApItemClickListener;
 //        this.itemClickListener =  itemClickListener;
     }
@@ -112,42 +108,42 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
     @Override
     // 포지션에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ApItem ap_item = ap_items.get(position);
+        ApItem apItem = apItems.get(position);
 
-        String text = ap_item.getSsid();
-        int sec_level = ap_item.getSecLevel();
-        int rssi_level = ap_item.getRssiLevel();
+        String text = apItem.getSsid();
+        int secLevel = apItem.getSecLevel();
+        int rssiLevel = apItem.getRssiLevel();
 
-        holder.textView_SSID.setText(text);
-        switch (sec_level){
+        holder.ssidTextView.setText(text);
+        switch (secLevel){
             case 1:
-                holder.img_ap_color.setImageResource(R.drawable.red);
+                holder.secColorImgView.setImageResource(R.drawable.red);
                 break;
             case 2:
-                holder.img_ap_color.setImageResource(R.drawable.orange);
+                holder.secColorImgView.setImageResource(R.drawable.orange);
                 break;
             case 3:
-                holder.img_ap_color.setImageResource(R.drawable.green);
+                holder.secColorImgView.setImageResource(R.drawable.green);
                 break;
             default:
-                holder.img_ap_color.setImageResource(R.drawable.red);
+                holder.secColorImgView.setImageResource(R.drawable.red);
         }
-        switch (rssi_level){
+        switch (rssiLevel){
             case 1:
-                holder.img_ap_rssi.setImageResource(R.drawable.wifi_1);
+                holder.rssiImgView.setImageResource(R.drawable.wifi_1);
                 break;
             case 2:
-                holder.img_ap_rssi.setImageResource(R.drawable.wifi_2);
+                holder.rssiImgView.setImageResource(R.drawable.wifi_2);
                 break;
             case 3:
-                holder.img_ap_rssi.setImageResource(R.drawable.wifi_3);
+                holder.rssiImgView.setImageResource(R.drawable.wifi_3);
                 break;
             default:
-                holder.img_ap_rssi.setImageResource(R.drawable.wifi_x);
+                holder.rssiImgView.setImageResource(R.drawable.wifi_x);
         }
 
-        holder.btn_ap_info.setTag(position);
-        holder.btn_ap_info.setOnClickListener(new View.OnClickListener() {
+        holder.moreinfoImgButton.setTag(position);
+        holder.moreinfoImgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (OnApItemClickListener != null) {
@@ -155,8 +151,8 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                 }
             }
         });
-        holder.btn_ap_connect.setTag(position);
-        holder.btn_ap_connect.setOnClickListener(new View.OnClickListener() {
+        holder.connectImgButton.setTag(position);
+        holder.connectImgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (OnApItemClickListener != null) {
@@ -164,12 +160,11 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                 }
             }
         });
-
     }
 
     // 전체 데이터 갯수 리턴
     @Override
     public int getItemCount() {
-        return ap_items.size();
+        return apItems.size();
     }
 }

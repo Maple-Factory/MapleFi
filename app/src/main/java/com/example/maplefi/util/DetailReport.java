@@ -9,10 +9,10 @@ public class DetailReport {
     private List<String> negatives = new ArrayList<String>();
     private List<String> solutions = new ArrayList<String>();
 
-    private final String post_posit = "은 좋으나, ";
-    private final String post_negat = "니다.";
-    private final String prev_sol = "더 나은 보안을 위해서는 ";
-    private final String best_policy = "추천 형태: 숨겨진 네트워크, \\n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]";
+    private final String postPosit = "은 좋으나, ";
+    private final String postNegat = "니다.";
+    private final String prevSol = "더 나은 보안을 위해서는 ";
+    private final String bestPolicy = "추천 형태: 숨겨진 네트워크, \\n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]";
 
 
 //            textViewReport.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
@@ -49,11 +49,11 @@ public class DetailReport {
         this.negatives.get(0);
         this.solutions.get(0);
 
-        this.report += this.prev_sol;
+        this.report += this.prevSol;
 
 
         this.report += "\n\n";
-        this.report += this.best_policy;
+        this.report += this.bestPolicy;
     }
 
     public String getReport(){
