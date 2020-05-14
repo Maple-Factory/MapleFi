@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.maplefi.ui.ApItem;
+import com.example.maplefi.util.DetailReport;
 
 public class MoreActivity extends AppCompatActivity {
     @Override
@@ -116,49 +117,14 @@ public class MoreActivity extends AppCompatActivity {
         detailLinearLayout.setVisibility(View.INVISIBLE);
 
         final TextView reportTextView = (TextView) findViewById(R.id.tv_detailReport);
-
-        // 보안방식에 따른 레포트
-//        if(ap_item.getCaps().contains("WEP")){
-//            Log.d("test", "onCreate: wep");
-//            textViewReport.setText(getString(R.string.wep_report));
-//
-//            Log.d("test", "onCreate: "+textViewReport.toString());
-//        }else if(ap_item.getCaps().contains("WPA")){
-//            Log.d("test", "onCreate: wpa");
-//            if(ap_item.getCaps().contains("TKIP")){
-//                Log.d("test", "onCreate: wpa-tkip");
-//                textViewReport.setText(getString(R.string.wpa_report) + " " + getString(R.string.tkip_report));
-//
-//                Log.d("test", "onCreate: "+textViewReport.toString());
-//            }else if(ap_item.getCaps().contains("PSK")){
-//                Log.d("test", "onCreate: wpa-psk");
-//                textViewReport.setText(getString(R.string.wpa_report) + "" + getString(R.string.psk_report));
-//
-//                Log.d("test", "onCreate: "+textViewReport.toString());
-//            }
-//        }else if(ap_item.getCaps().contains("WPA2")){
-//            Log.d("test", "onCreate: wpa2");
-//            textViewReport.setText(getString(R.string.wpa2_report));
-//
-//            Log.d("test", "onCreate: "+textViewReport.toString());
-//            if(ap_item.getCaps().contains("EAP")){
-//                Log.d("test", "onCreate: eap");
-//                textViewReport.setText(getString(R.string.eap_report));
-//
-//                Log.d("test", "onCreate: "+textViewReport);
-//            }
-//        }else{
-//            Log.d("test", "onCreate: else");
-//            textViewReport.setText(getString(R.string.none_report));
-//
-//            Log.d("test", "onCreate: "+textViewReport.toString());
-//        }
-        reportTextView.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
-                               "PSK 키 관리 방식을 사용하여 해커에게 도청당할 위험이 약간 있고, " +
-                               "네트워크 이름이 숨겨져 있지 않아 해커가 접근하기 용이합니다.\n\n" +
-                               "더 나은 보안을 위해서는 와이파이의 네트워크(디바이스) 숨기기 기능을 활성화하시고 " +
-                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다.\n\n" +
-                               "추천 형태: 숨겨진 네트워크, \n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]");
+        DetailReport detailReport = new DetailReport(apItem.getSsid(), apItem.getCaps(), apItem.getEapType());
+        reportTextView.setText(apItem.getCaps() + "\n" + detailReport.getReport());
+//        reportTextView.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
+//                               "PSK 키 관리 방식을 사용하여 해커에게 도청당할 위험이 약간 있고, " +
+//                               "네트워크 이름이 숨겨져 있지 않아 해커가 접근하기 용이합니다.\n\n" +
+//                               "더 나은 보안을 위해서는 와이파이의 네트워크(디바이스) 숨기기 기능을 활성화하시고 " +
+//                               "기업의 경우, EAP 키 관리 방식 적용을 추천합니다.\n\n" +
+//                               "추천 형태: 숨겨진 네트워크, \n[WPA2-EAP-CCMP] or [WPA2-PSK-CCMP]");
 
         // 디테일 설명 펴기/접기 버튼 이벤트
         detailImgButton.setOnClickListener(new Button.OnClickListener() {
