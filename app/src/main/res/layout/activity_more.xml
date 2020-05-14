@@ -20,28 +20,31 @@
             android:id="@+id/constLayout_sidebar"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/sidebar_layout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline_length"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="←"
-                android:textSize="18sp"
+                android:clickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_revert" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constLayout_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/ap_list_layout"
             app:layout_constraintStart_toStartOf="@+id/guideline_length"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +56,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -66,9 +68,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_layout"
                     android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline_length"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tv_ssid"
@@ -98,35 +100,35 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/wifi_3" />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/imgb_connect"
                         android:layout_width="0px"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        app:srcCompat="@android:drawable/btn_star_big_off" />
+                        android:clickable="true"
+                        app:srcCompat="@android:drawable/ic_lock_idle_charging" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1.5dp"
+                    android:contentDescription="TODO"
                     android:layerType="software"
-                    android:src="@drawable/drawable_dash_line"
-                    android:contentDescription="TODO" />
+                    android:src="@drawable/drawable_dash_line" />
 
                 <LinearLayout
                     android:id="@+id/scoreLayout"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@drawable/border_layout"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/linLayout_evalItems"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1.2"
-                        android:background="@drawable/border_layout"
                         android:orientation="vertical"
                         android:paddingLeft="2dp"
                         android:paddingTop="2dp"
@@ -181,6 +183,7 @@
                             android:gravity="center"
                             android:text="sec_score"
                             android:textSize="18sp" />
+
                         <TextView
                             android:id="@+id/img_secColorSet"
                             android:layout_width="match_parent"
@@ -214,11 +217,12 @@
                             android:text="rssi_score"
                             android:textSize="12sp" />
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imgb_detail"
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="2"
+                            android:clickable="true"
                             app:srcCompat="@android:drawable/ic_menu_add" />
                     </LinearLayout>
                 </LinearLayout>
@@ -227,20 +231,20 @@
                     android:id="@+id/img_dashDetail"
                     android:layout_width="match_parent"
                     android:layout_height="1.5dp"
+                    android:contentDescription="TODO"
                     android:layerType="software"
-                    android:src="@drawable/drawable_dash_line"
-                    android:contentDescription="TODO" />
+                    android:src="@drawable/drawable_dash_line" />
 
                 <LinearLayout
                     android:id="@+id/linLayout_detailReport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_layout"
+                    android:orientation="vertical"
                     android:paddingLeft="2dp"
                     android:paddingTop="2dp"
                     android:paddingRight="2dp"
-                    android:paddingBottom="2dp"
-                    android:orientation="vertical">
+                    android:paddingBottom="2dp">
 
                     <TextView
                         android:id="@+id/tv_detailReport"

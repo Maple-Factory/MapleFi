@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.example.maplefi.util.ListAdapterOld;
 import com.example.maplefi.util.MainActivityNavigator;
 import com.example.maplefi.util.SecurityEstimater;
 import com.example.maplefi.util.WifiUtil;
+import com.github.zagum.switchicon.SwitchIconView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,40 +48,41 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     TextView nowSsidTextView;
     ImageView nowSecColorImgView;
     ImageView nowRssiImgView;
-    ImageButton nowMoreinfoImgButton;
-    ImageButton nowConnectImgButton;
+    ImageView nowMoreinfoImgButton;
+    SwitchIconView nowConnectImgButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getSupportActionBar().hide();
 
         wifiUtil = new WifiUtil(getApplicationContext(), this);
 
         // - 사이드바 요소
         // ON OFF 버튼
-        final Button onoffButton = (Button) findViewById(R.id.btn_onoff) ;
-        if(wifiUtil.isWifiEnabled()) onoffButton.setText("off");
-        else onoffButton.setText("on");
+        final SwitchIconView onoffButton = (SwitchIconView) findViewById(R.id.btn_onoff) ;
+        if(wifiUtil.isWifiEnabled()) onoffButton.setIconEnabled(true);
+        else onoffButton.setIconEnabled(false);
         onoffButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(wifiUtil.isWifiEnabled()) {
                     wifiUtil.setWifiEnabled(false);
-                    onoffButton.setText("on");  // to String.xml 리팩토링 필요
+                    onoffButton.setIconEnabled(false);
                     updateNowAp();
                     apItems.clear();
                     adapter.notifyDataSetChanged();
                 }
                 else {
                     wifiUtil.setWifiEnabled(true);
-                    onoffButton.setText("off"); // to String.xml 리팩토링 필요
+                    onoffButton.setIconEnabled(true);
                     updateNowAp();
                 }
             }
         });
         // Scan 버튼 (임시)
-        final Button scanButton = (Button) findViewById(R.id.btn_scan) ;
+        final ImageView scanButton = findViewById(R.id.btn_scan) ;
         scanButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         final TextView ssidTextView = (TextView) findViewById(R.id.tv_ssid);
         final ImageView colorImgView = (ImageView) findViewById(R.id.img_secColor);
         final ImageView rssiImgView = (ImageView) findViewById(R.id.img_strDegree);
-        ImageButton moreinfoImgButton = (ImageButton) findViewById(R.id.imgb_moreinfo) ;
-        ImageButton connectImgButton = (ImageButton) findViewById(R.id.imgb_connect) ;
+        ImageView moreinfoImgButton = (ImageView) findViewById(R.id.imgb_moreinfo) ;
+        SwitchIconView connectImgButton = (SwitchIconView) findViewById(R.id.imgb_connect) ;
         nowSsidTextView = ssidTextView;
         nowSecColorImgView = colorImgView;
         nowRssiImgView = rssiImgView;
@@ -199,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     nowSsidTextView.setText("연결된 와이파이가 없습니다.");
                     nowRssiImgView.setImageResource(R.drawable.wifi_x);
                     nowSecColorImgView.setImageResource(R.drawable.gray);
+                    nowConnectImgButton.setIconEnabled(false);
 //                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
 //                        @Override
 //                        public void onClick(View view) {
@@ -247,10 +251,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                             adapter.notifyDataSetChanged(); // 필요한지 확인 필요
                         }
                     });
+                    nowConnectImgButton.setIconEnabled(true, false);
                     nowConnectImgButton.setOnClickListener(new Button.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             wifiUtil.disconnect();  // 임시로 단순 연결 해제 기능으로 사용. 수정 필요
+                            nowConnectImgButton.setIconEnabled(false);
                             updateNowAp();
                         }
                     });
@@ -324,6 +330,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
         intent.putExtra("AP_ITEM", apItem);
         startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
     class WifiReceiver extends BroadcastReceiver {
         @Override
