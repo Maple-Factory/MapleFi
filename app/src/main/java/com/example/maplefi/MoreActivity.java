@@ -130,7 +130,7 @@ public class MoreActivity extends AppCompatActivity {
 
         final TextView reportTextView = (TextView) findViewById(R.id.tv_detailReport);
         DetailReport detailReport = new DetailReport(apItem.getSsid(), apItem.getCaps(), apItem.getEapType());
-        reportTextView.setText(apItem.getCaps() + "\n" + detailReport.getReport());
+        reportTextView.setText("[DEBUG] " + apItem.getCaps() + "\n" + detailReport.getReport());
 //        reportTextView.setText("인증 및 암호화 방식으로 WPA2를 사용한 것과 암호화 규칙으로 CCMP를 사용한 것은 좋으나, " +
 //                               "PSK 키 관리 방식을 사용하여 해커에게 도청당할 위험이 약간 있고, " +
 //                               "네트워크 이름이 숨겨져 있지 않아 해커가 접근하기 용이합니다.\n\n" +
