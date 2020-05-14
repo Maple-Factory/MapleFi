@@ -203,16 +203,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     nowRssiImgView.setImageResource(R.drawable.wifi_x);
                     nowSecColorImgView.setImageResource(R.drawable.gray);
                     nowConnectImgButton.setIconEnabled(false);
-//                    imgButtonNowMoreinf.setOnClickListener(new Button.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                        }
-//                    });
-//                    imgButtonNowConnect.setOnClickListener(new Button.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                        }
-//                    });
+                    nowMoreinfoImgButton.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    });
+                    nowConnectImgButton.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    });
                 }
                 else {
                     nowSsidTextView.setText(nowApItem.getSsid());
@@ -228,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                             nowSecColorImgView.setImageResource(R.drawable.green);
                             break;
                         default:
-                            nowSecColorImgView.setImageResource(R.drawable.red);
+                            nowSecColorImgView.setImageResource(R.drawable.gray);
                     }
                     int rssiLevel = nowApItem.getRssiLevel();
                     switch (rssiLevel){
