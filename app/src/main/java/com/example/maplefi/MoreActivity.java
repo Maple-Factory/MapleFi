@@ -104,7 +104,19 @@ public class MoreActivity extends AppCompatActivity {
 
         // AP 신호 강도 점수
         final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);
-        strScoreTextView.setText(Integer.toString(apItem.getRssiScore()) + " dBm");
+        switch (apItem.getRssiLevel()){
+            case 1:
+                strScoreTextView.setText("나쁨");
+                break;
+            case 2:
+                strScoreTextView.setText("중간");
+                break;
+            case 3:
+                strScoreTextView.setText("좋음");
+                break;
+            default:
+                strScoreTextView.setText("측정 중");
+        }
 
         // AP 디테일보기 버튼
         ImageButton detailImgButton = (ImageButton) findViewById(R.id.imgb_detail) ;
