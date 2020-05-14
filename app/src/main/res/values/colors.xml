@@ -3,4 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorSide">#546BA6</color>
+    <color name="colorNowAp">#A46571B3</color>
+    <color name="colorApList">#A48088B6</color>
+    <color name="colorMore">#A48088B6</color>
+
+    <color name="colorBorder">#222B2E42</color>
+    <color name="colorBox">#3B8AD0FF</color>
 </resources>

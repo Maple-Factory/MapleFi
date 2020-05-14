@@ -127,12 +127,12 @@ public class WifiUtil {
         List<ScanResult> networkList = wifiManager.getScanResults();
         if (networkList != null) {
             for (ScanResult network : networkList){
-                if(network.BSSID == bssid) {
+                if(network.BSSID.equals(bssid)) {
                     return network.capabilities;
                 }
             }
         }
-        return "";  // 예외 처리 구문 필요
+        return "[NOT FOUND]";  // 예외 처리 구문 필요
     }
     public boolean isNeedPassword(@NonNull String capabilities){
         String cap = capabilities.toUpperCase();

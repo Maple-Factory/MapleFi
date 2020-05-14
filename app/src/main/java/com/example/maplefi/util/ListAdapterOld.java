@@ -35,8 +35,8 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
         TextView ssidTextView;
         ImageView secColorImgView;
         ImageView rssiImgView;
-        ImageButton moreinfoImgButton;
-        ImageButton connectImgButton;
+        ImageView moreinfoImgButton;
+        ImageView connectImgButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

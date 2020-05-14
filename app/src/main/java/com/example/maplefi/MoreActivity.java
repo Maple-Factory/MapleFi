@@ -23,7 +23,7 @@ public class MoreActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ApItem apItem = (ApItem) intent.getSerializableExtra("AP_ITEM");
 
-        final Button backButton = (Button) findViewById(R.id.btn_back) ;
+        final ImageView backButton = (ImageView) findViewById(R.id.btn_back) ;
         backButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +66,7 @@ public class MoreActivity extends AppCompatActivity {
                 rssiImgView.setImageResource(R.drawable.wifi_x);
         }
 
-        ImageButton connectImgButton = (ImageButton) findViewById(R.id.imgb_connect) ;
+        ImageView connectImgButton = (ImageView) findViewById(R.id.imgb_connect) ;
         connectImgButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +119,7 @@ public class MoreActivity extends AppCompatActivity {
         }
 
         // AP 디테일보기 버튼
-        ImageButton detailImgButton = (ImageButton) findViewById(R.id.imgb_detail) ;
+        ImageView detailImgButton = (ImageView) findViewById(R.id.imgb_detail) ;
 
         // AP 디테일 정보
         final ImageView detailDashImgView = (ImageView) findViewById(R.id.img_dashDetail);

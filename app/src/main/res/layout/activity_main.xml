@@ -28,90 +28,129 @@
             android:id="@+id/constLayout_sidebar"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/sidebar_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/guideline_length"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <Button
+<!--            <Button-->
+<!--                android:id="@+id/btn_onoff"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="70dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:text="ON"-->
+<!--                android:textSize="10sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+            <com.github.zagum.switchicon.SwitchIconView
                 android:id="@+id/btn_onoff"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="15dp"
-                android:text="ON"
-                android:textSize="10sp"
+                app:si_animation_duration="500"
+                app:si_disabled_alpha=".5"
+                app:si_disabled_color="#b7b7b7"
+                app:si_enabled="false"
+                app:si_no_dash="true"
+                app:si_tint_color="#6CFF5C"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_lock_power_off"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_scan"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="15dp"
-                android:text="SC\nAN"
-                android:textSize="11sp"
+                android:clickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_onoff" />
+                app:layout_constraintTop_toBottomOf="@id/btn_onoff"
+                app:srcCompat="@android:drawable/ic_popup_sync"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linLayout_nowAp"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="0dp"
             android:orientation="horizontal"
+            android:background="@drawable/now_ap_layout"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline_width"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_length"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                android:id="@+id/tv_ssid"
-                android:layout_width="0px"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="Loading.."
-                android:textAllCaps="false"
-                android:textAlignment="textStart"
-                tools:ignore="RtlCompat"/>
+                android:layout_gravity="center"
+                android:background="@drawable/border_layout">
+                <TextView
+                    android:id="@+id/tv_ssid"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    android:text="Loading.."
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    tools:ignore="RtlCompat" />
 
-            <ImageView
-                android:id="@+id/img_secColor"
-                android:layout_width="0px"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/gray" />
+                <ImageView
+                    android:id="@+id/img_secColor"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/gray" />
 
-            <ImageView
-                android:id="@+id/img_strDegree"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/wifi_3" />
+                <ImageView
+                    android:id="@+id/img_strDegree"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/wifi_3" />
 
-            <ImageButton
-                android:id="@+id/imgb_moreinfo"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="50dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                app:srcCompat="@android:drawable/ic_menu_add"/>
+                <ImageView
+                    android:id="@+id/imgb_moreinfo"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    app:srcCompat="@android:drawable/ic_menu_add"/>
 
-            <ImageButton
-                android:id="@+id/imgb_connect"
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="50dp"
-                app:srcCompat="@android:drawable/btn_star_big_off" />
+                <com.github.zagum.switchicon.SwitchIconView
+                    android:id="@+id/imgb_connect"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:si_enabled="false"
+                    app:si_animation_duration="1500"
+                    app:si_disabled_alpha=".5"
+                    app:si_tint_color="#E4FF5050"
+                    app:si_disabled_color="#b7b7b7"
+                    app:si_no_dash="true"
+                    android:clickable="true"
+                    app:srcCompat="@android:drawable/ic_lock_idle_charging"/>
+            </LinearLayout>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constLayout_apList"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/ap_list_layout"
             android:clipToPadding="true"
             app:layout_constraintStart_toStartOf="@+id/guideline_length"
             app:layout_constraintEnd_toEndOf="parent"
