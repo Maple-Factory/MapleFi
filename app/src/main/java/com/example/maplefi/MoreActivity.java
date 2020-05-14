@@ -106,13 +106,13 @@ public class MoreActivity extends AppCompatActivity {
         final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);
         switch (apItem.getRssiLevel()){
             case 1:
-                strScoreTextView.setText("나쁨");
+                strScoreTextView.setText("나쁨("+apItem.getRssiScore()+")");
                 break;
             case 2:
-                strScoreTextView.setText("중간");
+                strScoreTextView.setText("보통("+apItem.getRssiScore()+")");
                 break;
             case 3:
-                strScoreTextView.setText("좋음");
+                strScoreTextView.setText("좋음("+apItem.getRssiScore()+")");
                 break;
             default:
                 strScoreTextView.setText("측정 중");

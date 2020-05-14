@@ -13,7 +13,7 @@ public class ApItem implements Serializable {
     public int eapType;
 
     public int rssiLevel;
-//    public int rssiScore;
+    public int rssiScore;
 
     public int[] secScores; //int[5] 생성자
     public int secLevel;
@@ -22,6 +22,8 @@ public class ApItem implements Serializable {
     private final int RSSI_LOW = -70;
     private final int SECURE_HIGH = 200;
     private final int SECURE_LOW = 100;
+    private final int RSSI_ADD = 85;
+    private final double RSSI_MUT = 2.5;
 
     public ApItem(String name, String capabilities, int rssi, int eapType) {
         this.apName = name;
@@ -42,7 +44,8 @@ public class ApItem implements Serializable {
         }
 
         // 신호강도 점수 책정
-//        this.rssiScore = rssi; // score 대신 rssi 값 그대로 사용. 수정 필요
+        this.rssiScore = (int) ((double)(this.rssi + RSSI_ADD) * RSSI_MUT);
+        this.rssiScore = this.rssiScore > 100 ? 100 : (this.rssiScore < 0 ? 0 : this.rssiScore);
 
         // 보안 점수 책정
         this.secScores = securityEstimater.getScores();
@@ -79,9 +82,9 @@ public class ApItem implements Serializable {
     public int getRssiLevel(){
         return this.rssiLevel;
     }
-//    public int getRssiScore(){
-//        return this.rssiScore;
-//    }
+    public int getRssiScore(){
+        return this.rssiScore;
+    }
 
     public int getSecScore(int index){
         return this.secScores[index];
