@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.maplefi.ui.ApItem;
 import com.example.maplefi.util.DetailReport;
-import com.example.maplefi.util.WifiUtil;
-import com.github.zagum.switchicon.SwitchIconView;
 
 public class MoreActivity extends AppCompatActivity {
     @Override
@@ -81,24 +78,24 @@ public class MoreActivity extends AppCompatActivity {
         // -------------------------------------------------------------//
         // AP 상세 정보
         final TextView evalItemTextView1 = (TextView) findViewById(R.id.tv_evalItem1);
-        evalItemTextView1.setText(" Password : " + apItem.getSecScore(1));
+        evalItemTextView1.setText(" Password : " + apItem.getSecScores(1));
 //        textViewCap1.setText("Password : 90");
 
         final TextView evalItemTextView2 = (TextView) findViewById(R.id.tv_evalItem2);
-        evalItemTextView2.setText(" Packet : " + apItem.getSecScore(2));
+        evalItemTextView2.setText(" Packet : " + apItem.getSecScores(2));
 //        textViewCap2.setText("Packet : 50");
 
         final TextView evalItemTextView3 = (TextView) findViewById(R.id.tv_evalItem3);
-        evalItemTextView3.setText(" Packet snif : " + apItem.getSecScore(3));
+        evalItemTextView3.setText(" Packet snif : " + apItem.getSecScores(3));
 //        textViewCap3.setText("Packet snif : 0");
 
         final TextView evalItemTextView4 = (TextView) findViewById(R.id.tv_evalItem4);
-        evalItemTextView4.setText(" Hide : " + apItem.getSecScore(4));
+        evalItemTextView4.setText(" Hide : " + apItem.getSecScores(4));
 //        textViewCap4.setText("Hide : 0");
 
         // AP 보안 점수
         final TextView secScoreTextView = (TextView) findViewById(R.id.tv_secScore);
-        secScoreTextView.setText(Integer.toString(apItem.getSecScore(0)) + " 점");
+        secScoreTextView.setText(Integer.toString(apItem.getSecScores(0)) + " 점");
 //        textViewSecScore.setText("140 점");
 
 
