@@ -20,8 +20,8 @@ public class ApItem implements Serializable {
 
     private final int RSSI_HIGH = -60;
     private final int RSSI_LOW = -70;
-    private final int SECURE_HIGH = 200;
-    private final int SECURE_LOW = 100;
+    private final int SECURE_HIGH = 300;
+    private final int SECURE_LOW = 200;
     private final int RSSI_ADD = 85;
     private final double RSSI_MUT = 2.5;
 
