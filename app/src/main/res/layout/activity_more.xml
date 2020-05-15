@@ -100,13 +100,19 @@
                         android:layout_weight="1"
                         app:srcCompat="@drawable/wifi_3" />
 
-                    <ImageView
-                        android:id="@+id/imgb_connect"
-                        android:layout_width="0px"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        app:srcCompat="@android:drawable/ic_lock_idle_charging" />
+<!--                    <com.github.zagum.switchicon.SwitchIconView-->
+<!--                        android:id="@+id/imgb_connect"-->
+<!--                        android:layout_width="0px"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        app:si_enabled="true"-->
+<!--                        app:si_animation_duration="500"-->
+<!--                        app:si_disabled_alpha=".5"-->
+<!--                        app:si_tint_color="#E4FF5050"-->
+<!--                        app:si_disabled_color="#b7b7b7"-->
+<!--                        app:si_no_dash="true"-->
+<!--                        android:clickable="true"-->
+<!--                        app:srcCompat="@android:drawable/ic_lock_idle_charging" />-->
                 </LinearLayout>
 
                 <ImageView
