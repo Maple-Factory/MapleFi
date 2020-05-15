@@ -15,12 +15,13 @@ public class ApItem implements Serializable {
     public int rssiLevel;
     public int rssiScore;
 
-    public int[] secScores; //int[5] 생성자
+    public int secScore; //int[5] 생성자
+    public int[] secScores;
     public int secLevel;
 
     private final int RSSI_HIGH = -60;
     private final int RSSI_LOW = -70;
-    private final int SECURE_HIGH = 170;
+    private final int SECURE_HIGH = 200;
     private final int SECURE_LOW = 100;
     private final int RSSI_ADD = 85;
     private final double RSSI_MUT = 2.5;
@@ -48,15 +49,15 @@ public class ApItem implements Serializable {
         this.rssiScore = this.rssiScore > 100 ? 100 : (this.rssiScore < 0 ? 0 : this.rssiScore);
 
         // 보안 점수 책정
+        this.secScore = securityEstimater.getFinal();
         this.secScores = securityEstimater.getScores();
-//        this.secScores = {140,90,50,0,0};
         Log.d("TEST add", "ApItem: sec store 지정");
 
         // 보안 레벨 책정
-        if(this.secScores[0] > SECURE_HIGH){
+        if(this.secScore > SECURE_HIGH){
             this.secLevel = 3;
         }
-        else if(this.secScores[0] > SECURE_LOW){
+        else if(this.secScore > SECURE_LOW){
             this.secLevel = 2;
         }
         else {
@@ -86,7 +87,7 @@ public class ApItem implements Serializable {
         return this.rssiScore;
     }
 
-    public int getSecScore(int index){
+    public int getSecScores(int index){
         return this.secScores[index];
     }
     public int getSecLevel(){

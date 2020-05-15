@@ -149,8 +149,8 @@ public class SecurityEstimater {
            Log.d(TAG, "check_Enc: ccmp");
 //           ap_Item.addSec_Score(20);
 //           Log.d(TAG, "packetRule_checker: grade " + ap_Item.getSecScore());
-           scores[2] += 30;
-           scores[3] += 30;
+           scores[2] += 40;
+           scores[3] += 40;
        }else if (capabilities.contains("TKIP")) {
                Log.d(TAG, "packet_checker: protocol tkip");//wep에서 사용하는 암호화 방식
 //            ap_Item.addSec_Score(10);
@@ -168,19 +168,12 @@ public class SecurityEstimater {
 
     }
 
-    //도청 난이도 판별
-//    public void checkPacketsnif(int eap_type){
-//        if (eap_type == -1) {
-//            Log.d(TAG, "packetsnif_checker: this is not eap");
-//        } else {
-//            Log.d(TAG, "packetsnif_checker: not in our eap case");
-////            score[3] += 50;
-//        }
-//        scores[0] += scores[3];
-//    }
-
     public int[] getScores() {
        return this.scores;
+    }
+
+    public int getFinal(){
+        return this.scores[0];
     }
 }
 
