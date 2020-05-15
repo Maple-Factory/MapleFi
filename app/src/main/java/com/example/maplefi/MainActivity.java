@@ -14,6 +14,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
     ImageView nowRssiImgView;
     ImageView nowMoreinfoImgButton;
     SwitchIconView nowConnectImgButton;
+    ImageView scanButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             }
         });
         // Scan 버튼 (임시)
-        final ImageView scanButton = findViewById(R.id.btn_scan) ;
+        scanButton = findViewById(R.id.btn_scan) ;
         scanButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
 //                        Log.d("TEST",scanResult.toString());
                         if(scanResult.SSID.equals(""))
                             scanResult.SSID = "숨겨진 네트워크";   // 임시로 숨겨진 ap 단순히 처리. 수정 필요
+                        else if(nowApItem != null)
+                            if(scanResult.SSID.equals(nowApItem.getSsid()))
+                                continue;
                         addItem(scanResult.SSID, scanResult.capabilities, scanResult.level,
                                 Integer.parseInt(wifiUtil.parseEapType(scanResult.toString())));
                     }
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         updateNowAp();
 
         // - 테스트 샘플
-        addItem("TEST SAMPLE","[WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]",-50,-1);
+//        addItem("TEST SAMPLE","[WPA-PSK-CCMP+TKIP][WPA2-PSK-CCMP+TKIP][WPS][ESS]",-50,-1);
 //        addItem("IPTIME","[WEP][ESS]",-80);
 
         WifiReceiver receiverWifi = new WifiReceiver();
@@ -183,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
+                boolean changedNowApSsid = false;
                 Log.d("TEST","Update Now AP");
                 WifiInfo wifiInfo = wifiUtil.getConnectionInfo();
                 if(wifiInfo.getNetworkId() != -1) {
@@ -217,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     });
                 }
                 else {
+                    if(!nowSsidTextView.getText().equals(nowApItem.getSsid()))
+                        changedNowApSsid = true;
                     nowSsidTextView.setText(nowApItem.getSsid());
                     int secLevel = nowApItem.getSecLevel();
                     switch (secLevel){
@@ -263,6 +271,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                         }
                     });
                 }
+                if(changedNowApSsid) {
+                    Log.d("TEST","changedNowApSsid");
+                    scanButton.performClick();
+                }
+                else {
+                    Log.d("TEST","Not ChangedNowApSsid");
+                }
                 adapter.notifyDataSetChanged();
             }
         }, 3000);
@@ -278,13 +293,25 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             else {
                 // No Password New Connect
                 int netId = wifiUtil.addProfile(ssid, capabilities);
-                wifiUtil.connect(netId);
+
+                boolean isConnected;
+                isConnected = wifiUtil.connect(netId);
+                if(!isConnected)
+                    wifiUtil.removeProfile(netId);
             }
         }
         else {  // Already Ap Profile
-            wifiUtil.connect(ssid);
+            Log.d("TEST"," Already Ap Profile ---------");
+            boolean isConnected;
+            isConnected = wifiUtil.connect(ssid);
+            if(!isConnected) {
+                Log.d("TEST"," RemoveProfile ---------");
+                wifiUtil.removeProfile(ssid);
+                Log.d("TEST"," RemoveProfile End ---------");
+            }
         }
     }
+
     public void askPassword(String ssid, String capabilities) {
         Intent intent = new Intent(this, PasswdPopupActivity.class);
         intent.putExtra("ssid", ssid);
@@ -308,7 +335,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                         Log.d("TEST", "Try Password [netId:" + Integer.toString(netId) + "]");
                         passwordTryNetId = netId;
 
-                        wifiUtil.connect(netId);
+                        boolean isConnected;
+                        isConnected = wifiUtil.connect(netId);
+                        if(!isConnected)
+                            wifiUtil.removeProfile(netId);
                         updateNowAp();
                         Log.d("TEST", ssid + " " + capabilities + " " + password);
                     }
@@ -327,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
     @Override
     public void callMoreActivity(ApItem apItem) {
         Intent intent = new Intent(getApplicationContext(), MoreActivity.class);
@@ -341,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
             String action  = intent.getAction();
             if(action.equals(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION)){
                 Log.d("TEST", "Check SUPPLICANT_STATE_CHANGED_ACTION");
-                SupplicantState suplState=((SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE));
+                SupplicantState suplState = ((SupplicantState)intent.getParcelableExtra(WifiManager.EXTRA_NEW_STATE));
                 switch(suplState){
                     case ASSOCIATED:Log.i("SupplicantState", "ASSOCIATED");
                         break;
@@ -380,6 +411,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     Toast toast = Toast.makeText(getApplicationContext(), "Wifi 패스워드가 틀렸습니다.", Toast.LENGTH_SHORT);
                     toast.show();
 
+                    Log.d("TEST","############# passwordTryNetId : " + Integer.toString(passwordTryNetId));
                     if(passwordTryNetId != -1) {
                         wifiUtil.removeProfile(passwordTryNetId);
                         passwordTryNetId = -1;

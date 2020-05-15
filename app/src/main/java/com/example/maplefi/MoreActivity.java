@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.maplefi.ui.ApItem;
 import com.example.maplefi.util.DetailReport;
+import com.example.maplefi.util.WifiUtil;
+import com.github.zagum.switchicon.SwitchIconView;
 
 public class MoreActivity extends AppCompatActivity {
     @Override
@@ -48,7 +50,7 @@ public class MoreActivity extends AppCompatActivity {
                 secColorImgView.setImageResource(R.drawable.green);
                 break;
             default:
-                secColorImgView.setImageResource(R.drawable.red);
+                secColorImgView.setImageResource(R.drawable.gray);
         }
         final ImageView rssiImgView = (ImageView) findViewById(R.id.img_strDegree);
         int rssiLevel = apItem.getRssiLevel();
@@ -66,13 +68,15 @@ public class MoreActivity extends AppCompatActivity {
                 rssiImgView.setImageResource(R.drawable.wifi_x);
         }
 
-        ImageView connectImgButton = (ImageView) findViewById(R.id.imgb_connect) ;
-        connectImgButton.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                wifiUtil.connect("","","");
-            }
-        });
+//        SwitchIconView connectImgButton = (SwitchIconView) findViewById(R.id.imgb_connect) ;
+//        connectImgButton.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                wifiUtil.disconnect();
+//
+//
+//            }
+//        });
 
         // -------------------------------------------------------------//
         // AP 상세 정보

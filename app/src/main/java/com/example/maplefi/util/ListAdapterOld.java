@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maplefi.MainActivity;
 import com.example.maplefi.R;
 import com.example.maplefi.ui.ApItem;
+import com.github.zagum.switchicon.SwitchIconView;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
         ImageView secColorImgView;
         ImageView rssiImgView;
         ImageView moreinfoImgButton;
-        ImageView connectImgButton;
+        SwitchIconView connectImgButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,7 +108,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
 
     @Override
     // 포지션에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         ApItem apItem = apItems.get(position);
 
         String text = apItem.getSsid();
@@ -157,6 +158,8 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
             public void onClick(View v) {
                 if (OnApItemClickListener != null) {
                     OnApItemClickListener.onConBtnClick(v, (int)v.getTag());
+                    holder.connectImgButton.setIconEnabled(true);
+
                 }
             }
         });

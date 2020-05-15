@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class WifiUtil {
@@ -78,8 +79,7 @@ public class WifiUtil {
     public boolean connect(String ssid){
         int net_id = getProfileId(ssid);
         if(net_id != -1) {
-            connect(net_id);
-            return true;
+            return connect(net_id);
         }
         return false;
     }
@@ -94,13 +94,11 @@ public class WifiUtil {
                 net_id = addProfile(ssid, capabilities);
             }
 
-            connect(net_id);
+            return connect(net_id);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        Log.v(TAG, "[+] Connected ! ");
-        return true;
     }
     public boolean connect(String ssid, String capabilities, String password) {
         // Ref. https://stackoverflow.com/questions/8818290/how-do-i-connect-to-a-specific-wi-fi-network-in-android-programmatically
@@ -237,16 +235,13 @@ public class WifiUtil {
     public void removeProfile(int netId){
         boolean b = wifiManager.removeNetwork(netId);
         wifiManager.saveConfiguration();
+
         if(b) Log.d("TEST","Remove True net_id:" + Integer.toString(netId));
         else Log.d("TEST","Remove False net_id:" + Integer.toString(netId));
     }
     public void removeProfile(String ssid){
         int netId = getProfileId(ssid);
-        boolean b = wifiManager.removeNetwork(netId);
-        wifiManager.saveConfiguration();
-
-        if(b) Log.d("TEST","Remove True net_id:" + Integer.toString(netId));
-        else Log.d("TEST","Remove False net_id:" + Integer.toString(netId));
+        removeProfile(netId);
     }
 
     public int ssidToEap(String ssid){

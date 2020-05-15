@@ -44,11 +44,17 @@
             android:paddingBottom="5dp"
             app:srcCompat="@android:drawable/ic_menu_add" />
 
-        <ImageView
+        <com.github.zagum.switchicon.SwitchIconView
             android:id="@+id/imgb_connect"
             android:layout_width="0px"
             android:layout_weight="1"
             android:layout_height="50dp"
+            app:si_enabled="true"
+            app:si_animation_duration="1500"
+            app:si_disabled_alpha=".5"
+            app:si_tint_color="#E49AFF84"
+            app:si_disabled_color="#b7b7b7"
+            app:si_no_dash="true"
             android:clickable="true"
             app:srcCompat="@android:drawable/ic_lock_idle_charging" />
     </LinearLayout>
