@@ -98,6 +98,7 @@
                         android:layout_width="0px"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:paddingRight="5dp"
                         app:srcCompat="@drawable/wifi_3" />
 
 <!--                    <com.github.zagum.switchicon.SwitchIconView-->
@@ -209,6 +210,7 @@
                             android:id="@+id/img_rssiLevel"
                             android:layout_width="match_parent"
                             android:layout_height="51dp"
+                            android:paddingTop="10dp"
                             app:srcCompat="@drawable/rssi_0" />
 
                         <TextView
