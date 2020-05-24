@@ -121,14 +121,14 @@ public class SecurityEstimater {
 
     //패킷 암호화 규칙 체크
     public void checkEnc(String capabilities){
-       if (capabilities.contains("CCMP")) {
-           Log.d(TAG, "check_Enc: ccmp");
-           scores[2] += 40;
-           scores[3] += 40;
-       }else if (capabilities.contains("TKIP")) {
-               Log.d(TAG, "packet_checker: protocol tkip");//wep에서 사용하는 암호화 방식
-               scores[2] += 20;
-               scores[3] += 20;
+       if (capabilities.contains("TKIP")) {
+           Log.d(TAG, "check_Enc: TKIP");
+           scores[2] += 20;
+           scores[3] += 20;
+       }else if (capabilities.contains("CCMP")) {
+               Log.d(TAG, "packet_checker: protocol CCMP");//wep에서 사용하는 암호화 방식
+               scores[2] += 40;
+               scores[3] += 40;
                Log.d(TAG, "packet_checker: "+ scores[2]);
        } else {
            Log.d(TAG, "packetRule_checker: not in packetrule case");
