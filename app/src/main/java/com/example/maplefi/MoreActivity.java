@@ -100,8 +100,37 @@ public class MoreActivity extends AppCompatActivity {
 
 
         // AP 보안 신호등
-//        final ImageView imgViewLightSet = (ImageView) findViewById(R.id.img_sec_score);
-//        imgViewLight.setImageResource(R.drawable.);
+        final ImageView imgViewLightSet = (ImageView) findViewById(R.id.img_secColorLight);
+        switch (apItem.getSecLevel()){
+            case 1:
+                imgViewLightSet.setImageResource(R.drawable.light_red);
+                break;
+            case 2:
+                imgViewLightSet.setImageResource(R.drawable.light_orange);
+                break;
+            case 3:
+                imgViewLightSet.setImageResource(R.drawable.light_green);
+                break;
+            default:
+                imgViewLightSet.setImageResource(R.drawable.light_default);
+        }
+
+        // AP rssi 레벨
+        final ImageView imgViewRssiSet = (ImageView) findViewById(R.id.img_rssiLevel);
+        switch (apItem.getRssiLevel()){
+            case 1:
+                imgViewRssiSet.setImageResource(R.drawable.rssi_1);
+                break;
+            case 2:
+                imgViewRssiSet.setImageResource(R.drawable.rssi_2);
+                break;
+            case 3:
+                imgViewRssiSet.setImageResource(R.drawable.rssi_3);
+                break;
+            default:
+                imgViewRssiSet.setImageResource(R.drawable.rssi_0);
+        }
+
 
         // AP 신호 강도 점수
         final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);

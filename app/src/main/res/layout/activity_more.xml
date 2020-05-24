@@ -190,13 +190,12 @@
                             android:text="sec_score"
                             android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/img_secColorSet"
+                        <ImageView
+                            android:id="@+id/img_secColorLight"
                             android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="신호등 이미지" />
+                            android:layout_height="41dp"
+                            app:srcCompat="@drawable/light_default" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -206,13 +205,11 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/img_strDetail"
+                        <ImageView
+                            android:id="@+id/img_rssiLevel"
                             android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="4"
-                            android:gravity="center"
-                            android:text="신호강도 이미지" />
+                            android:layout_height="51dp"
+                            app:srcCompat="@drawable/rssi_0" />
 
                         <TextView
                             android:id="@+id/tv_strScore"
