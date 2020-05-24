@@ -242,6 +242,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     }
                     int rssiLevel = nowApItem.getRssiLevel();
                     switch (rssiLevel){
+                        case 0:
                         case 1:
                             nowRssiImgView.setImageResource(R.drawable.wifi_1);
                             break;
@@ -249,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                             nowRssiImgView.setImageResource(R.drawable.wifi_2);
                             break;
                         case 3:
+                        case 4:
                             nowRssiImgView.setImageResource(R.drawable.wifi_3);
                             break;
                         default:

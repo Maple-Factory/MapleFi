@@ -52,6 +52,7 @@ public class MoreActivity extends AppCompatActivity {
         final ImageView rssiImgView = (ImageView) findViewById(R.id.img_strDegree);
         int rssiLevel = apItem.getRssiLevel();
         switch (rssiLevel){
+            case 0:
             case 1:
                 rssiImgView.setImageResource(R.drawable.wifi_1);
                 break;
@@ -59,6 +60,7 @@ public class MoreActivity extends AppCompatActivity {
                 rssiImgView.setImageResource(R.drawable.wifi_2);
                 break;
             case 3:
+            case 4:
                 rssiImgView.setImageResource(R.drawable.wifi_3);
                 break;
             default:
@@ -127,6 +129,9 @@ public class MoreActivity extends AppCompatActivity {
             case 3:
                 imgViewRssiSet.setImageResource(R.drawable.rssi_3);
                 break;
+            case 4:
+                imgViewRssiSet.setImageResource(R.drawable.rssi_full);
+                break;
             default:
                 imgViewRssiSet.setImageResource(R.drawable.rssi_0);
         }
@@ -135,13 +140,15 @@ public class MoreActivity extends AppCompatActivity {
         // AP 신호 강도 점수
         final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);
         switch (apItem.getRssiLevel()){
+            case 0:
             case 1:
+            case 2:
                 strScoreTextView.setText("나쁨("+apItem.getRssiScore()+")");
                 break;
-            case 2:
+            case 3:
                 strScoreTextView.setText("보통("+apItem.getRssiScore()+")");
                 break;
-            case 3:
+            case 4:
                 strScoreTextView.setText("좋음("+apItem.getRssiScore()+")");
                 break;
             default:

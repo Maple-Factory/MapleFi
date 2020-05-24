@@ -19,8 +19,9 @@ public class ApItem implements Serializable {
     public int[] secScores;
     public int secLevel;
 
-    private final int RSSI_HIGH = -60;
-    private final int RSSI_LOW = -70;
+    private final int RSSI_SCORE_ONE = 75;
+    private final int RSSI_SCORE_TWO = 50;
+    private final int RSSI_SCORE_THREE = 25;
     private final int SECURE_HIGH = 200;
     private final int SECURE_LOW = 100;
     private final int RSSI_ADD = 85;
@@ -33,20 +34,26 @@ public class ApItem implements Serializable {
         this.eapType = eapType;
         SecurityEstimater securityEstimater = new SecurityEstimater(name, capabilities, eapType);
 
-        // 신호강도 레벨 책정
-        if(this.rssi > RSSI_HIGH){
-            this.rssiLevel = 3;
-        }
-        else if(this.rssi > RSSI_LOW){
-            this.rssiLevel = 2;
-        }
-        else {
-            this.rssiLevel = 1;
-        }
-
         // 신호강도 점수 책정
         this.rssiScore = (int) ((double)(this.rssi + RSSI_ADD) * RSSI_MUT);
         this.rssiScore = this.rssiScore > 100 ? 100 : (this.rssiScore < 0 ? 0 : this.rssiScore);
+
+        // 신호강도 레벨 책정
+        if(this.rssiScore == 100){
+            this.rssiLevel = 4;
+        }
+        else if(this.rssiScore > RSSI_SCORE_ONE){
+            this.rssiLevel = 3;
+        }
+        else if(this.rssiScore > RSSI_SCORE_TWO){
+            this.rssiLevel = 2;
+        }
+        else if(this.rssiScore > RSSI_SCORE_THREE){
+            this.rssiLevel = 1;
+        }
+        else {
+            this.rssiLevel = 0;
+        }
 
         // 보안 점수 책정
         this.secScore = securityEstimater.getFinal();
