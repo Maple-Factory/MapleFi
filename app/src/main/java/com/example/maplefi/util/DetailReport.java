@@ -75,8 +75,8 @@ public class DetailReport {
             this.solutions.add("기업의 경우, EAP 키 관리 방식을 적용");
         }
         else {
-            this.negatives.add("키관리 방식을 적용하지 않은 것");
-            this.solutions.add("키관리 방식을 적용");
+            this.negatives.add("키 관리 방식을 적용하지 않은 것");
+            this.solutions.add("키 관리 방식을 적용");
         }
 
         // EAP Type
