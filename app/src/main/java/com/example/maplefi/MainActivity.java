@@ -347,11 +347,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityNavig
                     else {
                         Toast toast = Toast.makeText(getApplicationContext(), "패스워드의 길이가 부족합니다.", Toast.LENGTH_SHORT);  // Capabilities 에 맞는 비번 가이드라인 제시 추가 필요
                         toast.show();
+                        updateNowAp();
                     }
                 }
                 else {
                     Toast toast = Toast.makeText(getApplicationContext(), "패스워드가 필요합니다.", Toast.LENGTH_SHORT);
                     toast.show();
+                    updateNowAp();
                 }
             }
         }
