@@ -130,6 +130,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                 holder.secColorImgView.setImageResource(R.drawable.red);
         }
         switch (rssiLevel){
+            case 0:
             case 1:
                 holder.rssiImgView.setImageResource(R.drawable.wifi_1);
                 break;
@@ -137,6 +138,7 @@ public class ListAdapterOld extends RecyclerView.Adapter<ListAdapterOld.ViewHold
                 holder.rssiImgView.setImageResource(R.drawable.wifi_2);
                 break;
             case 3:
+            case 4:
                 holder.rssiImgView.setImageResource(R.drawable.wifi_3);
                 break;
             default:

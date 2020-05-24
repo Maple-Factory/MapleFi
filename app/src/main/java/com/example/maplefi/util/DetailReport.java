@@ -29,7 +29,13 @@ public class DetailReport {
     public DetailReport(String ssid, String capabilities, int eapType){
         // PW Encryption Type
         if(capabilities.contains("WPA2")) {     // Positive
-            this.positives.add("인증 및 암호화 방식으로 WPA2를 사용한 것");
+            if(capabilities.contains("WPA-")) {
+                this.negatives.add("인증 및 암호화 방식으로 WPA2와 WPA를 모두 사용해 해킹 공격에 취약한 점");
+                this.solutions.add("인증 및 암호화 방식으로 WPA2 방식만을 적용");
+            }
+            else {
+                this.positives.add("인증 및 암호화 방식으로 WPA2를 사용한 것");
+            }
         }
         else if(capabilities.contains("WPA")) {
             this.negatives.add("인증 및 암호화 방식으로 WPA 방식을 사용하여 해킹 공격에 취약한 점");
@@ -45,12 +51,12 @@ public class DetailReport {
         }
 
         // Packet Rule
-        if(capabilities.contains("CCMP")) {
-            this.positives.add("암호화 규칙으로 CCMP를 사용한 것");
-        }
-        else if(capabilities.contains("TKIP")) {
+        if(capabilities.contains("TKIP")) {
             this.negatives.add("암호화 규칙으로 TKIP를 사용하여 해킹에 다소 취약한 점");
             this.solutions.add("암호화 규칙으로 CCMP를 사용");
+        }
+        else if(capabilities.contains("CCMP")) {
+            this.positives.add("암호화 규칙으로 CCMP를 사용한 것");
         }
         else {
             this.negatives.add("암호화 규칙을 적용하지 않은 것");
@@ -75,8 +81,8 @@ public class DetailReport {
             this.solutions.add("기업의 경우, EAP 키 관리 방식을 적용");
         }
         else {
-            this.negatives.add("키관리 방식을 적용하지 않은 것");
-            this.solutions.add("키관리 방식을 적용");
+            this.negatives.add("키 관리 방식을 적용하지 않았다는 점");
+            this.solutions.add("키 관리 방식을 적용");
         }
 
         // EAP Type

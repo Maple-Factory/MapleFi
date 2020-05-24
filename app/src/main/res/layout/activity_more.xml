@@ -98,6 +98,7 @@
                         android:layout_width="0px"
                         android:layout_height="50dp"
                         android:layout_weight="1"
+                        android:paddingRight="5dp"
                         app:srcCompat="@drawable/wifi_3" />
 
 <!--                    <com.github.zagum.switchicon.SwitchIconView-->
@@ -178,7 +179,7 @@
                         android:id="@+id/linLayout_securebox"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:orientation="vertical">
 
                         <TextView
@@ -202,13 +203,14 @@
                         android:id="@+id/linLayout_strbox"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/img_rssiLevel"
                             android:layout_width="match_parent"
                             android:layout_height="51dp"
+                            android:paddingTop="10dp"
                             app:srcCompat="@drawable/rssi_0" />
 
                         <TextView
