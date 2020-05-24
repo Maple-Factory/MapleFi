@@ -39,10 +39,10 @@ public class DetailReport {
             this.negatives.add("인증 및 암호화 방식으로 WEP 방식을 사용하여 해킹에 상당히 취약한 점");
             this.solutions.add("인증 및 암호화 방식으로 WPA2 방식을 적용");
         }
-//        else {
-//            this.negatives.add("");
-//            this.solutions.add("");
-//        }
+        else {// 암호화 방식 없는것
+            this.negatives.add("인증 및 암호화 방식을 적용하지 않은 것");
+            this.solutions.add("인증 및 암호화 방식을 적용");
+        }
 
         // Packet Rule
         if(capabilities.contains("CCMP")) {
@@ -52,10 +52,10 @@ public class DetailReport {
             this.negatives.add("암호화 규칙으로 TKIP를 사용하여 해킹에 다소 취약한 점");
             this.solutions.add("암호화 규칙으로 CCMP를 사용");
         }
-//        else {
-//            this.negatives.add("");
-//            this.solutions.add("");
-//        }
+        else {
+            this.negatives.add("암호화 규칙을 적용하지 않은 것");
+            this.solutions.add("암호화 규칙 적용");
+        }
 
         // SSID Hide
         if(ssid.equals("숨겨진 네트워크")) {  // Positive
@@ -74,10 +74,10 @@ public class DetailReport {
             this.negatives.add("PSK 키 관리 방식을 사용하여 해커에게 도청당할 약간의 위험");
             this.solutions.add("기업의 경우, EAP 키 관리 방식을 적용");
         }
-//        else {
-//            this.negatives.add("");
-//            this.solutions.add("");
-//        }
+        else {
+            this.negatives.add("키관리 방식을 적용하지 않은 것");
+            this.solutions.add("키관리 방식을 적용");
+        }
 
         // EAP Type
 //        if(eapType == -1){
