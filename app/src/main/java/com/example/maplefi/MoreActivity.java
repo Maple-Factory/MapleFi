@@ -136,7 +136,6 @@ public class MoreActivity extends AppCompatActivity {
                 imgViewRssiSet.setImageResource(R.drawable.rssi_0);
         }
 
-
         // AP 신호 강도 점수
         final TextView strScoreTextView = (TextView) findViewById(R.id.tv_strScore);
         switch (apItem.getRssiLevel()){

@@ -179,7 +179,7 @@
                         android:id="@+id/linLayout_securebox"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:orientation="vertical">
 
                         <TextView
@@ -203,7 +203,7 @@
                         android:id="@+id/linLayout_strbox"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_weight="0.8"
                         android:orientation="vertical">
 
                         <ImageView
